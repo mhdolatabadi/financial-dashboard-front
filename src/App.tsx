@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import './App.css'
+import { AdminPage } from './pages/AdminPage'
+import { LoginPage } from './pages/LoginPage'
+import { UserPage } from './pages/UserPage'
+import { Button } from '@mui/material'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+enum Page {
+  login,
+  user,
+  admin,
 }
 
-export default App;
+function App() {
+  const [currentPage, setCurrentPage] = useState(Page.user)
+  return (
+    <div className="App">
+      <Button onClick={() => setCurrentPage(Page.login)}>صفحه‌ی ورود</Button>
+      <Button onClick={() => setCurrentPage(Page.user)}>صفحه‌ی کاربر</Button>
+      <Button onClick={() => setCurrentPage(Page.admin)}>صفحه‌ی مدیر</Button>
+      {currentPage === Page.login ? <LoginPage /> : null}
+      {currentPage === Page.user ? <UserPage /> : null}
+      {currentPage === Page.admin ? <AdminPage /> : null}
+    </div>
+  )
+}
+
+export default App
