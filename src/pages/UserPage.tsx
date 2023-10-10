@@ -7,7 +7,7 @@ import {
 export function UserPage() {
   return (
     <div>
-      <UserInformation />
+      {/* <UserInformation /> */}
       <TransactionsTable />
       <ProfitsTable />
     </div>

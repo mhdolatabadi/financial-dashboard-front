@@ -1,19 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { CacheProvider, ThemeProvider } from '@emotion/react'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { CacheProvider, ThemeProvider } from '@emotion/react'
 import { cacheRtl, theme } from './theme'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <CacheProvider value={cacheRtl}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </CacheProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <CacheProvider value={cacheRtl}>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </CacheProvider>
+    </LocalizationProvider>
   </React.StrictMode>
 )
 

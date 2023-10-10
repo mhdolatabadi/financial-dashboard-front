@@ -1,5 +1,7 @@
-import { Stack, Typography, styled } from '@mui/material'
-import { useState } from 'react'
+import { Button, Stack, Typography, styled } from '@mui/material'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { DataDisplayWithEdit } from '../common/DataDisplayWithEdit'
 
 const DataFieldRow = styled(Stack)(() => ({
   flexDirection: 'row',
@@ -7,52 +9,86 @@ const DataFieldRow = styled(Stack)(() => ({
   width: '100%',
 }))
 
-export function UserInformation() {
-  const [firstName, setFirstName] = useState('jim')
-  const [lastName, setLastName] = useState('carry')
-  const [username, setUsername] = useState('@jimcarry')
-  const [nationalNo, setNationalNo] = useState('0012345678')
-  const [lastTransactionDate, setLastTransactionDate] = useState('1402-11-01')
-  const [totalFinance, setTotalFinance] = useState('999,999,999,999')
+const RowFlex = styled('div')(({ theme }) => ({
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'space-evenly',
+  color: theme.palette.secondary.main,
+  border: '2px solid white',
+}))
+
+interface Props {
+  id: string
+}
+interface User {
+  id: string
+  username: string
+  password: string
+  firstName: string | null
+  lastName: string | null
+  nationalNo: number | null
+  financial: number | null
+  unit: string
+  totalProfit: number | null
+  isAdmin: boolean
+}
+export function UserInformation({ id }: Props) {
+  const [user, setUser] = useState<Partial<User>>()
+
+  useEffect(() => {
+    axios.get(`http://localhost:3456/user/${id}`).then((res) => {
+      console.log(res)
+      setUser(res.data)
+    })
+  }, [id])
+
+  const handleEditUser = (partialUser: Partial<User>) => {
+    axios.put(`http://localhost:3456/user/${id}`, partialUser)
+    setUser({ ...user, ...partialUser })
+  }
+
   return (
     <Stack
-      sx={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        direction: 'rtl',
-      }}
+      sx={{ justifyContent: 'center', alignItems: 'center', width: '100%' }}
     >
       <Typography>اطلاعات کاربر</Typography>
       <DataFieldRow>
-        <div>
-          <Typography>نام کاربری</Typography>
-          <Typography>{username}</Typography>
-        </div>
-        <div>
-          <Typography>شماره ملی</Typography>
-          <Typography>{nationalNo}</Typography>
-        </div>
+        <DataDisplayWithEdit
+          label="نام کاربری"
+          value={user?.username}
+          onEdit={(username) => handleEditUser({ username })}
+        />
+        <DataDisplayWithEdit
+          label="شماره ملی"
+          value={user?.nationalNo}
+          onEdit={(nationalNo) =>
+            handleEditUser({ nationalNo: Number(nationalNo) })
+          }
+        />
       </DataFieldRow>
       <DataFieldRow>
-        <div>
-          <Typography>نام</Typography>
-          <Typography>{firstName}</Typography>
-        </div>
-        <div>
-          <Typography>نام خانوادگی</Typography>
-          <Typography>{lastName}</Typography>
-        </div>
+        <DataDisplayWithEdit
+          label="نام"
+          value={user?.firstName}
+          onEdit={(firstName) => handleEditUser({ firstName })}
+        />
+        <DataDisplayWithEdit
+          label="نام خانوادگی"
+          value={user?.lastName}
+          onEdit={(lastName) => handleEditUser({ lastName })}
+        />
       </DataFieldRow>
       <DataFieldRow>
-        <div>
-          <Typography>تاریخ آخرین تراکنش</Typography>
-          <Typography>{lastTransactionDate}</Typography>
-        </div>
-        <div>
-          <Typography>دارایی فعلی در صندوق</Typography>
-          <Typography>{totalFinance}</Typography>
-        </div>
+        <DataDisplayWithEdit
+          label="تاریخ آخرین تراکنش"
+          value={Date.now().toString()}
+          onEdit={() => console.log('edited')}
+        />
+        <DataDisplayWithEdit
+          label="دارایی فعلی در صندوق"
+          value={user?.financial}
+          onEdit={() => console.log('edited')}
+        />
       </DataFieldRow>
     </Stack>
   )
