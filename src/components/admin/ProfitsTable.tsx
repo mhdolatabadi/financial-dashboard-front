@@ -20,7 +20,7 @@ export function ProfitsTable({ userId }: Props) {
     axios.get(`http://localhost:3456/profit/${userId}`).then((res) => {
       setUsers(res.data)
     })
-  }, [])
+  }, [userId])
   return (
     <TableContainer>
       <Table>

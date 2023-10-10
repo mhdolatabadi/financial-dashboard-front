@@ -8,9 +8,6 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { styled } from '@mui/material'
 
 interface Props {
   selectUser: (id: string) => unknown

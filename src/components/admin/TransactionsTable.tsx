@@ -21,7 +21,7 @@ export function TransactionsTable({ userId }: Props) {
       setUsers(res.data)
       console.log(res.data)
     })
-  }, [])
+  }, [userId])
   return (
     <TableContainer>
       <Table>
