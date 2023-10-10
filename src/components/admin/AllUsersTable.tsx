@@ -12,55 +12,39 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { styled } from '@mui/material'
 
-const CenteredTableCell = styled(TableCell)(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-}))
-
-const RowDirTableRow = styled(TableRow)(() => ({
-  display: 'flex',
-  flexDirection: 'row',
-  width: '100%',
-}))
-
 interface Props {
   selectUser: (id: string) => unknown
+  users: { username: string; id: string }[]
 }
 
-export function AllUsersTable({ selectUser }: Props) {
-  const [users, setUsers] = useState([])
-  useEffect(() => {
-    axios.get('http://localhost:3456/user').then((res) => {
-      setUsers(res.data)
-    })
-  }, [])
+export function AllUsersTable({ selectUser, users }: Props) {
   return (
-    <TableContainer>
+    <TableContainer sx={{ width: '700px' }}>
       <Table>
         <TableHead>
-          <RowDirTableRow>
-            <CenteredTableCell>نام کاربری</CenteredTableCell>
-            <CenteredTableCell>مشاهده</CenteredTableCell>
-          </RowDirTableRow>
+          <TableRow>
+            <TableCell>نام کاربری</TableCell>
+          </TableRow>
         </TableHead>
         <TableBody>
           {users.length > 0 ? (
             users.map((u: { username: string; id: string }) => (
-              <RowDirTableRow key={u.username}>
-                <CenteredTableCell>{u.username}</CenteredTableCell>
-                <CenteredTableCell>
+              <TableRow key={u.username}>
+                <TableCell
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Typography>{u.username}</Typography>
                   <Button onClick={() => selectUser(u.id)}>مشاهده</Button>
-                </CenteredTableCell>
-              </RowDirTableRow>
+                </TableCell>
+              </TableRow>
             ))
           ) : (
-            <TableRow>
-              <TableCell>
-                <Typography>هنوز کاربری ساخته نشده است</Typography>
-              </TableCell>
-            </TableRow>
+            <Typography>هنوز کاربری ساخته نشده است</Typography>
           )}
         </TableBody>
       </Table>

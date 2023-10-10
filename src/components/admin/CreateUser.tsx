@@ -15,7 +15,7 @@ export function CreateUser() {
     <div
       dir="rtl"
       style={{
-        width: '100%',
+        width: '700px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -33,7 +33,9 @@ export function CreateUser() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       ></TextField>
-      <Button onClick={handleCreateUser}>ساخت</Button>
+      <Button variant="contained" onClick={handleCreateUser}>
+        ساخت
+      </Button>
     </div>
   )
 }

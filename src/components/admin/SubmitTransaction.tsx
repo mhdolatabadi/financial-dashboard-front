@@ -14,7 +14,16 @@ import { Dayjs } from 'dayjs'
 import { useState } from 'react'
 import axios from 'axios'
 
-export function SubmitTransaction() {
+interface User {
+  id: string
+  username: string
+}
+
+interface Props {
+  users: User[]
+}
+
+export function SubmitTransaction({ users }: Props) {
   const [username, setUsername] = useState<string>()
   const [date, setDate] = useState<Dayjs | null>()
   const [type, setType] = useState<string>('in')
@@ -41,11 +50,20 @@ export function SubmitTransaction() {
       }}
     >
       <Typography>ثبت تراکنش مالی</Typography>
-      <TextField
-        label="نام کاربری"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+
+      <div>
+        <TextField
+          select
+          sx={{ width: '200px' }}
+          value={username}
+          label="نام کاربری"
+          onChange={(e) => setUsername(e.target.value)}
+        >
+          {users.map((u) => (
+            <MenuItem value={u.id}>{u.username}</MenuItem>
+          ))}
+        </TextField>
+      </div>
       <DatePicker
         label="تاریخ"
         value={date}
@@ -61,29 +79,33 @@ export function SubmitTransaction() {
         <FormControlLabel value="in" control={<Radio />} label="واریز" />
         <FormControlLabel value="out" control={<Radio />} label="برداشت" />
       </RadioGroup>
+      <div>
+        <TextField
+          label="مبلغ"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={unit}
+          onChange={(e) => setUnit(e.target.value)}
+        >
+          <MenuItem value="rial">ریال</MenuItem>
+          <MenuItem value="derham">درهم</MenuItem>
+          <MenuItem value="dollar">دلار</MenuItem>
+          <MenuItem value="euro">یورو</MenuItem>
+        </Select>
+      </div>
       <TextField
-        label="مبلغ"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <InputLabel id="demo-simple-select-label">واحد</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={unit}
-        onChange={(e) => setUnit(e.target.value)}
-      >
-        <MenuItem value="rial">ریال</MenuItem>
-        <MenuItem value="derham">درهم</MenuItem>
-        <MenuItem value="dollar">دلار</MenuItem>
-        <MenuItem value="euro">یورو</MenuItem>
-      </Select>
-      <TextField
+        multiline
         label="توضیحات"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <Button onClick={handleSubmitTransaction}>ثبت</Button>
+      <Button variant="contained" onClick={handleSubmitTransaction}>
+        ثبت
+      </Button>
     </div>
   )
 }
