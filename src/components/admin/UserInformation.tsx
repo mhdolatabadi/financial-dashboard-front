@@ -1,7 +1,10 @@
-import { Button, Stack, Typography, styled } from '@mui/material'
+import { Stack, Typography, styled } from '@mui/material'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { DataDisplayWithEdit } from '../common/DataDisplayWithEdit'
+import { Section } from '../common'
+import { PersianTexts } from '../../persianTexts'
+import { User } from '../../models/user'
 
 const DataFieldRow = styled(Stack)(() => ({
   flexDirection: 'row',
@@ -9,30 +12,11 @@ const DataFieldRow = styled(Stack)(() => ({
   width: '100%',
 }))
 
-const RowFlex = styled('div')(({ theme }) => ({
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'space-evenly',
-  color: theme.palette.secondary.main,
-  border: '2px solid white',
-}))
-
 interface Props {
   id: string
-}
-interface User {
-  id: string
-  username: string
-  password: string
-  firstName: string | null
-  lastName: string | null
-  nationalNo: number | null
-  financial: number | null
-  unit: string
-  totalProfit: number | null
   isAdmin: boolean
 }
-export function UserInformation({ id }: Props) {
+export function UserInformation({ id, isAdmin }: Props) {
   const [user, setUser] = useState<Partial<User>>()
 
   useEffect(() => {
@@ -48,18 +32,20 @@ export function UserInformation({ id }: Props) {
   }
 
   return (
-    <Stack
-      sx={{ justifyContent: 'center', alignItems: 'center', width: '100%' }}
-    >
-      <Typography>اطلاعات کاربر</Typography>
+    <Section>
+      <Typography color="primary" fontWeight="600">
+        {PersianTexts.userInformation}
+      </Typography>
       <DataFieldRow>
         <DataDisplayWithEdit
-          label="نام کاربری"
+          isAdmin={isAdmin}
+          label={PersianTexts.username}
           value={user?.username}
           onEdit={(username) => handleEditUser({ username })}
         />
         <DataDisplayWithEdit
-          label="شماره ملی"
+          isAdmin={isAdmin}
+          label={PersianTexts.nationalNo}
           value={user?.nationalNo}
           onEdit={(nationalNo) =>
             handleEditUser({ nationalNo: Number(nationalNo) })
@@ -68,28 +54,32 @@ export function UserInformation({ id }: Props) {
       </DataFieldRow>
       <DataFieldRow>
         <DataDisplayWithEdit
-          label="نام"
-          value={user?.firstName}
-          onEdit={(firstName) => handleEditUser({ firstName })}
+          isAdmin={isAdmin}
+          label={PersianTexts.firstname}
+          value={user?.firstname}
+          onEdit={(firstname) => handleEditUser({ firstname })}
         />
         <DataDisplayWithEdit
-          label="نام خانوادگی"
-          value={user?.lastName}
-          onEdit={(lastName) => handleEditUser({ lastName })}
+          isAdmin={isAdmin}
+          label={PersianTexts.lastname}
+          value={user?.lastname}
+          onEdit={(lastname) => handleEditUser({ lastname })}
         />
       </DataFieldRow>
       <DataFieldRow>
         <DataDisplayWithEdit
-          label="تاریخ آخرین تراکنش"
+          isAdmin={isAdmin}
+          label={PersianTexts.lastTransactionDate}
           value={Date.now().toString()}
           onEdit={() => console.log('edited')}
         />
         <DataDisplayWithEdit
-          label="دارایی فعلی در صندوق"
+          isAdmin={isAdmin}
+          label={PersianTexts.totalFinance}
           value={user?.financial}
           onEdit={() => console.log('edited')}
         />
       </DataFieldRow>
-    </Stack>
+    </Section>
   )
 }

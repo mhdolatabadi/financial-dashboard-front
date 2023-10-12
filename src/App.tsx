@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { AdminPage } from './pages/AdminPage'
 import { LoginPage } from './pages/LoginPage'
-import { AppBar, Button, Toolbar, Typography } from '@mui/material'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 
 enum Page {
   login,
@@ -11,16 +11,21 @@ enum Page {
 }
 
 function App() {
-  const [currentPage, setCurrentPage] = useState(Page.admin)
+  const currentPage = Page.admin
   return (
     <div className="App">
-      <AppBar>
+      <AppBar
+        sx={{
+          padding: '20px',
+          background: 'linear-gradient(to right, #00566f, #00566f, #0aa)',
+        }}
+      >
         <Toolbar>
-          <Typography>شرکت سرمایه گذاری حسیب</Typography>
+          <Typography fontSize="30px">
+            صندوق سرمایه‌گذاری خصوصی درنیکو
+          </Typography>
         </Toolbar>
       </AppBar>
-      <Button onClick={() => setCurrentPage(Page.login)}>صفحه‌ی ورود</Button>
-      <Button onClick={() => setCurrentPage(Page.admin)}>صفحه‌ی مدیر</Button>
       {currentPage === Page.login ? <LoginPage /> : null}
       {currentPage === Page.admin ? <AdminPage /> : null}
     </div>

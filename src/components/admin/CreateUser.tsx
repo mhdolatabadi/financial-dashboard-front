@@ -1,41 +1,43 @@
-import { Button, TextField, Typography } from '@mui/material'
-import axios from 'axios'
+import { Typography } from '@mui/material'
 import { useState } from 'react'
+import { PersianTexts } from '../../persianTexts'
+import { ContainedButton, TextField } from '../common'
 
-export function CreateUser() {
+interface Props {
+  handleCreateUser: ({
+    username,
+    password,
+  }: {
+    username: string
+    password: string
+  }) => unknown
+}
+
+export function CreateUser({ handleCreateUser }: Props) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const handleCreateUser = () => {
-    axios.post('http://localhost:3456/user', {
-      username,
-      password,
-    })
-  }
+
   return (
-    <div
-      dir="rtl"
-      style={{
-        width: '700px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '20px',
-      }}
-    >
-      <Typography>ساخت کاربر جدید</Typography>
+    <div>
+      <Typography color="primary" fontWeight="700">
+        {PersianTexts.createNewUser}
+      </Typography>
       <TextField
-        label="نام کاربری"
+        label={PersianTexts.username}
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-      ></TextField>
+      />
       <TextField
-        label="رمز عبور"
+        label={PersianTexts.password}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-      ></TextField>
-      <Button variant="contained" onClick={handleCreateUser}>
-        ساخت
-      </Button>
+      />
+      <ContainedButton
+        variant="contained"
+        onClick={() => handleCreateUser({ username, password })}
+      >
+        {PersianTexts.create}
+      </ContainedButton>
     </div>
   )
 }

@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { PersianTexts } from '../../persianTexts'
 
 interface Props {
   userId: string
@@ -22,14 +23,30 @@ export function ProfitsTable({ userId }: Props) {
     })
   }, [userId])
   return (
-    <TableContainer>
+    <TableContainer sx={{ width: '100%' }}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>تاریخ</TableCell>
-            <TableCell>مبلغ</TableCell>
-            <TableCell>واحد</TableCell>
-            <TableCell>توضیحات</TableCell>
+            <TableCell>
+              <Typography fontWeight="600" color="primary">
+                {PersianTexts.date}
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography fontWeight="600" color="primary">
+                {PersianTexts.amount}
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography fontWeight="600" color="primary">
+                {PersianTexts.unit}
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography fontWeight="600" color="primary">
+                {PersianTexts.description}
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -42,8 +59,12 @@ export function ProfitsTable({ userId }: Props) {
                 description: string
               }) => (
                 <TableRow key={u.date}>
-                  <TableCell>{u.date}</TableCell>
-                  <TableCell>{u.amount}</TableCell>
+                  <TableCell>
+                    {Intl.DateTimeFormat('fa-IR').format(new Date(u.date))}
+                  </TableCell>
+                  <TableCell>
+                    {Intl.NumberFormat('fa-IR').format(+u.amount)}
+                  </TableCell>
                   <TableCell>{u.unit}</TableCell>
                   <TableCell>{u.description}</TableCell>
                 </TableRow>

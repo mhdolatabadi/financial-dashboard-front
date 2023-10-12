@@ -1,20 +1,18 @@
-import { Button, MenuItem, TextField, Typography } from '@mui/material'
-import { DatePicker } from '@mui/x-date-pickers'
+import { MenuItem } from '@mui/material'
 import { Dayjs } from 'dayjs'
 import { useState } from 'react'
 import axios from 'axios'
+import { TextField, DatePicker, ContainedButton } from '../common'
+import { User } from '../../models/user'
+import { PersianTexts } from '../../persianTexts'
 
-interface User {
-  id: string
-  username: string
-}
 interface Props {
-  users: User[]
+  users: Partial<User>[]
 }
 
 export function SubmitProfit({ users }: Props) {
   const [username, setUsername] = useState<string>()
-  const [date, setDate] = useState<Dayjs | null>()
+  const [date, setDate] = useState<Dayjs | null | unknown>()
   const [amount, setAmount] = useState<string>()
   const [unit, setUnit] = useState<string>('rial')
   const [description, setDescription] = useState<string>()
@@ -28,23 +26,12 @@ export function SubmitProfit({ users }: Props) {
     })
   }
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '20px',
-        width: '500px',
-        height: '400px',
-      }}
-    >
-      <Typography>ثبت تراکنش مالی</Typography>
+    <div>
       <div style={{ width: '100%' }}>
         <TextField
           select
           sx={{ width: '100%' }}
-          label="نام کاربری"
+          label={PersianTexts.username}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         >
@@ -54,15 +41,14 @@ export function SubmitProfit({ users }: Props) {
         </TextField>
       </div>
       <DatePicker
-        sx={{ width: '100%' }}
-        label="تاریخ"
+        label={PersianTexts.date}
         value={date}
         onChange={(value) => setDate(value)}
       />
       <div style={{ display: 'flex', width: '100%' }}>
         <TextField
           sx={{ width: '100%' }}
-          label="مبلغ"
+          label={PersianTexts.amount}
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
@@ -71,26 +57,22 @@ export function SubmitProfit({ users }: Props) {
           value={unit}
           onChange={(e) => setUnit(e.target.value)}
         >
-          <MenuItem value="rial">ریال</MenuItem>
-          <MenuItem value="derham">درهم</MenuItem>
-          <MenuItem value="dollar">دلار</MenuItem>
-          <MenuItem value="euro">یورو</MenuItem>
+          <MenuItem value="rial">{PersianTexts.rial}</MenuItem>
+          <MenuItem value="derham">{PersianTexts.derham}</MenuItem>
+          <MenuItem value="dollar">{PersianTexts.dollar}</MenuItem>
+          <MenuItem value="euro">{PersianTexts.euro}</MenuItem>
         </TextField>
       </div>
       <TextField
         sx={{ width: '100%' }}
         multiline
-        label="توضیحات"
+        label={PersianTexts.description}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <Button
-        sx={{ width: '100%' }}
-        variant="contained"
-        onClick={handleSubmitTransaction}
-      >
-        ثبت
-      </Button>
+      <ContainedButton variant="contained" onClick={handleSubmitTransaction}>
+        {PersianTexts.submit}
+      </ContainedButton>
     </div>
   )
 }

@@ -1,19 +1,21 @@
 import { Button, TextField, Typography, styled } from '@mui/material'
 import { useEffect, useState } from 'react'
+import EditIcon from '@mui/icons-material/Edit'
 
 const RowFlex = styled('div')(({ theme }) => ({
   display: 'flex',
   width: '100%',
+  alignItems: 'cetner',
   justifyContent: 'space-evenly',
-  color: theme.palette.secondary.main,
   border: '2px solid white',
 }))
 interface Props {
   label: string
   value: number | string | undefined | null
+  isAdmin: boolean
   onEdit: (value: string) => unknown
 }
-export function DataDisplayWithEdit({ label, value, onEdit }: Props) {
+export function DataDisplayWithEdit({ label, value, onEdit, isAdmin }: Props) {
   const [editMode, setEditMode] = useState(false)
   const [newValue, setNewValue] = useState(value)
   useEffect(() => {
@@ -32,8 +34,10 @@ export function DataDisplayWithEdit({ label, value, onEdit }: Props) {
   }
   return (
     <RowFlex>
-      <Typography>{label}</Typography>
-      {editMode ? (
+      <Typography color="primary" fontWeight="500">
+        {label}
+      </Typography>
+      {editMode && isAdmin ? (
         <TextField
           value={newValue}
           onChange={(e) => setNewValue(e.target.value)}
@@ -41,9 +45,11 @@ export function DataDisplayWithEdit({ label, value, onEdit }: Props) {
       ) : (
         <Typography>{newValue ?? 'وارد نشده'}</Typography>
       )}
-      <Button onClick={() => handleEditButtonClick()}>
-        {editMode ? 'ذخیره' : 'ویرایش'}
-      </Button>
+      {isAdmin ? (
+        <Button onClick={() => handleEditButtonClick()}>
+          {editMode ? 'ذخیره' : <EditIcon />}
+        </Button>
+      ) : null}
       {editMode ? (
         <Button onClick={handleCancelEdit} color="error">
           انصراف

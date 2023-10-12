@@ -1,30 +1,18 @@
-import {
-  Button,
-  FormControlLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  TextField,
-  Typography,
-} from '@mui/material'
-import { DatePicker } from '@mui/x-date-pickers'
+import { FormControlLabel, MenuItem, Radio, RadioGroup } from '@mui/material'
 import { Dayjs } from 'dayjs'
 import { useState } from 'react'
 import axios from 'axios'
-
-interface User {
-  id: string
-  username: string
-}
+import { ContainedButton, DatePicker, TextField } from '../common'
+import { User } from '../../models/user'
+import { PersianTexts } from '../../persianTexts'
 
 interface Props {
-  users: User[]
+  users: Partial<User>[]
 }
 
 export function SubmitTransaction({ users }: Props) {
   const [username, setUsername] = useState<string>()
-  const [date, setDate] = useState<Dayjs | null>()
+  const [date, setDate] = useState<Dayjs | null | unknown>()
   const [type, setType] = useState<string>('in')
   const [amount, setAmount] = useState<string>()
   const [unit, setUnit] = useState<string>('rial')
@@ -40,71 +28,61 @@ export function SubmitTransaction({ users }: Props) {
     })
   }
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '20px',
-      }}
-    >
-      <Typography>ثبت تراکنش مالی</Typography>
-
-      <div>
-        <TextField
-          select
-          sx={{ width: '200px' }}
-          value={username}
-          label="نام کاربری"
-          onChange={(e) => setUsername(e.target.value)}
-        >
-          {users.map((u) => (
-            <MenuItem value={u.id}>{u.username}</MenuItem>
-          ))}
-        </TextField>
-      </div>
-      <DatePicker
-        label="تاریخ"
-        value={date}
-        onChange={(value) => setDate(value)}
-      />
+    <div>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
         value={type}
         onChange={(e) => setType(e.target.value)}
+        sx={{ padding: '10px' }}
       >
         <FormControlLabel value="in" control={<Radio />} label="واریز" />
         <FormControlLabel value="out" control={<Radio />} label="برداشت" />
       </RadioGroup>
-      <div>
+      <div style={{ width: '100%' }}>
         <TextField
-          label="مبلغ"
+          select
+          value={username}
+          label={PersianTexts.username}
+          onChange={(e) => setUsername(e.target.value)}
+        >
+          {users.map((u) => (
+            <MenuItem value={u.username}>{u.username}</MenuItem>
+          ))}
+        </TextField>
+      </div>
+      <DatePicker
+        label={PersianTexts.date}
+        value={date}
+        onChange={(value) => setDate(value)}
+      />
+      <div style={{ width: '100%', flexDirection: 'row', display: 'flex' }}>
+        <TextField
+          label={PersianTexts.amount}
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+        <TextField
+          select
           value={unit}
           onChange={(e) => setUnit(e.target.value)}
         >
-          <MenuItem value="rial">ریال</MenuItem>
-          <MenuItem value="derham">درهم</MenuItem>
-          <MenuItem value="dollar">دلار</MenuItem>
-          <MenuItem value="euro">یورو</MenuItem>
-        </Select>
+          <MenuItem value="rial">{PersianTexts.rial}</MenuItem>
+          <MenuItem value="derham">{PersianTexts.derham}</MenuItem>
+          <MenuItem value="dollar">{PersianTexts.dollar}</MenuItem>
+          <MenuItem value="euro">{PersianTexts.euro}</MenuItem>
+        </TextField>
       </div>
       <TextField
         multiline
-        label="توضیحات"
+        label={PersianTexts.description}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <Button variant="contained" onClick={handleSubmitTransaction}>
-        ثبت
-      </Button>
+      <ContainedButton variant="contained" onClick={handleSubmitTransaction}>
+        {PersianTexts.submit}
+      </ContainedButton>
     </div>
   )
 }

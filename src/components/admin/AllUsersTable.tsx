@@ -8,40 +8,62 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import { PersianTexts } from '../../persianTexts'
+import { User } from '../../models/user'
 
 interface Props {
   selectUser: (id: string) => unknown
-  users: { username: string; id: string }[]
+  users: Partial<User>[]
 }
 
 export function AllUsersTable({ selectUser, users }: Props) {
   return (
-    <TableContainer sx={{ width: '700px' }}>
+    <TableContainer>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>نام کاربری</TableCell>
+            <TableCell></TableCell>
+            <TableCell>
+              <Typography fontWeight="600" color="primary">
+                {PersianTexts.username}
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography fontWeight="600" color="primary">
+                {PersianTexts.firstname}
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography fontWeight="600" color="primary">
+                {PersianTexts.lastname}
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {users.length > 0 ? (
-            users.map((u: { username: string; id: string }) => (
+            users.map((u) => (
               <TableRow key={u.username}>
-                <TableCell
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <Typography>{u.username}</Typography>
-                  <Button onClick={() => selectUser(u.id)}>مشاهده</Button>
+                <TableCell>
+                  <Button onClick={() => selectUser(u.id ?? '')}>
+                    <VisibilityIcon />
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Typography fontWeight="700">{u.username}</Typography>
+                </TableCell>
+
+                <TableCell>
+                  <Typography>{u.firstname ?? PersianTexts.empty}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>{u.lastname ?? PersianTexts.empty}</Typography>
                 </TableCell>
               </TableRow>
             ))
           ) : (
-            <Typography>هنوز کاربری ساخته نشده است</Typography>
+            <Typography>{PersianTexts.thereIsNoUserYet}</Typography>
           )}
         </TableBody>
       </Table>
