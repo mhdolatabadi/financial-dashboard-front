@@ -1,12 +1,9 @@
-import { useState } from 'react'
 import './App.css'
 import { AdminPage } from './pages/AdminPage'
-import { LoginPage } from './pages/LoginPage'
 import { AppBar, Toolbar, Typography } from '@mui/material'
 
 enum Page {
   login,
-  user,
   admin,
 }
 
@@ -26,7 +23,7 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-      {currentPage === Page.login ? <LoginPage /> : null}
+      {/* {currentPage === Page.login ? <LoginPage /> : null} */}
       {currentPage === Page.admin ? <AdminPage /> : null}
     </div>
   )
