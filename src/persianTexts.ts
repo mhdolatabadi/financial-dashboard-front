@@ -26,4 +26,7 @@ export enum PersianTexts {
   submitProfit = 'ثبت سود',
   unit = 'واحد',
   transactionType = 'نوع (واریز یا برداشت)',
+  enter = 'ورود',
+  successfullLogin = 'با موفقیت وارد شدید',
+  wrongCredential = 'نام کاربری یا رمز عبور اشتباه است',
 }

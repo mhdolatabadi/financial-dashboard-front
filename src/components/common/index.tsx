@@ -25,26 +25,14 @@ export const ContainedButton = styled(Button)(() => ({
   fontSize: '18px',
 }))
 
-export function Section({
-  children,
-}: {
-  children: ReactElement[] | ReactElement
-}) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '20px',
-        border: '1px solid #88888849',
-        borderRadius: '20px',
-        boxSizing: 'border-box',
-        margin: '20px 0',
-      }}
-    >
-      {children}
-    </div>
-  )
-}
+export const Section = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '30px',
+  border: '1px solid #88888849',
+  borderRadius: '20px',
+  boxSizing: 'border-box',
+  margin: '20px 0',
+}))

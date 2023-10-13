@@ -2518,6 +2518,11 @@
   dependencies:
     "@types/jest" "*"
 
+"@types/toastify-js@^1.12.1":
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/@types/toastify-js/-/toastify-js-1.12.1.tgz#64f89dc8d34b3d8d0998267530dbd4c86c3f3cf4"
+  integrity sha512-9CTM+LKFmS0+Ii+RH55XPKcmNxCjLticj8kxeCxa7PnSVCZPQurb9XtKQtoMl/fv7WaqUpRezDcFuY8n92CtUg==
+
 "@types/trusted-types@^2.0.2":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.4.tgz#2b38784cd16957d3782e8e2b31c03bc1d13b4d65"
@@ -9254,6 +9259,11 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
+
+toastify-js@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/toastify-js/-/toastify-js-1.12.0.tgz#cc1c4f5c7e7380e854e20bedceb51980ea29f64d"
+  integrity sha512-HeMHCO9yLPvP9k0apGSdPUWrUbLnxUKNFzgUoZp1PHCLploIX/4DSQ7V8H25ef+h4iO9n0he7ImfcndnN6nDrQ==
 
 toidentifier@1.0.1:
   version "1.0.1"

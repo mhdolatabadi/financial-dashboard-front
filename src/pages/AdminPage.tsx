@@ -14,16 +14,23 @@ import { User } from '../models/user'
 import { Section } from '../components/common'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { PersianTexts } from '../persianTexts'
+import { Page } from '../App'
 
-export function AdminPage() {
+interface Props {
+  handleChangePage: (page: Page) => unknown
+}
+
+export function AdminPage({ handleChangePage }: Props) {
   const [selectedUser, setSelectedUser] = useState<string>()
   const [users, setUsers] = useState<Partial<User>[]>([])
   const [selectedTab, setSelectedTab] = useState<string>('1')
   const isAdmin = true
   useEffect(() => {
-    axios.get('http://localhost:3456/user').then((res) => {
-      setUsers(res.data)
-    })
+    axios
+      .get('http://localhost:3456/user', { headers: { authorization: '' } })
+      .then((res) => {
+        setUsers(res.data)
+      })
   }, [])
   const handleCreateUser = ({
     username,
