@@ -84,8 +84,23 @@ export function TransactionsTable({ userId }: Props) {
                 )
               )
             ) : (
+<<<<<<< HEAD
               <div style={{ padding: "20px", width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
                 <Typography fontWeight="600">{PersianTexts.thereIsNoTransactionYet}</Typography>
+=======
+              <div
+                style={{
+                  padding: "20px",
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "row",
+                }}
+              >
+                <Typography fontWeight="600">
+                  {PersianTexts.thereIsNoTransactionYet}
+                </Typography>
+>>>>>>> bbadac5 (Complete login process)
               </div>
             )}
           </TableBody>
