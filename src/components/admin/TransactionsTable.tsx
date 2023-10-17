@@ -10,7 +10,6 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { PersianTexts } from "../../persianTexts";
-import { Section } from "../common";
 import { SectionWithHeader } from "../common/SectionWithHeader";
 import { unitToPersian } from "../../utils/unitToPersian";
 import { transactionTypeConverter } from "../../utils/transactionTypeConverter";
@@ -84,10 +83,6 @@ export function TransactionsTable({ userId }: Props) {
                 )
               )
             ) : (
-<<<<<<< HEAD
-              <div style={{ padding: "20px", width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-                <Typography fontWeight="600">{PersianTexts.thereIsNoTransactionYet}</Typography>
-=======
               <div
                 style={{
                   padding: "20px",
@@ -100,7 +95,6 @@ export function TransactionsTable({ userId }: Props) {
                 <Typography fontWeight="600">
                   {PersianTexts.thereIsNoTransactionYet}
                 </Typography>
->>>>>>> bbadac5 (Complete login process)
               </div>
             )}
           </TableBody>
