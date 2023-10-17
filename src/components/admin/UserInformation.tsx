@@ -1,41 +1,39 @@
-import { Stack, Typography, styled } from '@mui/material'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { DataDisplayWithEdit } from '../common/DataDisplayWithEdit'
-import { Section } from '../common'
-import { PersianTexts } from '../../persianTexts'
-import { User } from '../../models/user'
+import { Stack, Typography, styled } from "@mui/material";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { DataDisplayWithEdit } from "../common/DataDisplayWithEdit";
+import { PersianTexts } from "../../persianTexts";
+import { User } from "../../models/user";
+import { SectionWithHeader } from "../common/SectionWithHeader";
+import { unitToPersian } from "../../utils/unitToPersian";
 
 const DataFieldRow = styled(Stack)(() => ({
-  flexDirection: 'row',
-  justifyContent: 'space-evenly',
-  width: '100%',
-}))
+  flexDirection: "row",
+  justifyContent: "space-evenly",
+  width: "100%",
+}));
 
 interface Props {
-  id: string
-  isAdmin: boolean
+  id: string;
+  isAdmin: boolean;
 }
 export function UserInformation({ id, isAdmin }: Props) {
-  const [user, setUser] = useState<Partial<User>>()
+  const [user, setUser] = useState<Partial<User>>();
 
   useEffect(() => {
     axios.get(`http://localhost:3456/user/${id}`).then((res) => {
-      console.log(res)
-      setUser(res.data)
-    })
-  }, [id])
+      console.log(res);
+      setUser(res.data);
+    });
+  }, [id]);
 
   const handleEditUser = (partialUser: Partial<User>) => {
-    axios.put(`http://localhost:3456/user/${id}`, partialUser)
-    setUser({ ...user, ...partialUser })
-  }
+    axios.put(`http://localhost:3456/user/${id}`, partialUser);
+    setUser({ ...user, ...partialUser });
+  };
 
   return (
-    <Section>
-      <Typography color="primary" fontWeight="600">
-        {PersianTexts.userInformation}
-      </Typography>
+    <SectionWithHeader header={PersianTexts.userInformation}>
       <DataFieldRow>
         <DataDisplayWithEdit
           isAdmin={isAdmin}
@@ -70,16 +68,27 @@ export function UserInformation({ id, isAdmin }: Props) {
         <DataDisplayWithEdit
           isAdmin={isAdmin}
           label={PersianTexts.lastTransactionDate}
-          value={Date.now().toString()}
-          onEdit={() => console.log('edited')}
+          value={
+            user?.lastTransactionDate
+              ? Intl.DateTimeFormat("fa-IR")
+                  .format(new Date(user?.lastTransactionDate))
+                  .toString()
+              : PersianTexts.thereIsNoTransactionYet
+          }
         />
         <DataDisplayWithEdit
           isAdmin={isAdmin}
           label={PersianTexts.totalFinance}
-          value={user?.financial}
-          onEdit={() => console.log('edited')}
+          value={
+            user?.financial && user?.unit
+              ? `${Intl.NumberFormat("fa-IR").format(
+                  +user?.financial
+                )} ${unitToPersian(user?.unit)}`
+              : undefined
+          }
+          onEdit={(financial) => handleEditUser({ financial: +financial })}
         />
       </DataFieldRow>
-    </Section>
-  )
+    </SectionWithHeader>
+  );
 }

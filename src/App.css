@@ -1,6 +1,9 @@
 .App {
   text-align: center;
-  padding: 100px 200px;
+  padding: 100px 400px;
+
+  background: linear-gradient(to right, #00566f, #00566f, #0aa);
+  height: 100%;
 }
 
 .App-logo {

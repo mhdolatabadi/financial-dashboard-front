@@ -11,4 +11,5 @@ export interface User extends LoginInformation {
   unit: string | undefined
   totalProfit: number | undefined
   isAdmin: boolean
+  lastTransactionDate: number
 }

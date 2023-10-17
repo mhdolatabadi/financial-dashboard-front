@@ -1,4 +1,4 @@
-import { Tab } from '@mui/material'
+import { Tab } from "@mui/material";
 import {
   CreateUser,
   SubmitProfit,
@@ -6,41 +6,58 @@ import {
   ProfitsTable,
   TransactionsTable,
   UserInformation,
-} from '../components/admin'
-import { AllUsersTable } from '../components/admin/AllUsersTable'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { User } from '../models/user'
-import { Section } from '../components/common'
-import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { PersianTexts } from '../persianTexts'
-import { Page } from '../App'
+} from "../components/admin";
+import { AllUsersTable } from "../components/admin/AllUsersTable";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { User } from "../models/user";
+import { Section } from "../components/common";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { PersianTexts } from "../persianTexts";
+import { Page } from "../App";
 
 interface Props {
-  handleChangePage: (page: Page) => unknown
+  username: string | undefined;
+  accessToken: string | undefined;
+  handleChangePage: (
+    page: Page,
+    username: string,
+    accessToken: string
+  ) => unknown;
 }
 
-export function AdminPage({ handleChangePage }: Props) {
-  const [selectedUser, setSelectedUser] = useState<string>()
-  const [users, setUsers] = useState<Partial<User>[]>([])
-  const [selectedTab, setSelectedTab] = useState<string>('1')
-  const isAdmin = true
+export function AdminPage({ username, accessToken, handleChangePage }: Props) {
+  const [selectedUser, setSelectedUser] = useState<string>();
+  const [users, setUsers] = useState<Partial<User>[]>([]);
+  const [selectedTab, setSelectedTab] = useState<string>("1");
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   useEffect(() => {
     axios
-      .get('http://localhost:3456/user', { headers: { authorization: '' } })
-      .then((res) => {
-        setUsers(res.data)
+      .get(`http://localhost:3456/user/username/${username}`, {
+        headers: { authorization: "" },
       })
-  }, [])
+      .then((res) => {
+        setSelectedUser(res.data.id);
+        console.log(res.data);
+        setIsAdmin(res.data.isAdmin);
+      });
+    if (isAdmin) {
+      axios
+        .get("http://localhost:3456/user", { headers: { authorization: "" } })
+        .then((res) => {
+          setUsers(res.data);
+        });
+    }
+  }, [username, isAdmin]);
   const handleCreateUser = ({
     username,
     password,
   }: {
-    username: string
-    password: string
+    username: string;
+    password: string;
   }) => {
     axios
-      .post('http://localhost:3456/user', {
+      .post("http://localhost:3456/user", {
         username,
         password,
       })
@@ -54,11 +71,11 @@ export function AdminPage({ handleChangePage }: Props) {
             firstname: undefined,
             lastname: undefined,
           },
-        ])
-      })
-  }
+        ]);
+      });
+  };
   return (
-    <div style={{ width: '100%', padding: '30px 0 0' }}>
+    <div style={{ width: "100%", padding: "30px 0 0" }}>
       {isAdmin ? (
         <Section>
           <TabContext value={selectedTab}>
@@ -66,10 +83,23 @@ export function AdminPage({ handleChangePage }: Props) {
               onChange={(e, value) => setSelectedTab(value)}
               aria-label="basic tabs example"
             >
-              <Tab label={PersianTexts.usersList} value="1" />
-              <Tab label={PersianTexts.createNewUser} value="2" />
-              <Tab label={PersianTexts.submitTransaction} value="3" />
-              <Tab label={PersianTexts.submitProfit} value="4" />
+              <Tab
+                label={PersianTexts.usersList}
+                value="1"
+              />
+              <Tab
+                label={PersianTexts.createNewUser}
+                value="2"
+              />
+              <Tab
+                label={PersianTexts.submitTransaction}
+                value="3"
+              />
+
+              <Tab
+                label={PersianTexts.submitProfit}
+                value="4"
+              />
             </TabList>
 
             <TabPanel value="1">
@@ -96,5 +126,5 @@ export function AdminPage({ handleChangePage }: Props) {
       {selectedUser ? <TransactionsTable userId={selectedUser} /> : null}
       {selectedUser ? <ProfitsTable userId={selectedUser} /> : null}
     </div>
-  )
+  );
 }

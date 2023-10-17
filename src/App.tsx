@@ -1,8 +1,8 @@
-import './App.css'
-import { AdminPage } from './pages/AdminPage'
-import { AppBar, Toolbar, Typography } from '@mui/material'
-import { LoginPage } from './pages/LoginPage'
-import { useState } from 'react'
+import "./App.css";
+import { AdminPage } from "./pages/AdminPage";
+import { AppBar, Toolbar, Typography } from "@mui/material";
+import { LoginPage } from "./pages/LoginPage";
+import { useState } from "react";
 
 export enum Page {
   login,
@@ -10,20 +10,32 @@ export enum Page {
 }
 
 function App() {
-  const [currentPage, setCurrentPage] = useState(Page.login)
-  const handleChangePage = (page: Page) => {
-    setCurrentPage(page)
-  }
+  const [currentPage, setCurrentPage] = useState(Page.login);
+  const [username, setUsername] = useState<string>();
+  const [accessToken, setAccessToken] = useState<string>();
+  const handleChangePage = (
+    page: Page,
+    username: string | undefined,
+    accessToken: string
+  ) => {
+    setCurrentPage(page);
+    setUsername(username);
+    setAccessToken(accessToken);
+  };
   return (
     <div className="App">
       <AppBar
         sx={{
-          padding: '20px',
-          background: 'linear-gradient(to right, #00566f, #00566f, #0aa)',
+          padding: "20px",
+          backgroundColor: "white",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
         }}
       >
+        <img alt="dornico" width="50px" height="50px" src="/dornico.svg" />
         <Toolbar>
-          <Typography fontSize="30px">
+          <Typography fontSize="20px" color="primary" fontWeight="700">
             صندوق سرمایه‌گذاری خصوصی درنیکو
           </Typography>
         </Toolbar>
@@ -32,10 +44,14 @@ function App() {
         <LoginPage handleChangePage={handleChangePage} />
       ) : null}
       {currentPage === Page.admin ? (
-        <AdminPage handleChangePage={handleChangePage} />
+        <AdminPage
+          username={username}
+          accessToken={accessToken}
+          handleChangePage={handleChangePage}
+        />
       ) : null}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -8,6 +8,8 @@ export enum PersianTexts {
   totalFinance = 'دارایی فعلی در صندوق',
   empty = 'وارد نشده',
   thereIsNoUserYet = 'هنوز کاربری ساخته نشده است',
+  thereIsNoTransactionYet = 'تراکنشی ثبت نشده است',
+  thereIsNotProfitYet = 'سودی ثبت نشده است',
   createNewUser = 'ساخت کاربر جدید',
   create = 'ساخت',
   userInformation = 'اطلاعات کاربر',
@@ -29,4 +31,6 @@ export enum PersianTexts {
   enter = 'ورود',
   successfullLogin = 'با موفقیت وارد شدید',
   wrongCredential = 'نام کاربری یا رمز عبور اشتباه است',
+  profitTable = 'جدول سودها',
+  transactionTable = 'جدول تراکنش‌ها'
 }

@@ -1,70 +1,50 @@
-import { MenuItem } from '@mui/material'
-import { Dayjs } from 'dayjs'
-import { useState } from 'react'
-import axios from 'axios'
-import { TextField, DatePicker, ContainedButton } from '../common'
-import { User } from '../../models/user'
-import { PersianTexts } from '../../persianTexts'
+import dayjs from "dayjs";
+import { useState } from "react";
+import axios from "axios";
+import { TextField, DatePicker, ContainedButton } from "../common";
+import { User } from "../../models/user";
+import { PersianTexts } from "../../persianTexts";
+import { UsernameSelect } from "./UsernameSelect";
+import { AmountUnitTextField } from "./AmountUnitTextField";
 
 interface Props {
-  users: Partial<User>[]
+  users: Partial<User>[];
 }
 
 export function SubmitProfit({ users }: Props) {
-  const [username, setUsername] = useState<string>()
-  const [date, setDate] = useState<Dayjs | null | unknown>()
-  const [amount, setAmount] = useState<string>()
-  const [unit, setUnit] = useState<string>('rial')
-  const [description, setDescription] = useState<string>()
+  const [username, setUsername] = useState<string>();
+  const [date, setDate] = useState<number>(new Date().getTime());
+  const [amount, setAmount] = useState<number>();
+  const [unit, setUnit] = useState<string>("rial");
+  const [description, setDescription] = useState<string>();
   const handleSubmitTransaction = () => {
-    axios.post('http://localhost:3456/profit', {
+    axios.post("http://localhost:3456/profit", {
       username,
-      date,
+      date: new Date(date),
       amount,
       unit,
       description,
-    })
-  }
+    });
+  };
   return (
     <div>
-      <div style={{ width: '100%' }}>
-        <TextField
-          select
-          sx={{ width: '100%' }}
-          label={PersianTexts.username}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        >
-          {users.map((u) => (
-            <MenuItem value={u.id}>{u.username}</MenuItem>
-          ))}
-        </TextField>
-      </div>
+      <UsernameSelect
+        username={username}
+        users={users}
+        onChange={(e) => setUsername(e.target.value)}
+      />
       <DatePicker
         label={PersianTexts.date}
-        value={date}
-        onChange={(value) => setDate(value)}
+        value={dayjs(date)}
+        onChange={(value) => setDate(dayjs(value).valueOf())}
       />
-      <div style={{ display: 'flex', width: '100%' }}>
-        <TextField
-          sx={{ width: '100%' }}
-          label={PersianTexts.amount}
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-        <TextField
-          select
-          value={unit}
-          onChange={(e) => setUnit(e.target.value)}
-        >
-          <MenuItem value="rial">{PersianTexts.rial}</MenuItem>
-          <MenuItem value="derham">{PersianTexts.derham}</MenuItem>
-          <MenuItem value="dollar">{PersianTexts.dollar}</MenuItem>
-          <MenuItem value="euro">{PersianTexts.euro}</MenuItem>
-        </TextField>
-      </div>
+      <AmountUnitTextField
+        unit={unit}
+        onAmountChange={(e) => setAmount(+e.target.value)}
+        amount={amount}
+        onUnitChange={(e) => setUnit(e.target.value)}
+      />
       <TextField
-        sx={{ width: '100%' }}
         multiline
         label={PersianTexts.description}
         value={description}
@@ -74,5 +54,5 @@ export function SubmitProfit({ users }: Props) {
         {PersianTexts.submit}
       </ContainedButton>
     </div>
-  )
+  );
 }
