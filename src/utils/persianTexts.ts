@@ -30,7 +30,8 @@ export enum PersianTexts {
   transactionType = 'نوع (واریز یا برداشت)',
   enter = 'ورود',
   successfullLogin = 'با موفقیت وارد شدید',
+  successful = 'با موفقیت ثبت شد',
   wrongCredential = 'نام کاربری یا رمز عبور اشتباه است',
   profitTable = 'جدول سودها',
-  transactionTable = 'جدول تراکنش‌ها'
+  transactionTable = 'جدول تراکنش‌ها',
 }

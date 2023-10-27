@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material";
-import { Section } from ".";
-import { ReactElement } from "react";
+import { Typography } from '@mui/material'
+import { Section } from '.'
+import { ReactElement } from 'react'
 
 interface Props {
-  header: string;
-  children: ReactElement | ReactElement[];
+  header: string
+  children: ReactElement | ReactElement[]
 }
 
 export function SectionWithHeader({ children, header }: Props) {
@@ -12,11 +12,11 @@ export function SectionWithHeader({ children, header }: Props) {
     <Section>
       <div
         style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          flexDirection: "row",
-          width: "100%",
-          marginBottom: "15px",
+          display: 'flex',
+          justifyContent: 'flex-start',
+          flexDirection: 'row',
+          width: '100%',
+          marginBottom: '15px',
         }}
       >
         <Typography color="primary" fontSize="20px" fontWeight="600">
@@ -25,5 +25,5 @@ export function SectionWithHeader({ children, header }: Props) {
       </div>
       {children}
     </Section>
-  );
+  )
 }

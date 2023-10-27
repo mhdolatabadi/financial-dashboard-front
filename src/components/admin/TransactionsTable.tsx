@@ -6,26 +6,27 @@ import {
   TableHead,
   TableRow,
   Typography,
-} from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { PersianTexts } from "../../persianTexts";
-import { SectionWithHeader } from "../common/SectionWithHeader";
-import { unitToPersian } from "../../utils/unitToPersian";
-import { transactionTypeConverter } from "../../utils/transactionTypeConverter";
+} from '@mui/material'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { PersianTexts } from '../../utils/persianTexts'
+import { SectionWithHeader } from '../common/SectionWithHeader'
+import { unitToPersian } from '../../utils/unitToPersian'
+import { transactionTypeConverter } from '../../utils/transactionTypeConverter'
+import { getUserTransactions } from '../../utils/dataManipulation'
 
 interface Props {
-  userId: string;
+  userId: string
 }
 
 export function TransactionsTable({ userId }: Props) {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([])
   useEffect(() => {
-    axios.get(`http://localhost:3456/transaction/${userId}`).then((res) => {
-      setUsers(res.data);
-      console.log(res.data);
-    });
-  }, [userId]);
+    getUserTransactions(userId).then((res) => {
+      setUsers(res.data)
+      console.log(res.data)
+    })
+  }, [userId])
   return (
     <SectionWithHeader header={PersianTexts.transactionTable}>
       <TableContainer>
@@ -63,33 +64,33 @@ export function TransactionsTable({ userId }: Props) {
             {users.length > 0 ? (
               users.map(
                 (u: {
-                  date: string;
-                  type: string;
-                  amount: string;
-                  unit: string;
-                  description: string;
+                  date: string
+                  type: string
+                  amount: string
+                  unit: string
+                  description: string
                 }) => (
                   <TableRow key={u.date}>
                     <TableCell>
-                      {Intl.DateTimeFormat("fa-IR").format(new Date(u?.date))}
+                      {Intl.DateTimeFormat('fa-IR').format(new Date(u?.date))}
                     </TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("fa-IR").format(+u?.amount)}
+                      {Intl.NumberFormat('fa-IR').format(+u?.amount)}
                     </TableCell>
                     <TableCell>{unitToPersian(u?.unit)}</TableCell>
                     <TableCell>{u?.description}</TableCell>
                     <TableCell>{transactionTypeConverter(u?.type)}</TableCell>
                   </TableRow>
-                )
+                ),
               )
             ) : (
               <div
                 style={{
-                  padding: "20px",
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "row",
+                  padding: '20px',
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexDirection: 'row',
                 }}
               >
                 <Typography fontWeight="600">
@@ -101,5 +102,5 @@ export function TransactionsTable({ userId }: Props) {
         </Table>
       </TableContainer>
     </SectionWithHeader>
-  );
+  )
 }

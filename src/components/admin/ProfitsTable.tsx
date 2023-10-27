@@ -6,27 +6,28 @@ import {
   TableHead,
   TableRow,
   Typography,
-} from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { PersianTexts } from "../../persianTexts";
-import { SectionWithHeader } from "../common/SectionWithHeader";
-import { unitToPersian } from "../../utils/unitToPersian";
+} from '@mui/material'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { PersianTexts } from '../../utils/persianTexts'
+import { SectionWithHeader } from '../common/SectionWithHeader'
+import { unitToPersian } from '../../utils/unitToPersian'
+import { getUserProfits } from '../../utils/dataManipulation'
 
 interface Props {
-  userId: string;
+  userId: string
 }
 
 export function ProfitsTable({ userId }: Props) {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([])
   useEffect(() => {
-    axios.get(`http://localhost:3456/profit/${userId}`).then((res) => {
-      setUsers(res.data);
-    });
-  }, [userId]);
+    getUserProfits(userId).then((res) => {
+      setUsers(res.data)
+    })
+  }, [userId])
   return (
     <SectionWithHeader header={PersianTexts.profitTable}>
-      <TableContainer sx={{ width: "100%", bgcolor: "white" }}>
+      <TableContainer sx={{ width: '100%', bgcolor: 'white' }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -56,31 +57,31 @@ export function ProfitsTable({ userId }: Props) {
             {users.length > 0 ? (
               users.map(
                 (u: {
-                  date: string;
-                  amount: string;
-                  unit: string;
-                  description: string;
+                  date: string
+                  amount: string
+                  unit: string
+                  description: string
                 }) => (
                   <TableRow key={u.date}>
                     <TableCell>
-                      {Intl.DateTimeFormat("fa-IR").format(new Date(u.date))}
+                      {Intl.DateTimeFormat('fa-IR').format(new Date(u.date))}
                     </TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("fa-IR").format(+u.amount)}
+                      {Intl.NumberFormat('fa-IR').format(+u.amount)}
                     </TableCell>
                     <TableCell>{unitToPersian(u.unit)}</TableCell>
                     <TableCell>{u.description}</TableCell>
                   </TableRow>
-                )
+                ),
               )
             ) : (
               <div
                 style={{
-                  padding: "20px",
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "row",
+                  padding: '20px',
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexDirection: 'row',
                 }}
               >
                 <Typography fontWeight="600">
@@ -92,5 +93,5 @@ export function ProfitsTable({ userId }: Props) {
         </Table>
       </TableContainer>
     </SectionWithHeader>
-  );
+  )
 }

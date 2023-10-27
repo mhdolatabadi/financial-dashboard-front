@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import { useState } from 'react'
-import { PersianTexts } from '../../persianTexts'
+import { PersianTexts } from '../../utils/persianTexts'
 import { ContainedButton, TextField } from '../common'
 
 interface Props {
@@ -18,20 +18,23 @@ export function CreateUser({ handleCreateUser }: Props) {
   const [password, setPassword] = useState('')
 
   return (
-    <div>
-      <Typography color="primary" fontWeight="700">
+
+    <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%'}}>
+      {/* <Typography color="primary" fontWeight="700">
         {PersianTexts.createNewUser}
-      </Typography>
-      <TextField
-        label={PersianTexts.username}
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <TextField
-        label={PersianTexts.password}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      </Typography> */}
+      <div style={{ margin: '20px 0 40px' }}>
+        <TextField
+          label={PersianTexts.username}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextField
+          label={PersianTexts.password}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
       <ContainedButton
         variant="contained"
         onClick={() => handleCreateUser({ username, password })}

@@ -1,8 +1,8 @@
-import "./App.css";
-import { AdminPage } from "./pages/AdminPage";
-import { AppBar, Toolbar, Typography } from "@mui/material";
-import { LoginPage } from "./pages/LoginPage";
-import { useState } from "react";
+import './App.css'
+import { AdminPage } from './pages/AdminPage'
+import { AppBar, Toolbar, Typography } from '@mui/material'
+import { LoginPage } from './pages/LoginPage'
+import { useState } from 'react'
 
 export enum Page {
   login,
@@ -10,27 +10,27 @@ export enum Page {
 }
 
 function App() {
-  const [currentPage, setCurrentPage] = useState(Page.login);
-  const [username, setUsername] = useState<string>();
-  const [accessToken, setAccessToken] = useState<string>();
+  const [currentPage, setCurrentPage] = useState(Page.login)
+  const [username, setUsername] = useState<string>('')
+  const [accessToken, setAccessToken] = useState<string>('')
   const handleChangePage = (
     page: Page,
-    username: string | undefined,
-    accessToken: string
+    username: string,
+    accessToken: string,
   ) => {
-    setCurrentPage(page);
-    setUsername(username);
-    setAccessToken(accessToken);
-  };
+    setCurrentPage(page)
+    setUsername(username)
+    setAccessToken(accessToken)
+  }
   return (
     <div className="App">
       <AppBar
         sx={{
-          padding: "20px",
-          backgroundColor: "white",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
+          padding: '20px',
+          backgroundColor: 'white',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
         }}
       >
         <img alt="dornico" width="50px" height="50px" src="/dornico.svg" />
@@ -51,7 +51,7 @@ function App() {
         />
       ) : null}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

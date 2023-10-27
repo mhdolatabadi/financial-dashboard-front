@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import { PersianTexts } from '../../persianTexts'
+import { PersianTexts } from '../../utils/persianTexts'
 import { User } from '../../models/user'
 
 interface Props {
@@ -19,8 +19,8 @@ interface Props {
 
 export function AllUsersTable({ selectUser, users }: Props) {
   return (
-    <TableContainer>
-      <Table>
+    <TableContainer sx={{ height: '100%', overflowY: 'auto'}}>
+      <Table stickyHeader>
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
@@ -41,13 +41,13 @@ export function AllUsersTable({ selectUser, users }: Props) {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ overflowY: 'scroll', height: '100%' }}>
           {users.length > 0 ? (
             users.map((u) => (
               <TableRow key={u.username}>
-                <TableCell>
-                  <Button onClick={() => selectUser(u.id ?? '')}>
-                    <VisibilityIcon />
+                <TableCell sx={{ width: '10px', padding: 0}}>
+                  <Button onClick={() => selectUser(u.id ?? '')} sx={{ minWidth: 0}}>
+                    <VisibilityIcon sx={{ width: '15px', height: '15px'}} />
                   </Button>
                 </TableCell>
                 <TableCell>
