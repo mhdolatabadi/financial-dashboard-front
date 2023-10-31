@@ -40,6 +40,8 @@ export function SubmitTransaction({ users }: Props) {
         justifyContent: 'space-between',
         flexDirection: 'column',
         height: '100%',
+        padding: '0 300px',
+        boxSizing: 'border-box'
       }}
     >
       <div>

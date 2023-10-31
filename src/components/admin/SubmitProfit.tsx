@@ -31,7 +31,16 @@ export function SubmitProfit({ users }: Props) {
     })
   }
   return (
-    <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%'}}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        height: '100%',
+        padding: '0 300px',
+        boxSizing: 'border-box',
+      }}
+    >
       <div>
         <UsernameSelect
           username={username}

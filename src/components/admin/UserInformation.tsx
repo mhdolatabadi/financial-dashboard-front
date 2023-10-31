@@ -22,13 +22,12 @@ export function UserInformation({ id, isAdmin }: Props) {
 
   useEffect(() => {
     getUserWithId(id).then((res) => {
-      console.log(res)
       setUser(res.data)
     })
   }, [id])
 
   const handleEditUser = (partialUser: Partial<User>) => {
-    updateUserInformation(partialUser)
+    updateUserInformation(id, partialUser)
     setUser({ ...user, ...partialUser })
   }
 
@@ -44,7 +43,7 @@ export function UserInformation({ id, isAdmin }: Props) {
         <DataDisplayWithEdit
           isAdmin={isAdmin}
           label={PersianTexts.nationalNo}
-          value={user?.nationalNo}
+          value={user?.nationalNo ? Intl.NumberFormat('fa-IR', {useGrouping: false}).format(user?.nationalNo ?? 0) : undefined}
           onEdit={(nationalNo) =>
             handleEditUser({ nationalNo: Number(nationalNo) })
           }

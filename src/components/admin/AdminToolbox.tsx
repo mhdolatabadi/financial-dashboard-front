@@ -12,11 +12,10 @@ import { SuccessToast } from '../common/SuccessToast'
 import { User } from '../../models/user'
 
 const StyledTabPanel = styled(TabPanel)(() => ({
-    height: '400px',
     padding: '10px 30px',
     boxSizing: 'border-box',
     width: '100%',
-    margin: '10px 0 0'
+    margin: '10px 0 0',
 }))
 
 interface Props {

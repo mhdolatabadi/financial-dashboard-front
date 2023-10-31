@@ -8,7 +8,7 @@ export function getUserWithUsername(username: string) {
 }
 
 export function getUserWithId(id: string) {
-  return getRequest(`/user/username/${id}`, {
+  return getRequest(`/user/${id}`, {
     headers: { Authorization: '' },
   })
 }
@@ -30,8 +30,8 @@ export function createUser(username: string, password: string) {
   )
 }
 
-export function updateUserInformation(user: Partial<User>) {
-  return putRequest('/user/${id}', user, { headers: { Authorization: '' } })
+export function updateUserInformation(id: string, user: Partial<User>) {
+  return putRequest(`/user/${id}`, user, { headers: { Authorization: '' } })
 }
 
 export function loginUser(username: string, password: string) {
