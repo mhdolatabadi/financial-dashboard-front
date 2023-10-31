@@ -1,5 +1,5 @@
 import { User } from '../models/user'
-import { getRequest, postRequest, putRequest } from './request'
+import { deleteRequest, getRequest, postRequest, putRequest } from './request'
 
 export function getUserWithUsername(username: string) {
   return getRequest(`/user/username/${username}`, {
@@ -34,6 +34,10 @@ export function updateUserInformation(id: string, user: Partial<User>) {
   return putRequest(`/user/${id}`, user, { headers: { Authorization: '' } })
 }
 
+export function deleteUser(id: string) {
+  return deleteRequest(`/user/${id}`, { headers: { Authorization: '' } })
+}
+
 export function loginUser(username: string, password: string) {
   return postRequest('/auth/login', { username, password })
 }
@@ -49,7 +53,6 @@ export function submitTransaction(transaction: unknown) {
     headers: { Authorization: '' },
   })
 }
-
 
 export function getUserProfits(userId: string) {
   return getRequest(`/profit/${userId}`, {

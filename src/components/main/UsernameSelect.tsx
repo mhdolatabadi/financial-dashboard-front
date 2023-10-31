@@ -1,6 +1,6 @@
 import { MenuItem } from '@mui/material'
 import { PersianTexts } from '../../utils/persianTexts'
-import { TextField } from '../common'
+import { TextField } from '../common/TextField'
 import { User } from '../../models/user'
 
 interface Props {

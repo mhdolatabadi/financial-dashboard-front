@@ -1,4 +1,4 @@
-import { PersianTexts } from '../../utils/persianTexts'
+import { PersianTexts } from '../../../utils/persianTexts'
 import Toastify from 'toastify-js'
 
 export const ErrorToast = Toastify({

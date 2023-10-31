@@ -7,26 +7,30 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { PersianTexts } from '../../utils/persianTexts'
 import { SectionWithHeader } from '../common/SectionWithHeader'
 import { unitToPersian } from '../../utils/unitToPersian'
 import { getUserProfits } from '../../utils/dataManipulation'
+import { useSelector } from 'react-redux'
+import { selectedUserIdView } from '../../pages/selected-user.slice'
+import { Paid } from '@mui/icons-material'
 
-interface Props {
-  userId: string
-}
-
-export function ProfitsTable({ userId }: Props) {
+export function ProfitsTable() {
   const [users, setUsers] = useState([])
+  const userId = useSelector(selectedUserIdView)
   useEffect(() => {
-    getUserProfits(userId).then((res) => {
-      setUsers(res.data)
-    })
+    getUserProfits(userId)
+      .then((res) => {
+        setUsers(res.data)
+      })
+      .catch(console.warn)
   }, [userId])
   return (
-    <SectionWithHeader header={PersianTexts.profitTable}>
+    <SectionWithHeader
+      header={PersianTexts.profitTable}
+      Icon={<Paid color="primary" />}
+    >
       <TableContainer sx={{ width: '100%', bgcolor: 'white' }}>
         <Table>
           <TableHead>

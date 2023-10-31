@@ -5,9 +5,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMomentJalaali } from '@mui/x-date-pickers/AdapterMomentJalaali'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { cacheRtl, theme } from './theme'
+import { cacheRtl, theme } from './setup/theme/theme'
 import './index.css'
 import 'dayjs/locale/fa'
+import { ReduxProvider } from './setup/store'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -15,7 +16,9 @@ root.render(
     <LocalizationProvider dateAdapter={AdapterMomentJalaali} adapterLocale="fa">
       <CacheProvider value={cacheRtl}>
         <ThemeProvider theme={theme}>
-          <App />
+          <ReduxProvider>
+            <App />
+          </ReduxProvider>
         </ThemeProvider>
       </CacheProvider>
     </LocalizationProvider>

@@ -4,12 +4,12 @@ export interface LoginInformation {
 }
 export interface User extends LoginInformation {
   id: string
-  firstname: string | undefined
-  lastname: string | undefined
-  nationalNo: number | undefined
-  financial: number | undefined
-  unit: string | undefined
-  totalProfit: number | undefined
+  firstname?: string 
+  lastname?: string
+  nationalNo?: number
+  financial?: number
+  unit: string
+  totalProfit?: number
   isAdmin: boolean
-  lastTransactionDate: number
+  lastTransactionDate?: number
 }

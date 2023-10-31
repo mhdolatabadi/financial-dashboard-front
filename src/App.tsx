@@ -1,27 +1,14 @@
 import './App.css'
-import { AdminPage } from './pages/AdminPage'
+import { MainPage } from './pages/MainPage'
 import { AppBar, Toolbar, Typography } from '@mui/material'
 import { LoginPage } from './pages/LoginPage'
-import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { currentPageView } from './pages/main.slice'
+import { Page } from './models/Page'
 
-export enum Page {
-  login,
-  admin,
-}
 
 function App() {
-  const [currentPage, setCurrentPage] = useState(Page.login)
-  const [username, setUsername] = useState<string>('')
-  const [accessToken, setAccessToken] = useState<string>('')
-  const handleChangePage = (
-    page: Page,
-    username: string,
-    accessToken: string,
-  ) => {
-    setCurrentPage(page)
-    setUsername(username)
-    setAccessToken(accessToken)
-  }
+  const currentPage = useSelector(currentPageView)
   return (
     <div className="App">
       <AppBar
@@ -40,16 +27,19 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-      {currentPage === Page.login ? (
-        <LoginPage handleChangePage={handleChangePage} />
-      ) : null}
-      {currentPage === Page.admin ? (
-        <AdminPage
-          username={username}
-          accessToken={accessToken}
-          handleChangePage={handleChangePage}
-        />
-      ) : null}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        {currentPage === Page.login && <LoginPage />}
+        {currentPage === Page.admin && <MainPage />}
+      </div>
     </div>
   )
 }

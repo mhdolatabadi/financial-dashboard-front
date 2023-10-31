@@ -7,28 +7,31 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { PersianTexts } from '../../utils/persianTexts'
 import { SectionWithHeader } from '../common/SectionWithHeader'
 import { unitToPersian } from '../../utils/unitToPersian'
 import { transactionTypeConverter } from '../../utils/transactionTypeConverter'
 import { getUserTransactions } from '../../utils/dataManipulation'
+import { useSelector } from 'react-redux'
+import { selectedUserIdView } from '../../pages/selected-user.slice'
+import { Receipt } from '@mui/icons-material'
 
-interface Props {
-  userId: string
-}
-
-export function TransactionsTable({ userId }: Props) {
+export function TransactionsTable() {
   const [users, setUsers] = useState([])
+  const userId = useSelector(selectedUserIdView)
   useEffect(() => {
-    getUserTransactions(userId).then((res) => {
-      setUsers(res.data)
-      console.log(res.data)
-    })
+    getUserTransactions(userId)
+      .then((res) => {
+        setUsers(res.data)
+      })
+      .catch(console.warn)
   }, [userId])
   return (
-    <SectionWithHeader header={PersianTexts.transactionTable}>
+    <SectionWithHeader
+      header={PersianTexts.transactionTable}
+      Icon={<Receipt color="primary" />}
+    >
       <TableContainer>
         <Table>
           <TableHead>
@@ -50,12 +53,12 @@ export function TransactionsTable({ userId }: Props) {
               </TableCell>
               <TableCell>
                 <Typography fontWeight="600" color="primary">
-                  {PersianTexts.description}
+                  {PersianTexts.transactionType}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography fontWeight="600" color="primary">
-                  {PersianTexts.transactionType}
+                  {PersianTexts.description}
                 </Typography>
               </TableCell>
             </TableRow>
@@ -78,8 +81,8 @@ export function TransactionsTable({ userId }: Props) {
                       {Intl.NumberFormat('fa-IR').format(+u?.amount)}
                     </TableCell>
                     <TableCell>{unitToPersian(u?.unit)}</TableCell>
-                    <TableCell>{u?.description}</TableCell>
                     <TableCell>{transactionTypeConverter(u?.type)}</TableCell>
+                    <TableCell>{u?.description}</TableCell>
                   </TableRow>
                 ),
               )

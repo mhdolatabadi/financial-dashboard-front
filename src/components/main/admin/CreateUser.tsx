@@ -1,16 +1,11 @@
-import { Typography } from '@mui/material'
 import { useState } from 'react'
-import { PersianTexts } from '../../utils/persianTexts'
-import { ContainedButton, TextField } from '../common'
+import { PersianTexts } from '../../../utils/persianTexts'
+import { TextField } from '../../common/TextField'
+import { ContainedButton } from '../../common'
+import { Credential } from '../../../models/Credential'
 
 interface Props {
-  handleCreateUser: ({
-    username,
-    password,
-  }: {
-    username: string
-    password: string
-  }) => unknown
+  handleCreateUser: ({ username, password }: Credential) => unknown
 }
 
 export function CreateUser({ handleCreateUser }: Props) {
@@ -18,11 +13,15 @@ export function CreateUser({ handleCreateUser }: Props) {
   const [password, setPassword] = useState('')
 
   return (
-
-    <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%', padding: '0 300px', boxSizing: 'border-box'}}>
-      {/* <Typography color="primary" fontWeight="700">
-        {PersianTexts.createNewUser}
-      </Typography> */}
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        height: '100%',
+        boxSizing: 'border-box',
+      }}
+    >
       <div style={{ margin: '20px 0 40px' }}>
         <TextField
           label={PersianTexts.username}

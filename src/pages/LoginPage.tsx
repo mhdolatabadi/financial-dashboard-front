@@ -1,30 +1,27 @@
-import axios from 'axios'
 import { useState } from 'react'
-import { ContainedButton, Section, TextField } from '../components/common'
 import { PersianTexts } from '../utils/persianTexts'
-import { Page } from '../App'
-import { SuccessToast } from '../components/common/SuccessToast'
-import { ErrorToast } from '../components/common/ErrorToast'
-import { loginUser } from '../utils/dataManipulation'
+import { SuccessToast } from '../components/common/toast/SuccessToast'
+import { ErrorToast } from '../components/common/toast/ErrorToast'
+import { getUserWithUsername, loginUser } from '../utils/dataManipulation'
+import { ContainedButton, Section, TextField } from '../components/common'
+import { useDispatch } from 'react-redux'
+import { setAccessToken, setCurrentPage } from './main.slice'
+import { Page } from '../models/Page'
+import { setCurrentIsAdmin, setCurrentUser, setCurrentUsername } from './current-user.slice'
+import { setSelectedUser, setSelectedUsername } from './selected-user.slice'
 
-interface Props {
-  handleChangePage: (
-    page: Page,
-    username: string,
-    accessToken: string,
-  ) => unknown
-}
-
-export function LoginPage({ handleChangePage }: Props) {
-  const [username, setUsername] = useState<string>('')
+export function LoginPage() {
+  const [username, setUsernameState] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [accessToken, setAccessToken] = useState<string>()
+  const dispatch = useDispatch()
   const loginHandler = () => {
     loginUser(username, password)
       .then(({ data }) => {
-        setAccessToken(data.access_token)
+        dispatch(setCurrentPage(Page.admin))
+        dispatch(setAccessToken(data.access_token))
+        dispatch(setCurrentIsAdmin(data.isAdmin))
+        dispatch(setSelectedUsername(username))
         SuccessToast(PersianTexts.successfullLogin).showToast()
-        handleChangePage(Page.admin, username, data.access_token)
       })
       .catch(() => {
         ErrorToast.showToast()
@@ -36,7 +33,7 @@ export function LoginPage({ handleChangePage }: Props) {
       <div style={{ marginBottom: '20px', width: '100%' }}>
         <TextField
           label={PersianTexts.username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsernameState(e.target.value)}
         />
         <TextField
           label={PersianTexts.password}
