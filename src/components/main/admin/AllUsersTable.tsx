@@ -15,7 +15,7 @@ import { Delete } from '@mui/icons-material'
 import { deleteUser } from '../../../utils/dataManipulation'
 import { SuccessToast } from '../../common/toast/SuccessToast'
 import { useDispatch } from 'react-redux'
-import { setSelectedUsername } from '../../../pages/selected-user.slice'
+import { setSelectedUsername } from '../../../pages/main/selected-user.slice'
 
 interface Props {
   users: User[]

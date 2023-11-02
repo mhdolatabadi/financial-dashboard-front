@@ -14,7 +14,7 @@ import { unitToPersian } from '../../utils/unitToPersian'
 import { transactionTypeConverter } from '../../utils/transactionTypeConverter'
 import { getUserTransactions } from '../../utils/dataManipulation'
 import { useSelector } from 'react-redux'
-import { selectedUserIdView } from '../../pages/selected-user.slice'
+import { selectedUserIdView } from '../../pages/main/selected-user.slice'
 import { Receipt } from '@mui/icons-material'
 
 export function TransactionsTable() {
@@ -33,39 +33,29 @@ export function TransactionsTable() {
       Icon={<Receipt color="primary" />}
     >
       <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <Typography fontWeight="600" color="primary">
-                  {PersianTexts.date}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography fontWeight="600" color="primary">
-                  {PersianTexts.amount}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography fontWeight="600" color="primary">
-                  {PersianTexts.unit}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography fontWeight="600" color="primary">
-                  {PersianTexts.transactionType}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography fontWeight="600" color="primary">
-                  {PersianTexts.description}
-                </Typography>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users.length > 0 ? (
-              users.map(
+        {users.length > 0 ? (
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Typography fontWeight="600" color="primary">
+                    {PersianTexts.date}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography fontWeight="600" color="primary">
+                    {PersianTexts.amount}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography fontWeight="600" color="primary">
+                    {PersianTexts.description}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users.map(
                 (u: {
                   date: string
                   type: string
@@ -77,32 +67,37 @@ export function TransactionsTable() {
                     <TableCell>
                       {Intl.DateTimeFormat('fa-IR').format(new Date(u?.date))}
                     </TableCell>
+
                     <TableCell>
-                      {Intl.NumberFormat('fa-IR').format(+u?.amount)}
+                      <Typography
+                        color={u.type === 'in' ? 'success.main' : 'error'}
+                      >
+                        {`${u.type === 'in' ? '+' : '-'} ${Intl.NumberFormat(
+                          'fa-IR',
+                        ).format(+u.amount)} ${unitToPersian(u.unit)}`}
+                      </Typography>
                     </TableCell>
-                    <TableCell>{unitToPersian(u?.unit)}</TableCell>
-                    <TableCell>{transactionTypeConverter(u?.type)}</TableCell>
                     <TableCell>{u?.description}</TableCell>
                   </TableRow>
                 ),
-              )
-            ) : (
-              <div
-                style={{
-                  padding: '20px',
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                }}
-              >
-                <Typography fontWeight="600">
-                  {PersianTexts.thereIsNoTransactionYet}
-                </Typography>
-              </div>
-            )}
-          </TableBody>
-        </Table>
+              )}
+            </TableBody>
+          </Table>
+        ) : (
+          <div
+            style={{
+              padding: '20px',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}
+          >
+            <Typography fontWeight="600">
+              {PersianTexts.thereIsNoTransactionYet}
+            </Typography>
+          </div>
+        )}
       </TableContainer>
     </SectionWithHeader>
   )

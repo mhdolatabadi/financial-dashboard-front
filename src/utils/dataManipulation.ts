@@ -30,7 +30,7 @@ export function createUser(username: string, password: string) {
   )
 }
 
-export function updateUserInformation(id: string, user: Partial<User>) {
+export function updateUserInformation(id: string, user: User) {
   return putRequest(`/user/${id}`, user, { headers: { Authorization: '' } })
 }
 

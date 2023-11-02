@@ -6,7 +6,7 @@ export interface User extends LoginInformation {
   id: string
   firstname?: string 
   lastname?: string
-  nationalNo?: number
+  nationalNo?: string
   financial?: number
   unit: string
   totalProfit?: number

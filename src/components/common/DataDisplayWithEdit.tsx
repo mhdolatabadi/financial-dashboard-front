@@ -17,8 +17,8 @@ const RowFlex = styled('div')(({ theme }) => ({
 }))
 interface Props {
   label: string
-  value: number | string | undefined | null
-  editMode: boolean
+  value: string | undefined
+  editMode?: boolean
   onEdit?: (value: string) => unknown
 }
 export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
@@ -26,6 +26,10 @@ export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
   useEffect(() => {
     setNewValue(value)
   }, [value])
+
+  useEffect(() => {
+    if (onEdit && newValue) onEdit(newValue)
+  }, [newValue])
   return (
     <RowFlex>
       <div
@@ -34,7 +38,7 @@ export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
           flexDirection: 'column',
           width: '100%',
           margin: '15px 0 10px',
-          height: '40px'
+          height: '40px',
         }}
       >
         <div
@@ -42,7 +46,7 @@ export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginBottom: '10px'
+            marginBottom: '10px',
           }}
         >
           <Typography
@@ -58,7 +62,11 @@ export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
               {value}
             </Typography>
           ) : (
-            <TextField size="small" />
+            <TextField
+              size="small"
+              value={newValue}
+              onChange={(e) => setNewValue(e.target.value)}
+            />
           )}
         </div>
         {!editMode && <Divider />}

@@ -29,9 +29,11 @@ export function SubmitProfit({ users }: Props) {
       amount,
       unit,
       description,
-    }).then(() => {
-      SuccessToast(PersianTexts.successful).showToast()
-    }).catch(console.warn)
+    })
+      .then(() => {
+        SuccessToast(PersianTexts.successful).showToast()
+      })
+      .catch(console.warn)
   }
   return (
     <div

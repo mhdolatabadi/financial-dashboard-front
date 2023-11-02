@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { User } from '../models/user'
-import { RootState } from '../setup/store'
+import { User } from '../../models/user'
+import { RootState } from '../../setup/store'
 
 const currentUserSlice = createSlice({
   name: 'currentUser',
@@ -10,7 +10,7 @@ const currentUserSlice = createSlice({
     password: '',
     firstname: '',
     lastname: '',
-    nationalNo: 0,
+    nationalNo: '',
     financial: 0,
     lastTransactionDate: 0,
     isAdmin: false,
@@ -61,3 +61,5 @@ export const currentUsernameView = (state: RootState) =>
   state.currentUser.username
 export const currentIsAdminView = (state: RootState) =>
   state.currentUser.isAdmin
+export const currentUserView = (state: RootState) =>
+  state.currentUser

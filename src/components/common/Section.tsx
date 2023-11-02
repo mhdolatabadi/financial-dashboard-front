@@ -1,7 +1,7 @@
 import { styled } from '@mui/material'
 
 export const Section = styled('div')(() => ({
-  minWidth: '400px',
+  minWidth: '500px',
   maxWidth: '1200px',
   backgroundColor: 'white',
   display: 'flex',
@@ -12,4 +12,5 @@ export const Section = styled('div')(() => ({
   boxShadow: '3px 3px 20px #000a',
   margin: '20px',
   alignItems: 'flex-start',
+  maxHeight: '700px',
 }))

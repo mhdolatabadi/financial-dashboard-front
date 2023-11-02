@@ -1,16 +1,16 @@
 import { Box, Button, Typography } from '@mui/material'
 import { ReactElement, ReactNode } from 'react'
 import { Section } from './Section'
-import { JsxElement } from 'typescript'
 
 interface Props {
   header: string
   children: ReactElement | ReactElement[] | ReactNode[]
-  onEdit?: () => unknown
+  action?: string
   Icon?: JSX.Element
+  onAction?: () => unknown
 }
 
-export function SectionWithHeader({ children, header, Icon, onEdit }: Props) {
+export function SectionWithHeader({ children, header, Icon, onAction, action }: Props) {
   return (
     <Section>
       <Box
@@ -46,7 +46,7 @@ export function SectionWithHeader({ children, header, Icon, onEdit }: Props) {
             {header}
           </Typography>
         </div>
-        {onEdit && <Button>ویرایش</Button>}
+        {onAction && action && <Button onClick={onAction}>{action}</Button>}
       </Box>
       {children}
     </Section>
