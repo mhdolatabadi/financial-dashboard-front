@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { User } from '../models/user'
-import { RootState } from '../setup/store'
+import { User } from '../../models/user'
+import { RootState } from '../../settings/store'
 
 const currentUserSlice = createSlice({
   name: 'currentUser',
@@ -10,12 +10,12 @@ const currentUserSlice = createSlice({
     password: '',
     firstname: '',
     lastname: '',
-    nationalNo: 0,
+    nationalNo: '',
     financial: 0,
     lastTransactionDate: 0,
     isAdmin: false,
     unit: '',
-    totalProfit: 0,
+    totalProfit: 0
   } as User,
   reducers: {
     setCurrentUsername: (state, action) => {
@@ -32,7 +32,7 @@ const currentUserSlice = createSlice({
         lastTransactionDate,
         isAdmin,
         unit,
-        totalProfit,
+        totalProfit
       } = action.payload
       state.id = id
       state.username = username
@@ -47,8 +47,8 @@ const currentUserSlice = createSlice({
     },
     setCurrentIsAdmin: (state, action) => {
       state.isAdmin = action.payload
-    },
-  },
+    }
+  }
 })
 
 const { actions, reducer } = currentUserSlice
@@ -61,3 +61,5 @@ export const currentUsernameView = (state: RootState) =>
   state.currentUser.username
 export const currentIsAdminView = (state: RootState) =>
   state.currentUser.isAdmin
+export const currentUserView = (state: RootState) =>
+  state.currentUser

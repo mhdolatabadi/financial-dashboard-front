@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { PersianTexts } from '../../../utils/persianTexts'
-import { TextField } from '../../common/TextField'
+import { TextField } from '../../common'
 import { ContainedButton } from '../../common'
 import { Credential } from '../../../models/Credential'
 
@@ -19,7 +19,7 @@ export function CreateUser({ handleCreateUser }: Props) {
         justifyContent: 'space-between',
         flexDirection: 'column',
         height: '100%',
-        boxSizing: 'border-box',
+        boxSizing: 'border-box'
       }}
     >
       <div style={{ margin: '20px 0 40px' }}>
@@ -35,7 +35,7 @@ export function CreateUser({ handleCreateUser }: Props) {
         />
       </div>
       <ContainedButton
-        variant="contained"
+        variant='contained'
         onClick={() => handleCreateUser({ username, password })}
       >
         {PersianTexts.create}

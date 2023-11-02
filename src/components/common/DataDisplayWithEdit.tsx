@@ -1,31 +1,30 @@
-import {
-  Button,
-  Divider,
-  Skeleton,
-  TextField,
-  Typography,
-  styled,
-} from '@mui/material'
+import { Divider, styled, TextField, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-const RowFlex = styled('div')(({ theme }) => ({
+const RowFlex = styled('div')(() => ({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-evenly',
   flexDirection: 'row',
-  border: '2px solid white',
+  border: '2px solid white'
 }))
+
 interface Props {
   label: string
-  value: number | string | undefined | null
-  editMode: boolean
+  value: string | undefined
+  editMode?: boolean
   onEdit?: (value: string) => unknown
 }
+
 export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
   const [newValue, setNewValue] = useState(value)
   useEffect(() => {
     setNewValue(value)
   }, [value])
+
+  useEffect(() => {
+    if (onEdit && newValue) onEdit(newValue)
+  }, [newValue])
   return (
     <RowFlex>
       <div
@@ -46,19 +45,23 @@ export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
           }}
         >
           <Typography
-            color="primary"
-            fontWeight="500"
-            fontSize="15px"
-            textAlign="left"
+            color='primary'
+            fontWeight='500'
+            fontSize='15px'
+            textAlign='left'
           >
             {label}
           </Typography>
           {!editMode ? (
-            <Typography fontWeight="500" color="#000d">
+            <Typography fontWeight='500' color='#000d'>
               {value}
             </Typography>
           ) : (
-            <TextField size="small" />
+            <TextField
+              size='small'
+              value={newValue}
+              onChange={(e) => setNewValue(e.target.value)}
+            />
           )}
         </div>
         {!editMode && <Divider />}

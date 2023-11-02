@@ -1,6 +1,6 @@
 import { MenuItem } from '@mui/material'
 import { PersianTexts } from '../../utils/persianTexts'
-import { TextField } from '../common/TextField'
+import { TextField } from '../common'
 
 interface Props {
   amount: number | undefined
@@ -10,11 +10,11 @@ interface Props {
 }
 
 export function AmountUnitTextField({
-  amount,
-  onAmountChange,
-  unit,
-  onUnitChange,
-}: Props) {
+                                      amount,
+                                      onAmountChange,
+                                      unit,
+                                      onUnitChange
+                                    }: Props) {
   return (
     <div style={{ display: 'flex', width: '100%' }}>
       <TextField
@@ -29,10 +29,10 @@ export function AmountUnitTextField({
         onChange={onUnitChange}
         sx={{ width: '150px', marginLeft: '20px' }}
       >
-        <MenuItem value="rial">{PersianTexts.rial}</MenuItem>
-        <MenuItem value="derham">{PersianTexts.derham}</MenuItem>
-        <MenuItem value="dollar">{PersianTexts.dollar}</MenuItem>
-        <MenuItem value="euro">{PersianTexts.euro}</MenuItem>
+        <MenuItem value='rial'>{PersianTexts.rial}</MenuItem>
+        <MenuItem value='derham'>{PersianTexts.derham}</MenuItem>
+        <MenuItem value='dollar'>{PersianTexts.dollar}</MenuItem>
+        <MenuItem value='euro'>{PersianTexts.euro}</MenuItem>
       </TextField>
     </div>
   )

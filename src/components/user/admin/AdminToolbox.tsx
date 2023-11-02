@@ -1,16 +1,12 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { Divider, Tab, styled } from '@mui/material'
+import { styled, Tab } from '@mui/material'
 import { CreateUser } from './CreateUser'
 import { PersianTexts } from '../../../utils/persianTexts'
 import { AllUsersTable } from './AllUsersTable'
 import { SubmitTransaction } from './SubmitTransaction'
 import { SubmitProfit } from './SubmitProfit'
 import { useEffect, useState } from 'react'
-import {
-  createUser,
-  getAllUsers,
-  getUserWithUsername,
-} from '../../../utils/dataManipulation'
+import { createUser, getAllUsers, getUserWithUsername } from '../../../utils/dataManipulation'
 import { User } from '../../../models/user'
 import { Section, SuccessToast } from '../../common'
 import { Credential } from '../../../models/Credential'
@@ -18,12 +14,14 @@ import { Credential } from '../../../models/Credential'
 const StyledTabPanel = styled(TabPanel)(() => ({
   padding: 0,
   boxSizing: 'border-box',
+
   width: '100%',
   height: '100%',
+
   minWidth: '500px',
   maxWidth: '500px',
   minHeight: '500px',
-  maxHeight: '500px',
+  maxHeight: '500px'
 }))
 
 export function AdminToolbox() {
@@ -39,7 +37,7 @@ export function AdminToolbox() {
   }, [])
 
   const handleCreateUser = ({ username, password }: Credential) => {
-    createUser(username, password).then((res) => {
+    createUser(username, password).then(() => {
       SuccessToast(PersianTexts.successful).showToast()
       getUserWithUsername(username)
         .then((res) => {
@@ -58,22 +56,22 @@ export function AdminToolbox() {
             sx={{ width: '100%', marginBottom: '20px' }}
             onChange={(e, value) => setSelectedTab(value)}
           >
-            <Tab disableRipple label={PersianTexts.usersList} value="1" />
-            <Tab label={PersianTexts.createNewUser} value="2" />
-            <Tab label={PersianTexts.submitTransaction} value="3" />
+            <Tab disableRipple label={PersianTexts.usersList} value='1' />
+            <Tab label={PersianTexts.createNewUser} value='2' />
+            <Tab label={PersianTexts.submitTransaction} value='3' />
 
-            <Tab label={PersianTexts.submitProfit} value="4" />
+            <Tab label={PersianTexts.submitProfit} value='4' />
           </TabList>
-          <StyledTabPanel value="1">
+          <StyledTabPanel value='1'>
             <AllUsersTable users={users} />
           </StyledTabPanel>
-          <StyledTabPanel value="2">
+          <StyledTabPanel value='2'>
             <CreateUser handleCreateUser={handleCreateUser} />
           </StyledTabPanel>
-          <StyledTabPanel value="3">
+          <StyledTabPanel value='3'>
             <SubmitTransaction users={users} />
           </StyledTabPanel>
-          <StyledTabPanel value="4">
+          <StyledTabPanel value='4'>
             <SubmitProfit users={users} />
           </StyledTabPanel>
         </TabContext>

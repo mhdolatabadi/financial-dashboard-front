@@ -1,14 +1,12 @@
 import { useState } from 'react'
-import { PersianTexts } from '../utils/persianTexts'
-import { SuccessToast } from '../components/common/toast/SuccessToast'
-import { ErrorToast } from '../components/common/toast/ErrorToast'
-import { getUserWithUsername, loginUser } from '../utils/dataManipulation'
-import { ContainedButton, Section, TextField } from '../components/common'
+import { PersianTexts } from '../../utils/persianTexts'
+import { ContainedButton, ErrorToast, Section, SuccessToast, TextField } from '../../components/common'
+import { loginUser } from '../../utils/dataManipulation'
 import { useDispatch } from 'react-redux'
-import { setAccessToken, setCurrentPage } from './main.slice'
-import { Page } from '../models/Page'
-import { setCurrentIsAdmin, setCurrentUser, setCurrentUsername } from './current-user.slice'
-import { setSelectedUser, setSelectedUsername } from './selected-user.slice'
+import { setAccessToken, setCurrentPage } from '../user/main.slice'
+import { Page } from '../../models/Page'
+import { setCurrentIsAdmin, setCurrentUsername } from '../user/current-user.slice'
+import { setSelectedUsername } from '../user/selected-user.slice'
 
 export function LoginPage() {
   const [username, setUsernameState] = useState<string>('')
@@ -21,6 +19,7 @@ export function LoginPage() {
         dispatch(setAccessToken(data.access_token))
         dispatch(setCurrentIsAdmin(data.isAdmin))
         dispatch(setSelectedUsername(username))
+        dispatch(setCurrentUsername(username))
         SuccessToast(PersianTexts.successfullLogin).showToast()
       })
       .catch(() => {
@@ -38,10 +37,10 @@ export function LoginPage() {
         <TextField
           label={PersianTexts.password}
           onChange={(e) => setPassword(e.target.value)}
-          type="password"
+          type='password'
         />
       </div>
-      <ContainedButton variant="contained" onClick={loginHandler}>
+      <ContainedButton variant='contained' onClick={loginHandler}>
         {PersianTexts.enter}
       </ContainedButton>
     </Section>

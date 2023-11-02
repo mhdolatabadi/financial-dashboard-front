@@ -1,4 +1,5 @@
 export enum PersianTexts {
+  edit = 'ویرایش',
   username = 'نام کاربری',
   password = 'رمز عبور',
   firstname = 'نام',

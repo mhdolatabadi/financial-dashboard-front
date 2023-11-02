@@ -6,6 +6,6 @@ export const DatePicker = styled(MuiDatePicker<Moment>)(() => ({
   margin: '10px 0',
   width: '100%',
   '&>div': {
-    borderRadius: '20px',
-  },
+    borderRadius: '20px'
+  }
 }))

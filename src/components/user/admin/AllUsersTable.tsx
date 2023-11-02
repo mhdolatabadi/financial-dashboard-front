@@ -1,21 +1,12 @@
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material'
+import { Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { PersianTexts } from '../../../utils/persianTexts'
 import { User } from '../../../models/user'
 import { Delete } from '@mui/icons-material'
 import { deleteUser } from '../../../utils/dataManipulation'
-import { SuccessToast } from '../../common/toast/SuccessToast'
+import { SuccessToast } from '../../common'
 import { useDispatch } from 'react-redux'
-import { setSelectedUsername } from '../../../pages/selected-user.slice'
+import { setSelectedUsername } from '../../../pages/user/selected-user.slice'
 
 interface Props {
   users: User[]
@@ -49,7 +40,7 @@ export function AllUsersTable({ users }: Props) {
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Typography fontWeight="700">{u.username}</Typography>
+                  <Typography fontWeight='700'>{u.username}</Typography>
                 </TableCell>
 
                 <TableCell>
@@ -64,7 +55,7 @@ export function AllUsersTable({ users }: Props) {
                     onClick={() => (u.id ? handleDeleteUser(u.id) : null)}
                     sx={{ minWidth: 0 }}
                   >
-                    <Delete color="error" />
+                    <Delete color='error' />
                   </Button>
                 </TableCell>
               </TableRow>

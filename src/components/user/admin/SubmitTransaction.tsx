@@ -1,34 +1,33 @@
+import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { useState } from 'react'
 import { User } from '../../../models/user'
 import { PersianTexts } from '../../../utils/persianTexts'
 import { UsernameSelect } from '../UsernameSelect'
 import { AmountUnitTextField } from '../AmountUnitTextField'
-import { submitProfit } from '../../../utils/dataManipulation'
+import { submitTransaction } from '../../../utils/dataManipulation'
+import { SuccessToast } from '../../common'
 import moment from 'moment-jalaali'
-import {
-  ContainedButton,
-  DatePicker,
-  SuccessToast,
-  TextField,
-} from '../../common'
+import { ContainedButton, DatePicker, TextField } from '../../common'
 
 interface Props {
   users: Partial<User>[]
 }
 
-export function SubmitProfit({ users }: Props) {
+export function SubmitTransaction({ users }: Props) {
   const [username, setUsername] = useState<string>()
   const [date, setDate] = useState<number>(new Date().getTime())
+  const [type, setType] = useState<string>('in')
   const [amount, setAmount] = useState<number>()
   const [unit, setUnit] = useState<string>('rial')
   const [description, setDescription] = useState<string>()
   const handleSubmitTransaction = () => {
-    submitProfit({
+    submitTransaction({
       username,
       date: new Date(date),
+      type,
       amount,
       unit,
-      description,
+      description
     }).then(() => {
       SuccessToast(PersianTexts.successful).showToast()
     }).catch(console.warn)
@@ -40,7 +39,7 @@ export function SubmitProfit({ users }: Props) {
         justifyContent: 'space-between',
         flexDirection: 'column',
         height: '100%',
-        boxSizing: 'border-box',
+        boxSizing: 'border-box'
       }}
     >
       <div>
@@ -60,6 +59,17 @@ export function SubmitProfit({ users }: Props) {
           amount={amount}
           onUnitChange={(e) => setUnit(e.target.value)}
         />
+        <RadioGroup
+          row
+          aria-labelledby='demo-row-radio-buttons-group-label'
+          name='row-radio-buttons-group'
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          sx={{ padding: '10px' }}
+        >
+          <FormControlLabel value='in' control={<Radio />} label='واریز' />
+          <FormControlLabel value='out' control={<Radio />} label='برداشت' />
+        </RadioGroup>
         <TextField
           multiline
           label={`${PersianTexts.description} (${PersianTexts.optional})`}
@@ -67,7 +77,7 @@ export function SubmitProfit({ users }: Props) {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      <ContainedButton variant="contained" onClick={handleSubmitTransaction}>
+      <ContainedButton variant='contained' onClick={handleSubmitTransaction}>
         {PersianTexts.submit}
       </ContainedButton>
     </div>

@@ -16,10 +16,10 @@ export const SuccessToast = (message: string) => Toastify({
     position: 'absolute',
     width: '300px',
     height: '50px',
-    borderRadius: '10px',
+    borderRadius: '10px'
   },
   offset: {
     y: '120px',
-    x: '20px',
-  },
+    x: '20px'
+  }
 })

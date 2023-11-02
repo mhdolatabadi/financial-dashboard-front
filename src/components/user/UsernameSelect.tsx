@@ -1,15 +1,16 @@
 import { MenuItem } from '@mui/material'
 import { PersianTexts } from '../../utils/persianTexts'
-import { TextField } from '../common/TextField'
+import { TextField } from '../common'
 import { User } from '../../models/user'
 
 interface Props {
   username: string | undefined
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => unknown
   users: Partial<User>[]
 }
+
 export function UsernameSelect({ username, onChange, users }: Props) {
   return (
     <div style={{ width: '100%' }}>
