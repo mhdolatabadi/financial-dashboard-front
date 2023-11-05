@@ -5,18 +5,22 @@ import { RootState } from '../../settings/store'
 const selectedUserSlice = createSlice({
   name: 'selectedUser',
   initialState: {
-    id: '',
-    username: '',
-    password: '',
-    firstname: '',
-    lastname: '',
-    nationalNo: '',
-    financial: 0,
-    lastTransactionDate: 0,
-    isAdmin: false,
-    unit: '',
-    totalProfit: 0
-  } as User,
+    info: {
+      id: '',
+      username: '',
+      password: '',
+      firstname: '',
+      lastname: '',
+      nationalNo: '',
+      financial: 0,
+      lastTransactionDate: 0,
+      isAdmin: false,
+      unit: '',
+      totalProfit: 0,
+    } as User,
+    transactions: [],
+    profits: [],
+  },
   reducers: {
     setSelectedUser: (state, action) => {
       const {
@@ -29,38 +33,51 @@ const selectedUserSlice = createSlice({
         lastTransactionDate,
         isAdmin,
         unit,
-        totalProfit
+        totalProfit,
       } = action.payload
-      state.id = id
-      state.username = username
-      state.firstname = firstname
-      state.lastname = lastname
-      state.isAdmin = isAdmin
-      state.nationalNo = nationalNo
-      state.financial = financial
-      state.lastTransactionDate = lastTransactionDate
-      state.unit = unit
-      state.totalProfit = totalProfit
+      state.info.id = id
+      state.info.username = username
+      state.info.firstname = firstname
+      state.info.lastname = lastname
+      state.info.isAdmin = isAdmin
+      state.info.nationalNo = nationalNo
+      state.info.financial = financial
+      state.info.lastTransactionDate = lastTransactionDate
+      state.info.unit = unit
+      state.info.totalProfit = totalProfit
     },
     setSelectedUsername: (state, action) => {
-      state.username = action.payload
+      state.info.username = action.payload
     },
     setSelectedFirstname: (state, action) => {
-      state.firstname = action.payload
+      state.info.firstname = action.payload
     },
     setSelectedLastname: (state, action) => {
-      state.lastname = action.payload
+      state.info.lastname = action.payload
     },
     setSelectedPassword: (state, action) => {
-      state.password = action.payload
+      state.info.password = action.payload
     },
     setSelectedFinancial: (state, action) => {
-      state.financial = action.payload
+      state.info.financial = action.payload
     },
     setSelectedNationalNo: (state, action) => {
-      state.nationalNo = action.payload
-    }
-  }
+      state.info.nationalNo = action.payload
+    },
+    setSelectedTransactions: (state, action) => {
+      state.transactions = action.payload
+    },
+    // addSelectedTransaction: (state, action) => {
+    //   state.transactions = state.transactions.concat(action.payload)
+    // },
+    setSelectedProfits: (state, action) => {
+      state.profits = []
+      state.profits = action.payload
+    },
+    // addSelectedProfit: (state, action) => {
+    //   state.profits = state.profits.concat(action.payload)
+    // },
+  },
 })
 
 const { actions, reducer } = selectedUserSlice
@@ -74,20 +91,29 @@ export const {
   setSelectedLastname,
   setSelectedNationalNo,
   setSelectedPassword,
-  setSelectedFinancial
+  setSelectedFinancial,
+  setSelectedProfits,
+  setSelectedTransactions,
+  // addSelectedTransaction,
+  // addSelectedProfit
 } = actions
 
-export const selectedUserIdView = (state: RootState) => state.selectedUser.id
+export const selectedUserIdView = (state: RootState) =>
+  state.selectedUser.info.id
 export const selectedUsernameView = (state: RootState) =>
-  state.selectedUser.username
+  state.selectedUser.info.username
 export const selectedFirstnameView = (state: RootState) =>
-  state.selectedUser.firstname
+  state.selectedUser.info.firstname
 export const selectedLastnameView = (state: RootState) =>
-  state.selectedUser.lastname
+  state.selectedUser.info.lastname
 export const selectedNationalNo = (state: RootState) =>
-  state.selectedUser.nationalNo
+  state.selectedUser.info.nationalNo
 export const selectedTotalProfit = (state: RootState) =>
-  state.selectedUser.totalProfit
+  state.selectedUser.info.totalProfit
 export const selectedFinancialView = (state: RootState) =>
-  state.selectedUser.financial
-export const selectedUserView = (state: RootState) => state.selectedUser
+  state.selectedUser.info.financial
+export const selectedUserView = (state: RootState) => state.selectedUser.info
+export const selectedUserTransactionsView = (state: RootState) =>
+  state.selectedUser.transactions
+export const selectedUserProfitsView = (state: RootState) =>
+  state.selectedUser.profits

@@ -1,52 +1,52 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material'
 import { PersianTexts } from '../../utils/persianTexts'
 import { SectionWithHeader } from '../common'
 import { unitToPersian } from '../../utils/unitToPersian'
-import { getUserTransactions } from '../../utils/dataManipulation'
 import { useSelector } from 'react-redux'
-import { selectedUserIdView } from '../../pages/user/selected-user.slice'
+import {
+  selectedUserTransactionsView,
+} from '../../pages/user/selected-user.slice'
 import { Receipt } from '@mui/icons-material'
 
 export function TransactionsTable() {
-  const [users, setUsers] = useState([])
-  const userId = useSelector(selectedUserIdView)
-  useEffect(() => {
-    getUserTransactions(userId)
-      .then((res) => {
-        setUsers(res.data)
-      })
-      .catch(console.warn)
-  }, [userId])
+  const transactions = useSelector(selectedUserTransactionsView)
   return (
     <SectionWithHeader
       header={PersianTexts.transactionTable}
-      Icon={<Receipt color='primary' />}
+      Icon={<Receipt color="primary" />}
     >
       <TableContainer>
-        {users.length > 0 ? (
+        {transactions.length > 0 ? (
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Typography fontWeight='600' color='primary'>
+                  <Typography fontWeight="600" color="primary">
                     {PersianTexts.date}
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography fontWeight='600' color='primary'>
+                  <Typography fontWeight="600" color="primary">
                     {PersianTexts.amount}
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography fontWeight='600' color='primary'>
+                  <Typography fontWeight="600" color="primary">
                     {PersianTexts.description}
                   </Typography>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map(
+              {transactions.map(
                 (u: {
                   date: string
                   type: string
@@ -64,13 +64,13 @@ export function TransactionsTable() {
                         color={u.type === 'in' ? 'success.user' : 'error'}
                       >
                         {`${u.type === 'in' ? '+' : '-'} ${Intl.NumberFormat(
-                          'fa-IR'
+                          'fa-IR',
                         ).format(+u.amount)} ${unitToPersian(u.unit)}`}
                       </Typography>
                     </TableCell>
                     <TableCell>{u?.description}</TableCell>
                   </TableRow>
-                )
+                ),
               )}
             </TableBody>
           </Table>
@@ -78,13 +78,12 @@ export function TransactionsTable() {
           <div
             style={{
               padding: '20px',
-              width: '100%',
               display: 'flex',
               alignItems: 'center',
-              flexDirection: 'row'
+              flexDirection: 'row',
             }}
           >
-            <Typography fontWeight='600'>
+            <Typography fontWeight="600" color="#000a">
               {PersianTexts.thereIsNoTransactionYet}
             </Typography>
           </div>

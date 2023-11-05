@@ -7,6 +7,7 @@ import { Person } from '@mui/icons-material'
 import { UserInformation } from './UserInformation'
 import { updateUserInformation } from '../../utils/dataManipulation'
 import { selectedUserView } from '../../pages/user/selected-user.slice'
+import { UserInformationForm } from './UserInformationForm'
 
 export function UserInformationContainer() {
   const isAdmin = useSelector(currentIsAdminView)
@@ -14,32 +15,18 @@ export function UserInformationContainer() {
 
   const [editMode, setEditMode] = useState(false)
 
-  const handleEditUser = () => {
-    updateUserInformation(selectedUser.id, {
-      ...selectedUser,
-      lastTransactionDate: undefined
-    })
-      .then(() => {
-        SuccessToast(PersianTexts.successful).showToast()
-      })
-      .catch(console.warn)
-      .finally(() => setEditMode(false))
-  }
-
   return (
     <SectionWithHeader
       header={PersianTexts.userInformation}
-      Icon={<Person color='primary' />}
-      action={
-        isAdmin
-          ? editMode
-            ? PersianTexts.submit
-            : PersianTexts.edit
-          : undefined
-      }
-      onAction={editMode ? handleEditUser : () => setEditMode(true)}
+      Icon={<Person color="primary" />}
+      action={isAdmin ? (editMode ? undefined : PersianTexts.edit) : undefined}
+      onAction={editMode ? undefined : () => setEditMode(true)}
     >
-      <UserInformation editMode={editMode} />
+      {editMode ? (
+        <UserInformationForm handleClose={(state) => setEditMode(state)} />
+      ) : (
+        <UserInformation editMode={editMode} />
+      )}
     </SectionWithHeader>
   )
 }

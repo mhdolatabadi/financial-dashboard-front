@@ -35,5 +35,6 @@ export enum PersianTexts {
   wrongCredential = 'نام کاربری یا رمز عبور اشتباه است',
   profitTable = 'جدول سودها',
   transactionTable = 'جدول تراکنش‌ها',
-  optional = 'اختیاری'
+  optional = 'اختیاری',
+  cancel = 'انصراف',
 }

@@ -1,30 +1,20 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
 import { PersianTexts } from '../../utils/persianTexts'
 import { SectionWithHeader } from '../common'
 import { unitToPersian } from '../../utils/unitToPersian'
-import { getUserProfits } from '../../utils/dataManipulation'
 import { useSelector } from 'react-redux'
-import { selectedUserIdView } from '../../pages/user/selected-user.slice'
+import { selectedUserProfitsView } from '../../pages/user/selected-user.slice'
 import { Paid } from '@mui/icons-material'
 
 export function ProfitsTable() {
-  const [users, setUsers] = useState([])
-  const userId = useSelector(selectedUserIdView)
-  useEffect(() => {
-    getUserProfits(userId)
-      .then((res) => {
-        setUsers(res.data)
-      })
-      .catch(console.warn)
-  }, [userId])
+  const profits = useSelector(selectedUserProfitsView)
   return (
     <SectionWithHeader
       header={PersianTexts.profitTable}
       Icon={<Paid color='primary' />}
     >
       <TableContainer sx={{ width: '100%', bgcolor: 'white' }}>
-        {users.length > 0 ? (
+        {profits.length > 0 ? (
           <Table>
             <TableHead>
               <TableRow>
@@ -46,7 +36,7 @@ export function ProfitsTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map(
+              {profits.map(
                 (u: {
                   date: string
                   amount: string

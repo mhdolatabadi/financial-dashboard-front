@@ -1,12 +1,30 @@
-import { Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Typography,
+} from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { PersianTexts } from '../../../utils/persianTexts'
 import { User } from '../../../models/user'
 import { Delete } from '@mui/icons-material'
-import { deleteUser } from '../../../utils/dataManipulation'
+import {
+  deleteUser,
+  getUserProfits,
+  getUserTransactions,
+  getUserWithId,
+  getUserWithUsername,
+} from '../../../utils/dataManipulation'
 import { SuccessToast } from '../../common'
 import { useDispatch } from 'react-redux'
-import { setSelectedUsername } from '../../../pages/user/selected-user.slice'
+import {
+  setSelectedProfits,
+  setSelectedTransactions,
+  setSelectedUser,
+} from '../../../pages/user/selected-user.slice'
 
 interface Props {
   users: User[]
@@ -15,7 +33,15 @@ interface Props {
 export function AllUsersTable({ users }: Props) {
   const dispatch = useDispatch()
   const handleSelectUser = (id: string) => {
-    dispatch(setSelectedUsername(id))
+    getUserWithId(id).then((res) => {
+      dispatch(setSelectedUser(res.data))
+    })
+    getUserTransactions(id).then((res) => {
+      dispatch(setSelectedTransactions(res.data))
+    })
+    getUserProfits(id).then((res) => {
+      dispatch(setSelectedProfits(res.data))
+    })
   }
   const handleDeleteUser = (id: string) => {
     deleteUser(id)
@@ -33,14 +59,14 @@ export function AllUsersTable({ users }: Props) {
               <TableRow key={u.username}>
                 <TableCell sx={{ width: '20px', padding: 0 }}>
                   <Button
-                    onClick={() => handleSelectUser(u.username)}
+                    onClick={() => handleSelectUser(u.id)}
                     sx={{ minWidth: 0 }}
                   >
                     <VisibilityIcon />
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Typography fontWeight='700'>{u.username}</Typography>
+                  <Typography fontWeight="700">{u.username}</Typography>
                 </TableCell>
 
                 <TableCell>
@@ -55,7 +81,7 @@ export function AllUsersTable({ users }: Props) {
                     onClick={() => (u.id ? handleDeleteUser(u.id) : null)}
                     sx={{ minWidth: 0 }}
                   >
-                    <Delete color='error' />
+                    <Delete color="error" />
                   </Button>
                 </TableCell>
               </TableRow>

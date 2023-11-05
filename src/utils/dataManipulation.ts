@@ -6,6 +6,13 @@ export function getUserWithUsername(username: string) {
     headers: { Authorization: '' }
   })
 }
+
+export function getUserWithId(id: string) {
+  return getRequest(`/user/${id}`, {
+    headers: { Authorization: '' },
+  })
+}
+
 export function getAllUsers() {
   return getRequest('/user', {
     headers: { Authorization: '' }
