@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { User } from '../../models/user'
-<<<<<<<< HEAD:src/pages/user/current-user.slice.ts
 import { RootState } from '../../settings/store'
-========
-import { RootState } from '../../setup/store'
->>>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17:src/pages/main/current-user.slice.ts
 
 const currentUserSlice = createSlice({
   name: 'currentUser',

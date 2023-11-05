@@ -23,9 +23,5 @@ export const theme = createTheme({
     success: {
       main: '#388e3c'
     }
-<<<<<<< HEAD:src/settings/theme/theme.ts
   }
-=======
-  },
->>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17:src/setup/theme/theme.ts
 })

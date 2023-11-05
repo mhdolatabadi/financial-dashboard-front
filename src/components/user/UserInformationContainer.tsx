@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux'
 import { currentIsAdminView } from '../../pages/user/current-user.slice'
 import { Person } from '@mui/icons-material'
 import { UserInformation } from './UserInformation'
-import { updateUserInformation } from '../../utils/dataManipulation'
 import { selectedUserView } from '../../pages/user/selected-user.slice'
 import { UserInformationForm } from './UserInformationForm'
 

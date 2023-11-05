@@ -17,6 +17,10 @@ const mainSlice = createSlice({
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload
+    },
+    setDeleteUser: (state, action) => {
+      const newUsers = state.users.filter(u => u.id != action.payload)
+      state.users = newUsers
     }
   }
 })
@@ -25,7 +29,7 @@ const { actions, reducer } = mainSlice
 
 export const mainReducer = reducer
 
-export const { setAccessToken, setCurrentPage } = actions
+export const { setAccessToken, setCurrentPage, setDeleteUser } = actions
 
 export const accessTokenView = (state: RootState) => state.main.accessToken
 export const currentPageView = (state: RootState) => state.main.currentPage
