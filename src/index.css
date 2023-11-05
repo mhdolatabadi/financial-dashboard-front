@@ -1,7 +1,19 @@
+<<<<<<< HEAD
 body {
     height: 100%;
     margin: 0;
     font-family: Vazirmatn,
+=======
+html {
+  height: max(100vh, max-content);
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family:
+    Vazirmatn,
+>>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17
     -apple-system,
     BlinkMacSystemFont,
     'Segoe UI',
@@ -13,8 +25,13 @@ body {
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
+<<<<<<< HEAD
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+=======
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+>>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17
 }
 
 #root {
@@ -27,8 +44,15 @@ code {
 }
 
 .App {
+<<<<<<< HEAD
     text-align: center;
 
     background: linear-gradient(to right, #00566f, #00566f, #0aa);
     height: 100%;
+=======
+  text-align: center;
+
+  background: linear-gradient(to right, #00566f, #00566f, #0aa);
+  height: 100%;
+>>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17
 }

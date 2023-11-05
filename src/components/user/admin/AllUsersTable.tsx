@@ -20,11 +20,15 @@ import {
 } from '../../../utils/dataManipulation'
 import { SuccessToast } from '../../common'
 import { useDispatch } from 'react-redux'
+<<<<<<< HEAD:src/components/user/admin/AllUsersTable.tsx
 import {
   setSelectedProfits,
   setSelectedTransactions,
   setSelectedUser,
 } from '../../../pages/user/selected-user.slice'
+=======
+import { setSelectedUsername } from '../../../pages/main/selected-user.slice'
+>>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17:src/components/main/admin/AllUsersTable.tsx
 
 interface Props {
   users: User[]

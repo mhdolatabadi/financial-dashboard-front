@@ -17,6 +17,17 @@ interface Props {
 }
 
 export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
+<<<<<<< HEAD
+=======
+  const [newValue, setNewValue] = useState(value)
+  useEffect(() => {
+    setNewValue(value)
+  }, [value])
+
+  useEffect(() => {
+    if (onEdit && newValue) onEdit(newValue)
+  }, [newValue])
+>>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17
   return (
     <RowFlex>
       <div
@@ -44,9 +55,23 @@ export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
           >
             {label}
           </Typography>
+<<<<<<< HEAD
           <Typography fontWeight="500" color="#000d">
             {value}
           </Typography>
+=======
+          {!editMode ? (
+            <Typography fontWeight="500" color="#000d">
+              {value}
+            </Typography>
+          ) : (
+            <TextField
+              size="small"
+              value={newValue}
+              onChange={(e) => setNewValue(e.target.value)}
+            />
+          )}
+>>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17
         </div>
         <Divider />
       </div>

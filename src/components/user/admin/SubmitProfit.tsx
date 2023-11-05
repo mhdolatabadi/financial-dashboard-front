@@ -23,7 +23,11 @@ export function SubmitProfit({ users }: Props) {
       date: new Date(date),
       amount,
       unit,
+<<<<<<< HEAD:src/components/user/admin/SubmitProfit.tsx
       description
+=======
+      description,
+>>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17:src/components/main/admin/SubmitProfit.tsx
     })
       .then(() => {
         SuccessToast(PersianTexts.successful).showToast()

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { PersianTexts } from '../../utils/persianTexts'
+<<<<<<< HEAD
 import {
   ContainedButton,
   ErrorToast,
@@ -27,6 +28,17 @@ import {
   setSelectedUser,
   setSelectedUsername,
 } from '../user/selected-user.slice'
+=======
+import { SuccessToast } from '../../components/common/toast/SuccessToast'
+import { ErrorToast } from '../../components/common/toast/ErrorToast'
+import { getUserWithUsername, loginUser } from '../../utils/dataManipulation'
+import { ContainedButton, Section, TextField } from '../../components/common'
+import { useDispatch } from 'react-redux'
+import { setAccessToken, setCurrentPage } from '../main/main.slice'
+import { Page } from '../../models/Page'
+import { setCurrentIsAdmin, setCurrentUser, setCurrentUsername } from '../main/current-user.slice'
+import { setSelectedUser, setSelectedUsername } from '../main/selected-user.slice'
+>>>>>>> 54ba37360b77af2fd181cacd6acd38c29f4c6f17
 
 export function LoginPage() {
   const [username, setUsernameState] = useState<string>('')
