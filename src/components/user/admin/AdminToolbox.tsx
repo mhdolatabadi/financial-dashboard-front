@@ -10,6 +10,8 @@ import { createUser, getAllUsers, getUserWithUsername } from '../../../utils/dat
 import { User } from '../../../models/user'
 import { Section, SuccessToast } from '../../common'
 import { Credential } from '../../../models/Credential'
+import { useDispatch } from 'react-redux'
+import { setAddUser } from '../../../pages/user/main.slice'
 
 const StyledTabPanel = styled(TabPanel)(() => ({
   padding: 0,
@@ -25,23 +27,15 @@ const StyledTabPanel = styled(TabPanel)(() => ({
 }))
 
 export function AdminToolbox() {
+  const dispatch = useDispatch()
   const [selectedTab, setSelectedTab] = useState<string>('1')
-  const [users, setUsers] = useState<User[]>([])
-
-  useEffect(() => {
-    getAllUsers()
-      .then((res) => {
-        setUsers(res.data)
-      })
-      .catch(console.warn)
-  }, [])
 
   const handleCreateUser = ({ username, password }: Credential) => {
     createUser(username, password).then(() => {
       SuccessToast(PersianTexts.successful).showToast()
       getUserWithUsername(username)
         .then((res) => {
-          setUsers([...users, res.data])
+          dispatch(setAddUser(res.data))
         })
         .catch(console.warn)
     })
@@ -63,16 +57,16 @@ export function AdminToolbox() {
             <Tab label={PersianTexts.submitProfit} value='4' />
           </TabList>
           <StyledTabPanel value='1'>
-            <AllUsersTable users={users} />
+            <AllUsersTable />
           </StyledTabPanel>
           <StyledTabPanel value='2'>
             <CreateUser handleCreateUser={handleCreateUser} />
           </StyledTabPanel>
           <StyledTabPanel value='3'>
-            <SubmitTransaction users={users} />
+            <SubmitTransaction />
           </StyledTabPanel>
           <StyledTabPanel value='4'>
-            <SubmitProfit users={users} />
+            <SubmitProfit />
           </StyledTabPanel>
         </TabContext>
       </Section>

@@ -51,7 +51,7 @@ export function App() {
           >
             <Typography fontWeight='500' fontSize='20'>
               {currentUser.firstname || currentUser.lastname
-                ? `${currentUser.firstname} ${currentUser.lastname}`
+                ? `${currentUser.firstname ?? ''} ${currentUser.lastname ?? ''}`
                 : currentUser.username}
             </Typography>
           </Button>

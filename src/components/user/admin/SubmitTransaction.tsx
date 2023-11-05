@@ -8,18 +8,18 @@ import { submitTransaction } from '../../../utils/dataManipulation'
 import { SuccessToast } from '../../common'
 import moment from 'moment-jalaali'
 import { ContainedButton, DatePicker, TextField } from '../../common'
+import { useSelector } from 'react-redux'
+import { usersView } from '../../../pages/user/main.slice'
 
-interface Props {
-  users: Partial<User>[]
-}
 
-export function SubmitTransaction({ users }: Props) {
+export function SubmitTransaction() {
   const [username, setUsername] = useState<string>()
   const [date, setDate] = useState<number>(new Date().getTime())
   const [type, setType] = useState<string>('in')
   const [amount, setAmount] = useState<number>()
   const [unit, setUnit] = useState<string>('rial')
   const [description, setDescription] = useState<string>()
+  const users = useSelector(usersView)
   const handleSubmitTransaction = () => {
     submitTransaction({
       username,

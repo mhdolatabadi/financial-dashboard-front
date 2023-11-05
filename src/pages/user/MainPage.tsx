@@ -4,7 +4,7 @@ import {
   UserInformationContainer,
 } from '../../components/user'
 import { useEffect } from 'react'
-import { getUserProfits, getUserTransactions, getUserWithUsername } from '../../utils/dataManipulation'
+import { getAllUsers, getUserProfits, getUserTransactions, getUserWithUsername } from '../../utils/dataManipulation'
 import { AdminToolbox } from '../../components/user/admin/AdminToolbox'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -16,6 +16,7 @@ import {
 import { selectedUsernameView, setSelectedProfits, setSelectedTransactions, setSelectedUser } from './selected-user.slice'
 import { Typography } from '@mui/material'
 import { unitToPersian } from '../../utils/unitToPersian'
+import { setUsers } from './main.slice'
 
 export function MainPage() {
   const dispatch = useDispatch()
@@ -25,6 +26,9 @@ export function MainPage() {
   const isAdmin = useSelector(currentIsAdminView)
 
   useEffect(() => {
+    getAllUsers().then(res => {
+      dispatch(setUsers(res.data))
+    })
     getUserWithUsername(currentUsername).then((res) => {
       dispatch(setCurrentUser(res.data))
       getUserTransactions(res.data.id).then((res2) => {

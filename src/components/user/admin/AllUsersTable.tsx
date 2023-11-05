@@ -19,20 +19,18 @@ import {
   getUserWithUsername,
 } from '../../../utils/dataManipulation'
 import { SuccessToast } from '../../common'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedProfits,
   setSelectedTransactions,
   setSelectedUser,
 } from '../../../pages/user/selected-user.slice'
-import { setDeleteUser } from '../../../pages/user/main.slice'
+import { setDeleteUser, usersView } from '../../../pages/user/main.slice'
 
-interface Props {
-  users: User[]
-}
 
-export function AllUsersTable({ users }: Props) {
+export function AllUsersTable() {
   const dispatch = useDispatch()
+  const users = useSelector(usersView)
   const handleSelectUser = (id: string) => {
     getUserWithId(id).then((res) => {
       dispatch(setSelectedUser(res.data))

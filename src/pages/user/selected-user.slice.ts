@@ -65,6 +65,7 @@ const selectedUserSlice = createSlice({
       state.info.nationalNo = action.payload
     },
     setSelectedTransactions: (state, action) => {
+      state.transactions = []
       state.transactions = action.payload
     },
     // addSelectedTransaction: (state, action) => {

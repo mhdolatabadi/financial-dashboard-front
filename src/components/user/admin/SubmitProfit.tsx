@@ -6,17 +6,17 @@ import { AmountUnitTextField } from '../AmountUnitTextField'
 import { submitProfit } from '../../../utils/dataManipulation'
 import moment from 'moment-jalaali'
 import { ContainedButton, DatePicker, SuccessToast, TextField } from '../../common'
+import { useSelector } from 'react-redux'
+import { usersView } from '../../../pages/user/main.slice'
 
-interface Props {
-  users: Partial<User>[]
-}
 
-export function SubmitProfit({ users }: Props) {
+export function SubmitProfit() {
   const [username, setUsername] = useState<string>()
   const [date, setDate] = useState<number>(new Date().getTime())
   const [amount, setAmount] = useState<number>()
   const [unit, setUnit] = useState<string>('rial')
   const [description, setDescription] = useState<string>()
+  const users = useSelector(usersView)
   const handleSubmitTransaction = () => {
     submitProfit({
       username,
