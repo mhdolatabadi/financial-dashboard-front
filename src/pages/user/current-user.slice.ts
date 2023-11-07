@@ -5,8 +5,8 @@ import { RootState } from '../../settings/store'
 const currentUserSlice = createSlice({
   name: 'currentUser',
   initialState: {
-    id: '',
-    username: '',
+    id: localStorage.getItem("id"),
+    username: localStorage.getItem("username"),
     password: '',
     firstname: '',
     lastname: '',

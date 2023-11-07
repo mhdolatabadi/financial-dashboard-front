@@ -10,7 +10,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { PersianTexts } from '../../../utils/persianTexts'
 import { User } from '../../../models/user'
-import { Delete } from '@mui/icons-material'
+import { Delete, DeleteOutline, VisibilityOutlined } from '@mui/icons-material'
 import {
   deleteUser,
   getUserProfits,
@@ -26,10 +26,11 @@ import {
   setSelectedUser,
 } from '../../../pages/user/selected-user.slice'
 import { setDeleteUser, usersView } from '../../../pages/user/main.slice'
-
+import { currentUsernameView } from '../../../pages/user/current-user.slice'
 
 export function AllUsersTable() {
   const dispatch = useDispatch()
+  const currentUsername = useSelector(currentUsernameView)
   const users = useSelector(usersView)
   const handleSelectUser = (id: string) => {
     getUserWithId(id).then((res) => {
@@ -51,41 +52,55 @@ export function AllUsersTable() {
       .catch(console.warn)
   }
   return (
-    <TableContainer sx={{ height: '100%', overflowY: 'auto' }}>
-      <Table stickyHeader>
-        <TableBody sx={{ overflowY: 'scroll', height: '100%' }}>
-          {users.length > 0 ? (
-            users.map((u) => (
-              <TableRow key={u.username}>
-                <TableCell sx={{ width: '20px', padding: 0 }}>
-                  <Button
-                    onClick={() => handleSelectUser(u.id)}
-                    sx={{ minWidth: 0 }}
-                  >
-                    <VisibilityIcon />
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <Typography fontWeight="700">{u.username}</Typography>
-                </TableCell>
+    <TableContainer
+      sx={{
+        overflowY: 'auto',
+        boxSizing: 'border-box',
+        borderRadius: '20px',
 
-                <TableCell>
-                  <Typography>
-                    {u.firstname || u.lastname
-                      ? `${u.firstname ?? ''} ${u.lastname ?? ''}`
-                      : `${PersianTexts.firstname} ${PersianTexts.empty}`}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ width: '20px', padding: 0 }}>
-                  <Button
-                    onClick={() => (u.id ? handleDeleteUser(u.id) : null)}
-                    sx={{ minWidth: 0 }}
-                  >
-                    <Delete color="error" />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))
+        borderColor: 'primary.main',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+      }}
+    >
+      <Table stickyHeader>
+        <TableBody
+          sx={{ overflowY: 'scroll', height: '100%', bgcolor: '#0001' }}
+        >
+          {users.length > 0 ? (
+            users
+              .filter((u) => u.username !== currentUsername)
+              .map((u) => (
+                <TableRow key={u.username}>
+                  <TableCell sx={{ width: '20px', padding: 0 }}>
+                    <Button
+                      onClick={() => handleSelectUser(u.id)}
+                      sx={{ minWidth: 0 }}
+                    >
+                      <VisibilityOutlined />
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Typography fontWeight="700">{u.username}</Typography>
+                  </TableCell>
+
+                  <TableCell>
+                    <Typography>
+                      {u.firstname || u.lastname
+                        ? `${u.firstname ?? ''} ${u.lastname ?? ''}`
+                        : `${PersianTexts.firstname} ${PersianTexts.empty}`}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ width: '20px', padding: 0 }}>
+                    <Button
+                      onClick={() => (u.id ? handleDeleteUser(u.id) : null)}
+                      sx={{ minWidth: 0 }}
+                    >
+                      <DeleteOutline color="error" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
           ) : (
             <Typography>{PersianTexts.thereIsNoUserYet}</Typography>
           )}

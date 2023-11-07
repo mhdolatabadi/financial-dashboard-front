@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
 
-const BASE_PATH = 'http://192.168.60.80:3456'
+const BASE_PATH = 'http://localhost:3456'
 
 export const getRequest = (path: string, config: AxiosRequestConfig) => {
   const url = `${BASE_PATH}${path}`

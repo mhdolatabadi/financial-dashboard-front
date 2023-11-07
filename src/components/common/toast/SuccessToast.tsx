@@ -9,10 +9,10 @@ export const SuccessToast = (message: string) => Toastify({
   style: {
     display: 'flex',
     alignItems: 'center',
-    color: 'green',
+    color: 'white',
     padding: '20px',
     boxSizing: 'border-box',
-    background: 'lightgreen',
+    background: 'rgb(0, 255, 0, 0.3)',
     position: 'absolute',
     width: '300px',
     height: '50px',

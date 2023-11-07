@@ -18,8 +18,8 @@ const selectedUserSlice = createSlice({
       unit: '',
       totalProfit: 0,
     } as User,
-    transactions: [],
-    profits: [],
+    transactions: [] as any[],
+    profits: [] as any[],
   },
   reducers: {
     setSelectedUser: (state, action) => {
@@ -36,6 +36,7 @@ const selectedUserSlice = createSlice({
         totalProfit,
       } = action.payload
       state.info.id = id
+      state.info.password = ''
       state.info.username = username
       state.info.firstname = firstname
       state.info.lastname = lastname
@@ -65,19 +66,30 @@ const selectedUserSlice = createSlice({
       state.info.nationalNo = action.payload
     },
     setSelectedTransactions: (state, action) => {
-      state.transactions = []
       state.transactions = action.payload
     },
     // addSelectedTransaction: (state, action) => {
     //   state.transactions = state.transactions.concat(action.payload)
     // },
     setSelectedProfits: (state, action) => {
-      state.profits = []
       state.profits = action.payload
     },
     // addSelectedProfit: (state, action) => {
     //   state.profits = state.profits.concat(action.payload)
     // },
+    setDeleteTransaction: (state, action) => {
+      const newTransactions = state.transactions.filter(
+        (u: any) => u?.id != action.payload,
+      )
+      state.transactions = newTransactions
+    },
+
+    setDeleteProfit: (state, action) => {
+      const newProfit = state.profits.filter(
+        (u: any) => u?.id != action.payload,
+      )
+      state.profits = newProfit
+    },
   },
 })
 
@@ -96,7 +108,9 @@ export const {
   setSelectedProfits,
   setSelectedTransactions,
   // addSelectedTransaction,
-  // addSelectedProfit
+  // addSelectedProfit,
+  setDeleteProfit,
+  setDeleteTransaction,
 } = actions
 
 export const selectedUserIdView = (state: RootState) =>

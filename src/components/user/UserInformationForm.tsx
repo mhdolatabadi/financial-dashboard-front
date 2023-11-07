@@ -41,7 +41,7 @@ export function UserInformationForm({
       />
       <TextField
         label={PersianTexts.password}
-        value={''}
+        value={selectedUser.password}
         onChange={(password) => dispatch(setSelectedPassword(password.target.value))}
       />
       <TextField

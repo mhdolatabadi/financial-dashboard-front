@@ -7,8 +7,13 @@ import { Person } from '@mui/icons-material'
 import { UserInformation } from './UserInformation'
 import { selectedUserView } from '../../pages/user/selected-user.slice'
 import { UserInformationForm } from './UserInformationForm'
+import { User } from '../../models/user'
 
-export function UserInformationContainer() {
+interface Props {
+  user: User
+}
+
+export function UserInformationContainer({ user }: Props) {
   const isAdmin = useSelector(currentIsAdminView)
   const selectedUser = useSelector(selectedUserView)
 
@@ -17,14 +22,17 @@ export function UserInformationContainer() {
   return (
     <SectionWithHeader
       header={PersianTexts.userInformation}
-      Icon={<Person color="primary" />}
+      Icon={<Person sx={{ color: 'primary.main' }} />}
       action={isAdmin ? (editMode ? undefined : PersianTexts.edit) : undefined}
       onAction={editMode ? undefined : () => setEditMode(true)}
+      sx={{
+        maxWidth: '400px',
+      }}
     >
       {editMode ? (
         <UserInformationForm handleClose={(state) => setEditMode(state)} />
       ) : (
-        <UserInformation editMode={editMode} />
+        <UserInformation editMode={editMode} user={user} />
       )}
     </SectionWithHeader>
   )

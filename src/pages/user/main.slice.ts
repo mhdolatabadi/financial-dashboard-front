@@ -6,10 +6,10 @@ import { Page } from '../../models/Page'
 const mainSlice = createSlice({
   name: 'main',
   initialState: {
-    currentPage: Page.login,
-    accessToken: '',
+    currentPage: localStorage.getItem('accessToken') ? Page.admin : Page.login,
+    accessToken: localStorage.getItem('accessToken'),
     selectedUser: null as unknown as User,
-    users: [] as User[]
+    users: [] as User[],
   },
   reducers: {
     setAccessToken: (state, action) => {
@@ -25,18 +25,24 @@ const mainSlice = createSlice({
       state.users.push(action.payload)
     },
     setDeleteUser: (state, action) => {
-      const newUsers = state.users.filter(u => u.id != action.payload)
+      const newUsers = state.users.filter((u) => u.id != action.payload)
       state.users = newUsers
-    }
-  }
+    },
+  },
 })
 
 const { actions, reducer } = mainSlice
 
 export const mainReducer = reducer
 
-export const { setAccessToken, setCurrentPage, setDeleteUser, setAddUser, setUsers } = actions
+export const {
+  setAccessToken,
+  setCurrentPage,
+  setDeleteUser,
+  setAddUser,
+  setUsers,
+} = actions
 
 export const accessTokenView = (state: RootState) => state.main.accessToken
 export const currentPageView = (state: RootState) => state.main.currentPage
-export const usersView = (state:RootState) => state.main.users
+export const usersView = (state: RootState) => state.main.users

@@ -6,12 +6,23 @@ import { AllUsersTable } from './AllUsersTable'
 import { SubmitTransaction } from './SubmitTransaction'
 import { SubmitProfit } from './SubmitProfit'
 import { useEffect, useState } from 'react'
-import { createUser, getAllUsers, getUserWithUsername } from '../../../utils/dataManipulation'
+import {
+  createUser,
+  getAllUsers,
+  getUserWithUsername,
+} from '../../../utils/dataManipulation'
 import { User } from '../../../models/user'
-import { Section, SuccessToast } from '../../common'
+import { Section, SectionWithHeader, SuccessToast } from '../../common'
 import { Credential } from '../../../models/Credential'
 import { useDispatch } from 'react-redux'
 import { setAddUser } from '../../../pages/user/main.slice'
+import {
+  AdminPanelSettings,
+  Group,
+  Paid,
+  PersonAdd,
+  Receipt,
+} from '@mui/icons-material'
 
 const StyledTabPanel = styled(TabPanel)(() => ({
   padding: 0,
@@ -23,7 +34,7 @@ const StyledTabPanel = styled(TabPanel)(() => ({
   minWidth: '500px',
   maxWidth: '500px',
   minHeight: '500px',
-  maxHeight: '500px'
+  maxHeight: '500px',
 }))
 
 export function AdminToolbox() {
@@ -42,34 +53,96 @@ export function AdminToolbox() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Section>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <SectionWithHeader
+        sx={{ maxWidth: '500px' }}
+        header="مدیریت اطلاعات کاربران"
+        Icon={<AdminPanelSettings color="primary" />}
+      >
         <TabContext value={selectedTab}>
           <TabList
             TabIndicatorProps={{ sx: { display: 'none' } }}
-            sx={{ width: '100%', marginBottom: '20px' }}
+            sx={{
+              width: '100%',
+              marginBottom: '20px',
+              bgcolor: 'primary.main',
+              borderRadius: '20px',
+            }}
             onChange={(e, value) => setSelectedTab(value)}
           >
-            <Tab disableRipple label={PersianTexts.usersList} value='1' />
-            <Tab label={PersianTexts.createNewUser} value='2' />
-            <Tab label={PersianTexts.submitTransaction} value='3' />
+            <Tab
+              sx={{
+                flexGrow: 1,
+                color: '#fffd',
+                '&.Mui-selected': {
+                  color: 'white',
+                  border: '1px solid white',
+                },
+              }}
+              icon={<Group />}
+              label={PersianTexts.usersList}
+              value="1"
+            />
+            <Tab
+              sx={{
+                flexGrow: 1,
+                color: '#fffd',
+                '&.Mui-selected': {
+                  color: 'white',
+                  border: '1px solid white',
+                },
+              }}
+              icon={<PersonAdd />}
+              label={PersianTexts.createNewUser}
+              value="2"
+            />
+            <Tab
+              sx={{
+                flexGrow: 1,
+                color: '#fffd',
+                '&.Mui-selected': {
+                  color: 'white',
+                  border: '1px solid white',
+                },
+              }}
+              icon={<Receipt />}
+              label={PersianTexts.submitTransaction}
+              value="3"
+            />
 
-            <Tab label={PersianTexts.submitProfit} value='4' />
+            <Tab
+              sx={{
+                color: '#fffd',
+                flexGrow: 1,
+                '&.Mui-selected': {
+                  color: 'white',
+                  border: '1px solid white',
+                },
+              }}
+              icon={<Paid />}
+              label={PersianTexts.submitProfit}
+              value="4"
+            />
           </TabList>
-          <StyledTabPanel value='1'>
+          <StyledTabPanel value="1">
             <AllUsersTable />
           </StyledTabPanel>
-          <StyledTabPanel value='2'>
+          <StyledTabPanel value="2">
             <CreateUser handleCreateUser={handleCreateUser} />
           </StyledTabPanel>
-          <StyledTabPanel value='3'>
+          <StyledTabPanel value="3">
             <SubmitTransaction />
           </StyledTabPanel>
-          <StyledTabPanel value='4'>
+          <StyledTabPanel value="4">
             <SubmitProfit />
           </StyledTabPanel>
         </TabContext>
-      </Section>
+      </SectionWithHeader>
     </div>
   )
 }

@@ -54,6 +54,10 @@ export function submitTransaction(transaction: unknown) {
   })
 }
 
+export function deleteTransaction(id: string) {
+  return deleteRequest(`/transaction/${id}`, { headers: { Authorization: '' } })
+}
+
 export function getUserProfits(userId: string) {
   return getRequest(`/profit/${userId}`, {
     headers: { Authorization: '' }
@@ -64,4 +68,8 @@ export function submitProfit(profit: unknown) {
   return postRequest('/profit', profit, {
     headers: { Authorization: '' }
   })
+}
+
+export function deleteProfit(id: string) {
+  return deleteRequest(`/profit/${id}`, { headers: { Authorization: '' } })
 }

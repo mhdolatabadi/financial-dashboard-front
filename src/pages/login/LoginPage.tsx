@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PersianTexts } from '../../utils/persianTexts'
 import {
   ContainedButton,
@@ -13,8 +13,12 @@ import {
   getUserWithUsername,
   loginUser,
 } from '../../utils/dataManipulation'
-import { useDispatch } from 'react-redux'
-import { setAccessToken, setCurrentPage } from '../user/main.slice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  accessTokenView,
+  setAccessToken,
+  setCurrentPage,
+} from '../user/main.slice'
 import { Page } from '../../models/Page'
 import {
   setCurrentIsAdmin,
@@ -35,16 +39,8 @@ export function LoginPage() {
   const loginHandler = () => {
     loginUser(username, password)
       .then(({ data }) => {
-        getUserWithUsername(username).then((res) => {
-          dispatch(setCurrentUser(res.data))
-          dispatch(setSelectedUser(res.data))
-          getUserTransactions(res.data.id).then((res2) => {
-            dispatch(setSelectedTransactions(res2.data))
-          })
-          getUserProfits(res.data.id).then((res2) => {
-            dispatch(setSelectedProfits(res2.data))
-          })
-        })
+        localStorage.setItem('username', username)
+        localStorage.setItem('accessToken', data.access_token)
         dispatch(setCurrentPage(Page.admin))
         dispatch(setAccessToken(data.access_token))
         dispatch(setCurrentIsAdmin(data.isAdmin))

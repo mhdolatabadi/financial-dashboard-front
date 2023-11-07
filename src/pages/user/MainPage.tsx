@@ -4,7 +4,12 @@ import {
   UserInformationContainer,
 } from '../../components/user'
 import { useEffect } from 'react'
-import { getAllUsers, getUserProfits, getUserTransactions, getUserWithUsername } from '../../utils/dataManipulation'
+import {
+  getAllUsers,
+  getUserProfits,
+  getUserTransactions,
+  getUserWithUsername,
+} from '../../utils/dataManipulation'
 import { AdminToolbox } from '../../components/user/admin/AdminToolbox'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -13,7 +18,13 @@ import {
   currentUserView,
   setCurrentUser,
 } from './current-user.slice'
-import { selectedUsernameView, setSelectedProfits, setSelectedTransactions, setSelectedUser } from './selected-user.slice'
+import {
+  selectedUserView,
+  selectedUsernameView,
+  setSelectedProfits,
+  setSelectedTransactions,
+  setSelectedUser,
+} from './selected-user.slice'
 import { Typography } from '@mui/material'
 import { unitToPersian } from '../../utils/unitToPersian'
 import { setUsers } from './main.slice'
@@ -23,14 +34,16 @@ export function MainPage() {
   const selectedUsername = useSelector(selectedUsernameView)
   const currentUsername = useSelector(currentUsernameView)
   const currentUser = useSelector(currentUserView)
+  const selectedUser = useSelector(selectedUserView)
   const isAdmin = useSelector(currentIsAdminView)
 
-  useEffect(() => {
-    getAllUsers().then(res => {
+  const fetchData = () => {
+    getAllUsers().then((res) => {
       dispatch(setUsers(res.data))
     })
     getUserWithUsername(currentUsername).then((res) => {
       dispatch(setCurrentUser(res.data))
+      dispatch(setSelectedUser(res.data))
       getUserTransactions(res.data.id).then((res2) => {
         dispatch(setSelectedTransactions(res2.data))
       })
@@ -38,10 +51,14 @@ export function MainPage() {
         dispatch(setSelectedProfits(res2.data))
       })
     })
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [currentUsername])
 
   return (
-    <div style={{ padding: '130px 0 0', height: '100%' }}>
+    <div style={{ padding: '130px 0 0', height: '100%', width: '100%' }}>
       <div style={{ padding: '20px' }}>
         <Typography
           color="white"
@@ -60,7 +77,7 @@ export function MainPage() {
           }}
         >
           {isAdmin && <AdminToolbox />}
-          {selectedUsername && <UserInformationContainer />}
+          {selectedUsername && <UserInformationContainer user={selectedUser} />}
         </div>
       )}
       <div

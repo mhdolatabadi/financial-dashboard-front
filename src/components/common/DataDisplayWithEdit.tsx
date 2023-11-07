@@ -1,4 +1,11 @@
-import { Divider, styled, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  Divider,
+  Stack,
+  styled,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { useEffect, useState } from 'react'
 
 const RowFlex = styled('div')(() => ({
@@ -22,32 +29,50 @@ export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
           width: '100%',
-          margin: '15px 0 10px',
-          height: '40px',
+          height: '50px',
+          justifyContent: 'space-between',
+          borderRadius: '20px',
+          backgroundColor: '#0001',
+          borderColor: 'primary.main',
+          borderWidth: '1px',
+          borderStyle: 'solid',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: '10px',
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            bgcolor: 'primary.main',
+            width: '50%',
+            height: '100%',
+            borderRadius: '20px 0 0 20px',
           }}
         >
           <Typography
-            color="primary"
+            color="white"
             fontWeight="500"
             fontSize="15px"
             textAlign="left"
           >
             {label}
           </Typography>
+        </Stack>
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            marginBottom: '10px',
+          }}
+        >
           <Typography fontWeight="500" color="#000d">
             {value}
           </Typography>
-        </div>
+        </Stack>
         <Divider />
       </div>
     </RowFlex>

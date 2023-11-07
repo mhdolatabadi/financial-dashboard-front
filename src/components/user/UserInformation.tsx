@@ -9,18 +9,32 @@ import {
   setSelectedLastname,
   setSelectedNationalNo,
   setSelectedPassword,
-  setSelectedUsername
+  setSelectedUsername,
 } from '../../pages/user/selected-user.slice'
+import { Box, Stack } from '@mui/material'
+import { User } from '../../models/user'
 
-export function UserInformation({ editMode }: { editMode: boolean }) {
+interface Props {
+  editMode: boolean
+  user: User
+}
+
+export function UserInformation({ user, editMode }: Props) {
   const dispatch = useDispatch()
-  const selectedUser = useSelector(selectedUserView)
   return (
-    <div style={{ width: '100%' }}>
+    <Stack
+      sx={{
+        width: '100%',
+        padding: '15px 0',
+        boxSizing: 'border-box',
+        justifyContent: 'space-between',
+        height: '100%'
+      }}
+    >
       <DataDisplayWithEdit
         editMode={editMode}
         label={PersianTexts.username}
-        value={selectedUser?.username}
+        value={user?.username}
         onEdit={(username) => dispatch(setSelectedUsername(username))}
       />
       {editMode && (
@@ -34,29 +48,29 @@ export function UserInformation({ editMode }: { editMode: boolean }) {
       <DataDisplayWithEdit
         editMode={editMode}
         label={PersianTexts.nationalNo}
-        value={selectedUser?.nationalNo ? selectedUser?.nationalNo : undefined}
+        value={user?.nationalNo ? user?.nationalNo : undefined}
         onEdit={(nationalNo) => dispatch(setSelectedNationalNo(nationalNo))}
       />
       <DataDisplayWithEdit
         editMode={editMode}
         label={PersianTexts.firstname}
-        value={selectedUser?.firstname}
+        value={user?.firstname}
         onEdit={(firstname) => dispatch(setSelectedFirstname(firstname))}
       />
       <DataDisplayWithEdit
         editMode={editMode}
         label={PersianTexts.lastname}
-        value={selectedUser?.lastname}
+        value={user?.lastname}
         onEdit={(lastname) => dispatch(setSelectedLastname(lastname))}
       />
       {!editMode && (
         <DataDisplayWithEdit
           label={PersianTexts.lastTransactionDate}
           value={
-            selectedUser?.lastTransactionDate
+            user?.lastTransactionDate
               ? Intl.DateTimeFormat('fa-IR')
-                .format(new Date(selectedUser?.lastTransactionDate))
-                .toString()
+                  .format(new Date(user?.lastTransactionDate))
+                  .toString()
               : PersianTexts.thereIsNoTransactionYet
           }
         />
@@ -65,16 +79,16 @@ export function UserInformation({ editMode }: { editMode: boolean }) {
         editMode={editMode}
         label={PersianTexts.totalFinance}
         value={
-          selectedUser.financial && selectedUser.unit
+          user.financial && user.unit
             ? editMode
-              ? String(selectedUser.financial)
+              ? String(user.financial)
               : `${Intl.NumberFormat('fa-IR').format(
-                +selectedUser.financial
-              )} ${unitToPersian(selectedUser.unit)}`
+                  +user.financial,
+                )} ${unitToPersian(user.unit)}`
             : undefined
         }
         onEdit={(financial) => dispatch(setSelectedFinancial(+financial))}
       />
-    </div>
+    </Stack>
   )
 }

@@ -2,11 +2,12 @@ import { styled } from '@mui/material'
 
 export const Section = styled('div')(() => ({
   minWidth: '500px',
-  maxWidth: '1200px',
+  width: '100%',
+  maxWidth: '1100px',
   backgroundColor: 'white',
   display: 'flex',
   flexDirection: 'column',
-  padding: '30px',
+  padding: '20px',
   border: '1px solid #88888849',
   borderRadius: '20px',
   boxShadow: '3px 3px 20px #000a',
