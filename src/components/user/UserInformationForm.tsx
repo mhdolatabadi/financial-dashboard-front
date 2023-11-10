@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { PersianTexts } from '../../utils/persianTexts'
-import { SuccessToast, TextField } from '../common'
+import { ErrorToast, SuccessToast, TextField } from '../common'
 import {
   selectedUserView,
   setSelectedFinancial,
@@ -29,7 +29,9 @@ export function UserInformationForm({
         console.log(res.data)
         SuccessToast(PersianTexts.successful).showToast()
       })
-      .catch(console.warn)
+      .catch(() => {
+        ErrorToast('مشکلی پیش آمد').showToast()
+      })
       .finally(() => handleClose(false))
   }
   return (
@@ -37,17 +39,22 @@ export function UserInformationForm({
       <TextField
         label={PersianTexts.username}
         value={selectedUser?.username}
-        onChange={(username) => dispatch(setSelectedUsername(username.target.value))}
+        onChange={(username) =>
+          dispatch(setSelectedUsername(username.target.value))
+        }
       />
       <TextField
         label={PersianTexts.password}
         value={selectedUser.password}
-        onChange={(password) => dispatch(setSelectedPassword(password.target.value))}
+        onChange={(password) =>
+          dispatch(setSelectedPassword(password.target.value))
+        }
       />
       <TextField
         label={PersianTexts.nationalNo}
         value={selectedUser?.nationalNo ? selectedUser?.nationalNo : undefined}
-        onChange={(nationalNo) => dispatch(setSelectedNationalNo(nationalNo.target.value))
+        onChange={(nationalNo) =>
+          dispatch(setSelectedNationalNo(nationalNo.target.value))
         }
       />
       <TextField

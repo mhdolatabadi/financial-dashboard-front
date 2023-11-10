@@ -5,10 +5,15 @@ import { UsernameSelect } from '../UsernameSelect'
 import { AmountUnitTextField } from '../AmountUnitTextField'
 import { submitProfit } from '../../../utils/dataManipulation'
 import moment from 'moment-jalaali'
-import { ContainedButton, DatePicker, SuccessToast, TextField } from '../../common'
+import {
+  ContainedButton,
+  DatePicker,
+  ErrorToast,
+  SuccessToast,
+  TextField,
+} from '../../common'
 import { useSelector } from 'react-redux'
 import { usersView } from '../../../pages/user/main.slice'
-
 
 export function SubmitProfit() {
   const [username, setUsername] = useState<string>()
@@ -23,12 +28,14 @@ export function SubmitProfit() {
       date: new Date(date),
       amount,
       unit,
-      description
+      description,
     })
       .then(() => {
         SuccessToast(PersianTexts.successful).showToast()
       })
-      .catch(console.warn)
+      .catch(() => {
+        ErrorToast('مشکلی پیش آمد').showToast()
+      })
   }
   return (
     <div
@@ -37,7 +44,7 @@ export function SubmitProfit() {
         justifyContent: 'space-between',
         flexDirection: 'column',
         height: '100%',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
       }}
     >
       <div>
@@ -64,7 +71,7 @@ export function SubmitProfit() {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      <ContainedButton variant='contained' onClick={handleSubmitTransaction}>
+      <ContainedButton variant="contained" onClick={handleSubmitTransaction}>
         {PersianTexts.submit}
       </ContainedButton>
     </div>

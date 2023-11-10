@@ -18,7 +18,7 @@ import {
   getUserWithId,
   getUserWithUsername,
 } from '../../../utils/dataManipulation'
-import { SuccessToast } from '../../common'
+import { ErrorToast, SuccessToast } from '../../common'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedProfits,
@@ -49,7 +49,9 @@ export function AllUsersTable() {
         dispatch(setDeleteUser(id))
         SuccessToast(PersianTexts.successful).showToast()
       })
-      .catch(console.warn)
+      .catch(() => {
+        ErrorToast('مشکلی پیش آمد').showToast()
+      })
   }
   return (
     <TableContainer

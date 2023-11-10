@@ -12,7 +12,12 @@ import {
   getUserWithUsername,
 } from '../../../utils/dataManipulation'
 import { User } from '../../../models/user'
-import { Section, SectionWithHeader, SuccessToast } from '../../common'
+import {
+  ErrorToast,
+  Section,
+  SectionWithHeader,
+  SuccessToast,
+} from '../../common'
 import { Credential } from '../../../models/Credential'
 import { useDispatch } from 'react-redux'
 import { setAddUser } from '../../../pages/user/main.slice'
@@ -48,7 +53,9 @@ export function AdminToolbox() {
         .then((res) => {
           dispatch(setAddUser(res.data))
         })
-        .catch(console.warn)
+        .catch(() => {
+          ErrorToast('مشکلی پیش آمد').showToast()
+        })
     })
   }
 

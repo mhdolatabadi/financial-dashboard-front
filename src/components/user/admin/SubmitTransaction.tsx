@@ -5,12 +5,11 @@ import { PersianTexts } from '../../../utils/persianTexts'
 import { UsernameSelect } from '../UsernameSelect'
 import { AmountUnitTextField } from '../AmountUnitTextField'
 import { submitTransaction } from '../../../utils/dataManipulation'
-import { SuccessToast } from '../../common'
+import { ErrorToast, SuccessToast } from '../../common'
 import moment from 'moment-jalaali'
 import { ContainedButton, DatePicker, TextField } from '../../common'
 import { useSelector } from 'react-redux'
 import { usersView } from '../../../pages/user/main.slice'
-
 
 export function SubmitTransaction() {
   const [username, setUsername] = useState<string>()
@@ -27,10 +26,14 @@ export function SubmitTransaction() {
       type,
       amount,
       unit,
-      description
-    }).then(() => {
-      SuccessToast(PersianTexts.successful).showToast()
-    }).catch(console.warn)
+      description,
+    })
+      .then(() => {
+        SuccessToast(PersianTexts.successful).showToast()
+      })
+      .catch(() => {
+        ErrorToast('مشکلی پیش آمد').showToast()
+      })
   }
   return (
     <div
@@ -39,7 +42,7 @@ export function SubmitTransaction() {
         justifyContent: 'space-between',
         flexDirection: 'column',
         height: '100%',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
       }}
     >
       <div>
@@ -61,14 +64,14 @@ export function SubmitTransaction() {
         />
         <RadioGroup
           row
-          aria-labelledby='demo-row-radio-buttons-group-label'
-          name='row-radio-buttons-group'
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
           value={type}
           onChange={(e) => setType(e.target.value)}
           sx={{ padding: '10px' }}
         >
-          <FormControlLabel value='in' control={<Radio />} label='واریز' />
-          <FormControlLabel value='out' control={<Radio />} label='برداشت' />
+          <FormControlLabel value="in" control={<Radio />} label="واریز" />
+          <FormControlLabel value="out" control={<Radio />} label="برداشت" />
         </RadioGroup>
         <TextField
           multiline
@@ -77,7 +80,7 @@ export function SubmitTransaction() {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      <ContainedButton variant='contained' onClick={handleSubmitTransaction}>
+      <ContainedButton variant="contained" onClick={handleSubmitTransaction}>
         {PersianTexts.submit}
       </ContainedButton>
     </div>

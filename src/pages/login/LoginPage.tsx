@@ -49,7 +49,7 @@ export function LoginPage() {
         SuccessToast(PersianTexts.successfullLogin).showToast()
       })
       .catch(() => {
-        ErrorToast.showToast()
+        ErrorToast('مشکلی پیش آمد').showToast()
       })
   }
 

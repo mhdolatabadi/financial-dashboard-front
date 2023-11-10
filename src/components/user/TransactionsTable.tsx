@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material'
 import { PersianTexts } from '../../utils/persianTexts'
-import { SectionWithHeader } from '../common'
+import { ErrorToast, SectionWithHeader } from '../common'
 import { unitToPersian } from '../../utils/unitToPersian'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -28,7 +28,9 @@ export function TransactionsTable() {
       .then(() => {
         dispatch(setDeleteTransaction(id))
       })
-      .catch(console.warn)
+      .catch(() => {
+        ErrorToast('مشکلی پیش آمد').showToast()
+      })
   }
   return (
     <SectionWithHeader

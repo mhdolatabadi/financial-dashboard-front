@@ -1,8 +1,7 @@
-import { PersianTexts } from '../../../utils/persianTexts'
 import Toastify from 'toastify-js'
 
-export const ErrorToast = Toastify({
-  text: PersianTexts.wrongCredential,
+export const ErrorToast = (text: string) => Toastify({
+  text: text,
   duration: 3000,
   gravity: 'top', // `top` or `bottom`
   position: 'right', // `left`, `center` or `right`
