@@ -25,42 +25,64 @@ export function SectionWithHeader({
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          flexDirection: 'row',
+          flexDirection: 'column',
           width: '100%',
-          borderColor: 'primary.main',
-          borderWidth: '0 0 1px 1px',
-          borderStyle: 'solid',
-          marginBottom: '15px',
-          // bgcolor: '#0001',
-          padding: '10px',
+          background: '#fff5',
+          padding: '20px',
           boxSizing: 'border-box',
           borderRadius: '20px',
+          height: '100%',
         }}
       >
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            borderRadius: '20px',
+            padding: '10px',
+            boxSizing: 'border-box',
+            marginBottom: '15px',
           }}
         >
           <div
             style={{
               display: 'flex',
-              margin: '0 0 0 10px',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            {Icon ?? null}
+            <div
+              style={{
+                display: 'flex',
+                margin: '0 0 0 10px',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {Icon ?? null}
+            </div>
+            <Typography color="primary" fontSize="20px" fontWeight="600">
+              {header}
+            </Typography>
           </div>
-          <Typography color="primary" fontSize="20px" fontWeight="600">
-            {header}
-          </Typography>
+          {onAction && action ? (
+            <Button
+              variant="outlined"
+              sx={{
+                width: '100px',
+                height: '50px',
+                borderRadius: '20px',
+                background: '#fff5',
+              }}
+              onClick={onAction}
+            >
+              {action}
+            </Button>
+          ) : null}
         </div>
-        {onAction && action && <Button onClick={onAction}>{action}</Button>}
+        {children}
       </Box>
-      {children}
     </Section>
   )
 }

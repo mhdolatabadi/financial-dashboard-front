@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { PersianTexts } from '../../utils/persianTexts'
-import { SectionWithHeader, SuccessToast } from '../common'
+import { SectionWithHeader } from '../common'
 import { useSelector } from 'react-redux'
 import { currentIsAdminView } from '../../pages/user/current-user.slice'
 import { Person } from '@mui/icons-material'
@@ -11,28 +11,31 @@ import { User } from '../../models/user'
 
 interface Props {
   user: User
+  editMode: boolean
+  handleEditMode: (b: boolean) => unknown
 }
 
-export function UserInformationContainer({ user }: Props) {
+export function UserInformationContainer({
+  user,
+  editMode,
+  handleEditMode,
+}: Props) {
   const isAdmin = useSelector(currentIsAdminView)
-  const selectedUser = useSelector(selectedUserView)
-
-  const [editMode, setEditMode] = useState(false)
 
   return (
     <SectionWithHeader
       header={PersianTexts.userInformation}
       Icon={<Person sx={{ color: 'primary.main' }} />}
       action={isAdmin ? (editMode ? undefined : PersianTexts.edit) : undefined}
-      onAction={editMode ? undefined : () => setEditMode(true)}
+      onAction={editMode ? undefined : () => handleEditMode(true)}
       sx={{
         maxWidth: '400px',
       }}
     >
       {editMode ? (
-        <UserInformationForm handleClose={(state) => setEditMode(state)} />
+        <UserInformationForm handleClose={(state) => handleEditMode(state)} />
       ) : (
-        <UserInformation editMode={editMode} user={user} />
+        <UserInformation user={user} />
       )}
     </SectionWithHeader>
   )

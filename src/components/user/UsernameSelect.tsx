@@ -6,7 +6,7 @@ import { User } from '../../models/user'
 interface Props {
   username: string | undefined
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => unknown
   users: Partial<User>[]
 }

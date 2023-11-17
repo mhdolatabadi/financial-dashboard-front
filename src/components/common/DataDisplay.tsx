@@ -1,29 +1,22 @@
-import {
-  Box,
-  Divider,
-  Stack,
-  styled,
-  TextField,
-  Typography,
-} from '@mui/material'
-import { useEffect, useState } from 'react'
+import { Divider, Stack, styled, Typography } from '@mui/material'
+import { PersianTexts } from '../../utils/persianTexts'
 
 const RowFlex = styled('div')(() => ({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-evenly',
   flexDirection: 'row',
-  border: '2px solid white',
+  borderRadius: '20px',
+  margin: '4px 0',
+  backgroundColor: '#fffa',
 }))
 
 interface Props {
   label: string
   value: string | undefined
-  editMode?: boolean
-  onEdit?: (value: string) => unknown
 }
 
-export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
+export function DataDisplay({ label, value }: Props) {
   return (
     <RowFlex>
       <div
@@ -33,7 +26,7 @@ export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
           height: '50px',
           justifyContent: 'space-between',
           borderRadius: '20px',
-          backgroundColor: '#0001',
+          backgroundColor: '#fffa',
           borderColor: 'primary.main',
           borderWidth: '1px',
           borderStyle: 'solid',
@@ -70,7 +63,7 @@ export function DataDisplayWithEdit({ label, value, onEdit, editMode }: Props) {
           }}
         >
           <Typography fontWeight="500" color="#000d">
-            {value}
+            {value ?? PersianTexts.empty}
           </Typography>
         </Stack>
         <Divider />

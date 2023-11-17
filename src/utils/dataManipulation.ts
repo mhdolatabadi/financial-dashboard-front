@@ -3,7 +3,7 @@ import { deleteRequest, getRequest, postRequest, putRequest } from './request'
 
 export function getUserWithUsername(username: string) {
   return getRequest(`/user/username/${username}`, {
-    headers: { Authorization: '' }
+    headers: { Authorization: '' },
   })
 }
 
@@ -15,18 +15,19 @@ export function getUserWithId(id: string) {
 
 export function getAllUsers() {
   return getRequest('/user', {
-    headers: { Authorization: '' }
+    headers: { Authorization: '' },
   })
 }
 
-export function createUser(username: string, password: string) {
+export function createUser(username: string, password: string, unit: string) {
   return postRequest(
     '/user',
     {
       username,
-      password
+      password,
+      unit,
     },
-    { headers: { Authorization: '' } }
+    { headers: { Authorization: '' } },
   )
 }
 
@@ -44,13 +45,13 @@ export function loginUser(username: string, password: string) {
 
 export function getUserTransactions(userId: string) {
   return getRequest(`/transaction/${userId}`, {
-    headers: { Authorization: '' }
+    headers: { Authorization: '' },
   })
 }
 
 export function submitTransaction(transaction: unknown) {
   return postRequest('/transaction', transaction, {
-    headers: { Authorization: '' }
+    headers: { Authorization: '' },
   })
 }
 
@@ -60,13 +61,13 @@ export function deleteTransaction(id: string) {
 
 export function getUserProfits(userId: string) {
   return getRequest(`/profit/${userId}`, {
-    headers: { Authorization: '' }
+    headers: { Authorization: '' },
   })
 }
 
 export function submitProfit(profit: unknown) {
   return postRequest('/profit', profit, {
-    headers: { Authorization: '' }
+    headers: { Authorization: '' },
   })
 }
 

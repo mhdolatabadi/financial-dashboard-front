@@ -7,16 +7,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import VisibilityIcon from '@mui/icons-material/Visibility'
 import { PersianTexts } from '../../../utils/persianTexts'
-import { User } from '../../../models/user'
-import { Delete, DeleteOutline, VisibilityOutlined } from '@mui/icons-material'
+import { DeleteOutline, VisibilityOutlined } from '@mui/icons-material'
 import {
   deleteUser,
   getUserProfits,
   getUserTransactions,
   getUserWithId,
-  getUserWithUsername,
 } from '../../../utils/dataManipulation'
 import { ErrorToast, SuccessToast } from '../../common'
 import { useDispatch, useSelector } from 'react-redux'
@@ -28,7 +25,11 @@ import {
 import { setDeleteUser, usersView } from '../../../pages/user/main.slice'
 import { currentUsernameView } from '../../../pages/user/current-user.slice'
 
-export function AllUsersTable() {
+interface Props {
+  editMode: boolean
+}
+
+export function AllUsersTable({ editMode }: Props) {
   const dispatch = useDispatch()
   const currentUsername = useSelector(currentUsernameView)
   const users = useSelector(usersView)
@@ -67,7 +68,7 @@ export function AllUsersTable() {
     >
       <Table stickyHeader>
         <TableBody
-          sx={{ overflowY: 'scroll', height: '100%', bgcolor: '#0001' }}
+          sx={{ overflowY: 'scroll', height: '100%', bgcolor: '#fffa' }}
         >
           {users.length > 0 ? (
             users
@@ -76,6 +77,7 @@ export function AllUsersTable() {
                 <TableRow key={u.username}>
                   <TableCell sx={{ width: '20px', padding: 0 }}>
                     <Button
+                      disabled={editMode}
                       onClick={() => handleSelectUser(u.id)}
                       sx={{ minWidth: 0 }}
                     >

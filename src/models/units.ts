@@ -1,6 +1,6 @@
 export enum Units {
-  rial,
-  euro,
-  dinar,
-  dollar,
+  rial = 'rial',
+  euro = 'euro',
+  derham = 'derham',
+  dollar = 'dollar',
 }

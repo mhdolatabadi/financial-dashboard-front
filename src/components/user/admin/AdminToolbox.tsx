@@ -5,19 +5,12 @@ import { PersianTexts } from '../../../utils/persianTexts'
 import { AllUsersTable } from './AllUsersTable'
 import { SubmitTransaction } from './SubmitTransaction'
 import { SubmitProfit } from './SubmitProfit'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   createUser,
-  getAllUsers,
   getUserWithUsername,
 } from '../../../utils/dataManipulation'
-import { User } from '../../../models/user'
-import {
-  ErrorToast,
-  Section,
-  SectionWithHeader,
-  SuccessToast,
-} from '../../common'
+import { ErrorToast, SectionWithHeader, SuccessToast } from '../../common'
 import { Credential } from '../../../models/Credential'
 import { useDispatch } from 'react-redux'
 import { setAddUser } from '../../../pages/user/main.slice'
@@ -30,24 +23,44 @@ import {
 } from '@mui/icons-material'
 
 const StyledTabPanel = styled(TabPanel)(() => ({
-  padding: 0,
-  boxSizing: 'border-box',
-
   width: '100%',
   height: '100%',
 
-  minWidth: '500px',
+  minWidth: '400px',
   maxWidth: '500px',
-  minHeight: '500px',
-  maxHeight: '500px',
+  minHeight: '550px',
+  maxHeight: '550px',
+
+  background: '#fffa',
+  padding: '15px',
+  boxSizing: 'border-box',
+  borderRadius: '20px',
 }))
 
-export function AdminToolbox() {
+const StyledTab = styled(Tab)(() => ({
+  flexGrow: 1,
+  color: '#fffd',
+  '&.Mui-selected': {
+    color: 'white',
+    border: '1px solid white',
+    borderColor: '#fff5',
+  },
+}))
+
+interface Props {
+  editMode: boolean
+}
+
+export function AdminToolbox({ editMode }: Props) {
   const dispatch = useDispatch()
   const [selectedTab, setSelectedTab] = useState<string>('1')
 
-  const handleCreateUser = ({ username, password }: Credential) => {
-    createUser(username, password).then(() => {
+  const handleCreateUser = ({
+    username,
+    password,
+    unit,
+  }: Credential & { unit: string }) => {
+    createUser(username, password, unit).then(() => {
       SuccessToast(PersianTexts.successful).showToast()
       getUserWithUsername(username)
         .then((res) => {
@@ -80,64 +93,32 @@ export function AdminToolbox() {
               bgcolor: 'primary.main',
               borderRadius: '20px',
             }}
-            onChange={(e, value) => setSelectedTab(value)}
+            onChange={(_, value) => setSelectedTab(value)}
           >
-            <Tab
-              sx={{
-                flexGrow: 1,
-                color: '#fffd',
-                '&.Mui-selected': {
-                  color: 'white',
-                  border: '1px solid white',
-                },
-              }}
+            <StyledTab
               icon={<Group />}
               label={PersianTexts.usersList}
               value="1"
             />
-            <Tab
-              sx={{
-                flexGrow: 1,
-                color: '#fffd',
-                '&.Mui-selected': {
-                  color: 'white',
-                  border: '1px solid white',
-                },
-              }}
+            <StyledTab
               icon={<PersonAdd />}
               label={PersianTexts.createNewUser}
               value="2"
             />
-            <Tab
-              sx={{
-                flexGrow: 1,
-                color: '#fffd',
-                '&.Mui-selected': {
-                  color: 'white',
-                  border: '1px solid white',
-                },
-              }}
+            <StyledTab
               icon={<Receipt />}
               label={PersianTexts.submitTransaction}
               value="3"
             />
 
-            <Tab
-              sx={{
-                color: '#fffd',
-                flexGrow: 1,
-                '&.Mui-selected': {
-                  color: 'white',
-                  border: '1px solid white',
-                },
-              }}
+            <StyledTab
               icon={<Paid />}
               label={PersianTexts.submitProfit}
               value="4"
             />
           </TabList>
           <StyledTabPanel value="1">
-            <AllUsersTable />
+            <AllUsersTable editMode={editMode} />
           </StyledTabPanel>
           <StyledTabPanel value="2">
             <CreateUser handleCreateUser={handleCreateUser} />

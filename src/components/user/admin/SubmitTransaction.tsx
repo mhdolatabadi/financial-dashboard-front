@@ -1,13 +1,17 @@
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { useState } from 'react'
-import { User } from '../../../models/user'
 import { PersianTexts } from '../../../utils/persianTexts'
 import { UsernameSelect } from '../UsernameSelect'
 import { AmountUnitTextField } from '../AmountUnitTextField'
 import { submitTransaction } from '../../../utils/dataManipulation'
-import { ErrorToast, SuccessToast } from '../../common'
+import {
+  ContainedButton,
+  DatePicker,
+  ErrorToast,
+  SuccessToast,
+  TextField,
+} from '../../common'
 import moment from 'moment-jalaali'
-import { ContainedButton, DatePicker, TextField } from '../../common'
 import { useSelector } from 'react-redux'
 import { usersView } from '../../../pages/user/main.slice'
 
@@ -57,7 +61,7 @@ export function SubmitTransaction() {
           onChange={(value) => setDate(moment(value).valueOf())}
         />
         <AmountUnitTextField
-          unit={unit}
+          unit={users.find((u) => u.username === username)?.unit ?? unit}
           onAmountChange={(e) => setAmount(+e.target.value)}
           amount={amount}
           onUnitChange={(e) => setUnit(e.target.value)}

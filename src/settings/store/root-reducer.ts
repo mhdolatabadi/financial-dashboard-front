@@ -6,6 +6,6 @@ import { selectedUserReducer } from '../../pages/user/selected-user.slice'
 export const rootReducer = combineReducers({
   main,
   currentUser: currentUserReducer,
-  selectedUser: selectedUserReducer
+  selectedUser: selectedUserReducer,
 })
 export type RootState = ReturnType<typeof rootReducer>

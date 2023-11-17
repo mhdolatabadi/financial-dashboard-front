@@ -13,7 +13,7 @@ import { ReduxProvider } from './settings/store'
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <StrictMode>
-    <LocalizationProvider dateAdapter={AdapterMomentJalaali} adapterLocale='fa'>
+    <LocalizationProvider dateAdapter={AdapterMomentJalaali} adapterLocale="fa">
       <CacheProvider value={cacheRtl}>
         <ThemeProvider theme={theme}>
           <ReduxProvider>
@@ -22,7 +22,7 @@ root.render(
         </ThemeProvider>
       </CacheProvider>
     </LocalizationProvider>
-  </StrictMode>
+  </StrictMode>,
 )
 
 // If you want to start measuring performance in your app, pass a function

@@ -4,7 +4,7 @@ export const Section = styled('div')(() => ({
   minWidth: '500px',
   width: '100%',
   maxWidth: '1100px',
-  backgroundColor: 'white',
+  background: '#fff5',
   display: 'flex',
   flexDirection: 'column',
   padding: '20px',
@@ -13,5 +13,5 @@ export const Section = styled('div')(() => ({
   boxShadow: '3px 3px 20px #000a',
   margin: '20px',
   alignItems: 'flex-start',
-  maxHeight: '700px'
+  maxHeight: '750px',
 }))

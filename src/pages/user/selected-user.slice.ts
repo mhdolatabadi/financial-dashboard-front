@@ -62,6 +62,9 @@ const selectedUserSlice = createSlice({
     setSelectedFinancial: (state, action) => {
       state.info.financial = action.payload
     },
+    setSelectedUnit: (state, action) => {
+      state.info.unit = action.payload
+    },
     setSelectedNationalNo: (state, action) => {
       state.info.nationalNo = action.payload
     },
@@ -105,6 +108,7 @@ export const {
   setSelectedNationalNo,
   setSelectedPassword,
   setSelectedFinancial,
+  setSelectedUnit,
   setSelectedProfits,
   setSelectedTransactions,
   // addSelectedTransaction,

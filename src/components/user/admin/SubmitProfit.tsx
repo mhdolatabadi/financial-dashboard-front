@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { User } from '../../../models/user'
 import { PersianTexts } from '../../../utils/persianTexts'
 import { UsernameSelect } from '../UsernameSelect'
 import { AmountUnitTextField } from '../AmountUnitTextField'
@@ -14,12 +13,13 @@ import {
 } from '../../common'
 import { useSelector } from 'react-redux'
 import { usersView } from '../../../pages/user/main.slice'
+import { Units } from '../../../models/units'
 
 export function SubmitProfit() {
   const [username, setUsername] = useState<string>()
   const [date, setDate] = useState<number>(new Date().getTime())
   const [amount, setAmount] = useState<number>()
-  const [unit, setUnit] = useState<string>('rial')
+  const [unit, setUnit] = useState<string>(Units.dollar)
   const [description, setDescription] = useState<string>()
   const users = useSelector(usersView)
   const handleSubmitTransaction = () => {
@@ -59,7 +59,7 @@ export function SubmitProfit() {
           onChange={(value) => setDate(moment(value).valueOf())}
         />
         <AmountUnitTextField
-          unit={unit}
+          unit={users.find((u) => u.username === username)?.unit ?? unit}
           onAmountChange={(e) => setAmount(+e.target.value)}
           amount={amount}
           onUnitChange={(e) => setUnit(e.target.value)}

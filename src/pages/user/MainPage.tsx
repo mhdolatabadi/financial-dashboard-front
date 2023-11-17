@@ -3,7 +3,7 @@ import {
   TransactionsTable,
   UserInformationContainer,
 } from '../../components/user'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   getAllUsers,
   getUserProfits,
@@ -19,8 +19,8 @@ import {
   setCurrentUser,
 } from './current-user.slice'
 import {
-  selectedUserView,
   selectedUsernameView,
+  selectedUserView,
   setSelectedProfits,
   setSelectedTransactions,
   setSelectedUser,
@@ -30,6 +30,8 @@ import { unitToPersian } from '../../utils/unitToPersian'
 import { setUsers } from './main.slice'
 
 export function MainPage() {
+  const [editMode, setEditMode] = useState(false)
+
   const dispatch = useDispatch()
   const selectedUsername = useSelector(selectedUsernameView)
   const currentUsername = useSelector(currentUsernameView)
@@ -59,7 +61,7 @@ export function MainPage() {
 
   return (
     <div style={{ padding: '130px 0 0', height: '100%', width: '100%' }}>
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: '50px' }}>
         <Typography
           color="white"
           fontWeight="700"
@@ -76,8 +78,14 @@ export function MainPage() {
             justifyContent: 'center',
           }}
         >
-          {isAdmin && <AdminToolbox />}
-          {selectedUsername && <UserInformationContainer user={selectedUser} />}
+          {isAdmin && <AdminToolbox editMode={editMode} />}
+          {selectedUsername !== currentUsername && isAdmin && (
+            <UserInformationContainer
+              user={selectedUser}
+              editMode={editMode}
+              handleEditMode={(b) => setEditMode(b)}
+            />
+          )}
         </div>
       )}
       <div

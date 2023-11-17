@@ -9,7 +9,7 @@ import {
   currentUserView,
 } from './pages/user/current-user.slice'
 import { UserInformation } from './components/user/UserInformation'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 export function App() {
   const dispatch = useDispatch()
@@ -25,6 +25,12 @@ export function App() {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const handleLogout = () => {
+    dispatch(setCurrentPage(Page.login))
+    localStorage.clear()
+    setAnchorEl(null)
+  }
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
   return (
@@ -32,31 +38,60 @@ export function App() {
       <AppBar
         sx={{
           padding: '20px',
-          backgroundColor: 'white',
+          backgroundColor: '#fffa',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
+          boxSizing: 'border-box',
         }}
       >
-        <img alt="dornico" width="50px" height="50px" src="/dornico.svg" />
         <Toolbar
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
+            backgroundColor: '#fffa',
+            borderRadius: '20px',
+            paddingLeft: 0,
+            paddingRight: 0,
+            padding: '15px',
+            boxSizing: 'border-box',
           }}
         >
-          <Typography fontSize="20px" color="primary" fontWeight="700">
-            صندوق سرمایه‌گذاری خصوصی درنیکو
-          </Typography>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <img
+              alt="dornico"
+              width="50px"
+              height="50px"
+              src="/dornico.svg"
+              style={{ marginLeft: '15px' }}
+            />
+            <Typography fontSize="20px" color="primary" fontWeight="700">
+              صندوق سرمایه‌گذاری خصوصی درنیکو
+            </Typography>
+          </div>
           {currentPage != Page.login && (
             <Button
-              onClick={handleClick}
+              onClick={isAdmin ? handleLogout : handleClick}
               variant="outlined"
-              sx={{ padding: '20px', borderRadius: '20px' }}
+              sx={{
+                padding: '20px',
+                borderRadius: '20px',
+                width: '150px',
+                background: '#fffa',
+              }}
+              color={isAdmin ? 'error' : 'primary'}
             >
               <Typography fontWeight="500" fontSize="20">
-                {isAdmin ? 'admin' :currentUser.firstname || currentUser.lastname
+                {isAdmin
+                  ? 'خروج'
+                  : currentUser.firstname || currentUser.lastname
                   ? `${currentUser.firstname} ${currentUser.lastname ?? ''}`
                   : currentUser.username}
               </Typography>
@@ -76,6 +111,7 @@ export function App() {
         sx={{
           '& > .MuiPaper-root': {
             borderRadius: '20px',
+            background: '#fffc',
           },
         }}
       >
@@ -90,7 +126,7 @@ export function App() {
             alignItems: 'flex-end',
           }}
         >
-          {!isAdmin && <UserInformation editMode={false} user={currentUser} />}
+          {!isAdmin && <UserInformation user={currentUser} />}
           <Button
             variant="contained"
             color="error"
@@ -100,11 +136,7 @@ export function App() {
               height: '40px',
               margin: '10px 0 0 10px',
             }}
-            onClick={() => {
-              dispatch(setCurrentPage(Page.login))
-              localStorage.clear()
-              setAnchorEl(null)
-            }}
+            onClick={handleLogout}
           >
             خروج
           </Button>

@@ -1,8 +1,7 @@
 body {
-  margin: 0;
-  height: 100vh;
-  font-family:
-    Vazirmatn,
+    margin: 0;
+    height: 100vh;
+    font-family: Vazirmatn,
     -apple-system,
     BlinkMacSystemFont,
     'Segoe UI',
@@ -14,23 +13,23 @@ body {
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0 0 300px;
-  background: linear-gradient(to right, #00566f, #00566f, #0aa);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 0 300px;
+    background: linear-gradient(to right, #00566f, #00566f, #0aa);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
 .App {
-  text-align: center;
-  height: 100%;
+    text-align: center;
+    height: 100%;
 }

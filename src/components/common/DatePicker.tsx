@@ -2,10 +2,22 @@ import { styled } from '@mui/material'
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers'
 import { Moment } from 'moment-jalaali'
 
-export const DatePicker = styled(MuiDatePicker<Moment>)(() => ({
+export const DatePicker = styled(MuiDatePicker<Moment>)(({ theme }) => ({
   margin: '10px 0',
   width: '100%',
   '&>div': {
-    borderRadius: '20px'
-  }
+    borderRadius: '20px',
+    backgroundColor: '#fffc',
+    fontWeight: '700',
+  },
+  '&>.MuiFormLabel-root': {
+    color: theme.palette.primary.main,
+    backgroundColor: '#ffff',
+    borderRadius: '20px',
+    padding: '1px 10px',
+    boxSizing: 'border-box',
+  },
+  '&>.MuiFormHelperText-root': {
+    color: theme.palette.primary.main,
+  },
 }))

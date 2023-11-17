@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { PersianTexts } from '../../utils/persianTexts'
 import {
   ContainedButton,
@@ -7,30 +7,15 @@ import {
   SuccessToast,
   TextField,
 } from '../../components/common'
-import {
-  getUserProfits,
-  getUserTransactions,
-  getUserWithUsername,
-  loginUser,
-} from '../../utils/dataManipulation'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  accessTokenView,
-  setAccessToken,
-  setCurrentPage,
-} from '../user/main.slice'
+import { loginUser } from '../../utils/dataManipulation'
+import { useDispatch } from 'react-redux'
+import { setAccessToken, setCurrentPage } from '../user/main.slice'
 import { Page } from '../../models/Page'
 import {
   setCurrentIsAdmin,
-  setCurrentUser,
   setCurrentUsername,
 } from '../user/current-user.slice'
-import {
-  setSelectedProfits,
-  setSelectedTransactions,
-  setSelectedUser,
-  setSelectedUsername,
-} from '../user/selected-user.slice'
+import { setSelectedUsername } from '../user/selected-user.slice'
 
 export function LoginPage() {
   const [username, setUsernameState] = useState<string>('')
@@ -46,7 +31,7 @@ export function LoginPage() {
         dispatch(setCurrentIsAdmin(data.isAdmin))
         dispatch(setSelectedUsername(username))
         dispatch(setCurrentUsername(username))
-        SuccessToast(PersianTexts.successfullLogin).showToast()
+        SuccessToast(PersianTexts.successfulLogin).showToast()
       })
       .catch(() => {
         ErrorToast('مشکلی پیش آمد').showToast()
@@ -55,20 +40,39 @@ export function LoginPage() {
 
   return (
     <Section sx={{ width: '500px', margin: '200px auto' }}>
-      <div style={{ marginBottom: '20px', width: '100%' }}>
-        <TextField
-          label={PersianTexts.username}
-          onChange={(e) => setUsernameState(e.target.value)}
-        />
-        <TextField
-          label={PersianTexts.password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-        />
+      <div
+        style={{
+          width: '100%',
+          background: '#fff5',
+          padding: '20px',
+          boxSizing: 'border-box',
+          borderRadius: '20px',
+        }}
+      >
+        <div
+          style={{
+            marginBottom: '20px',
+            width: '100%',
+            background: '#fff5',
+            padding: '20px',
+            boxSizing: 'border-box',
+            borderRadius: '20px',
+          }}
+        >
+          <TextField
+            label={PersianTexts.username}
+            onChange={(e) => setUsernameState(e.target.value)}
+          />
+          <TextField
+            label={PersianTexts.password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+          />
+        </div>
+        <ContainedButton variant="contained" onClick={loginHandler}>
+          {PersianTexts.enter}
+        </ContainedButton>
       </div>
-      <ContainedButton variant="contained" onClick={loginHandler}>
-        {PersianTexts.enter}
-      </ContainedButton>
     </Section>
   )
 }
