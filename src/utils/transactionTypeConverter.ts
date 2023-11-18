@@ -1,6 +1,7 @@
-import { PersianTexts } from './persianTexts'
+import { useTranslation } from 'react-i18next'
 
 export function transactionTypeConverter(type: string) {
-  if (type === 'in') return PersianTexts.deposite
-  if (type === 'out') return PersianTexts.withdraw
+  const { t } = useTranslation()
+  if (type === 'in') return t('common.deposit')
+  if (type === 'out') return t('common.withdraw')
 }

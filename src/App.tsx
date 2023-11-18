@@ -8,7 +8,7 @@ import {
   currentIsAdminView,
   currentUserView,
 } from './pages/user/current-user.slice'
-import { UserInformation } from './components/user/UserInformation'
+import { UserInformation } from './components/user-information/UserInformation'
 import React, { useState } from 'react'
 
 export function App() {

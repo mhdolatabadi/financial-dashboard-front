@@ -1,13 +1,11 @@
-import { useState } from 'react'
-import { PersianTexts } from '../../utils/persianTexts'
 import { SectionWithHeader } from '../common'
 import { useSelector } from 'react-redux'
 import { currentIsAdminView } from '../../pages/user/current-user.slice'
 import { Person } from '@mui/icons-material'
 import { UserInformation } from './UserInformation'
-import { selectedUserView } from '../../pages/user/selected-user.slice'
 import { UserInformationForm } from './UserInformationForm'
 import { User } from '../../models/user'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   user: User
@@ -20,13 +18,13 @@ export function UserInformationContainer({
   editMode,
   handleEditMode,
 }: Props) {
+  const { t } = useTranslation()
   const isAdmin = useSelector(currentIsAdminView)
-
   return (
     <SectionWithHeader
-      header={PersianTexts.userInformation}
+      header={t('userInformation')}
       Icon={<Person sx={{ color: 'primary.main' }} />}
-      action={isAdmin ? (editMode ? undefined : PersianTexts.edit) : undefined}
+      action={isAdmin ? (editMode ? undefined : t('common.edit')) : undefined}
       onAction={editMode ? undefined : () => handleEditMode(true)}
       sx={{
         maxWidth: '400px',

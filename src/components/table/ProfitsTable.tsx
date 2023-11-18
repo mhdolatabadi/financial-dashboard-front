@@ -1,4 +1,3 @@
-import { PersianTexts } from '../../utils/persianTexts'
 import { ErrorToast, SectionWithHeader, Table } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -6,9 +5,11 @@ import {
   setDeleteProfit,
 } from '../../pages/user/selected-user.slice'
 import { Paid } from '@mui/icons-material'
-import { deleteProfit } from '../../utils/dataManipulation'
+import { deleteProfit } from '../../settings/api/dataManipulation'
+import { useTranslation } from 'react-i18next'
 
 export function ProfitsTable() {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const profits = useSelector(selectedUserProfitsView)
   const handleDelete = (id: string) => {
@@ -22,18 +23,19 @@ export function ProfitsTable() {
   }
   return (
     <SectionWithHeader
-      header={PersianTexts.profitTable}
+      header={t('profitTable')}
       Icon={<Paid sx={{ color: 'primary.main' }} />}
     >
       <Table
+        type="profit"
         headers={[
-          { value: PersianTexts.date, width: '' },
-          { value: PersianTexts.amount, width: '30%' },
-          { value: PersianTexts.description, width: '100%' },
+          { value: t('common.date'), width: '' },
+          { value: t('common.amount'), width: '20%' },
+          { value: t('common.description'), width: '100%' },
         ]}
         values={profits}
         handleDelete={handleDelete}
-      ></Table>
+      />
     </SectionWithHeader>
   )
 }

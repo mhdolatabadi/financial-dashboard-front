@@ -1,7 +1,6 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { styled, Tab } from '@mui/material'
 import { CreateUser } from './CreateUser'
-import { PersianTexts } from '../../../utils/persianTexts'
 import { AllUsersTable } from './AllUsersTable'
 import { SubmitTransaction } from './SubmitTransaction'
 import { SubmitProfit } from './SubmitProfit'
@@ -9,11 +8,11 @@ import { useState } from 'react'
 import {
   createUser,
   getUserWithUsername,
-} from '../../../utils/dataManipulation'
-import { ErrorToast, SectionWithHeader, SuccessToast } from '../../common'
-import { Credential } from '../../../models/Credential'
+} from '../../settings/api/dataManipulation'
+import { ErrorToast, SectionWithHeader, SuccessToast } from '../common'
+import { Credential } from '../../models/Credential'
 import { useDispatch } from 'react-redux'
-import { setAddUser } from '../../../pages/user/main.slice'
+import { setAddUser } from '../../pages/user/main.slice'
 import {
   AdminPanelSettings,
   Group,
@@ -21,6 +20,7 @@ import {
   PersonAdd,
   Receipt,
 } from '@mui/icons-material'
+import { useTranslation } from 'react-i18next'
 
 const StyledTabPanel = styled(TabPanel)(() => ({
   width: '100%',
@@ -52,6 +52,7 @@ interface Props {
 }
 
 export function AdminToolbox({ editMode }: Props) {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const [selectedTab, setSelectedTab] = useState<string>('1')
 
@@ -61,7 +62,7 @@ export function AdminToolbox({ editMode }: Props) {
     unit,
   }: Credential & { unit: string }) => {
     createUser(username, password, unit).then(() => {
-      SuccessToast(PersianTexts.successful).showToast()
+      SuccessToast(t('messages.successful')).showToast()
       getUserWithUsername(username)
         .then((res) => {
           dispatch(setAddUser(res.data))
@@ -95,27 +96,19 @@ export function AdminToolbox({ editMode }: Props) {
             }}
             onChange={(_, value) => setSelectedTab(value)}
           >
-            <StyledTab
-              icon={<Group />}
-              label={PersianTexts.usersList}
-              value="1"
-            />
+            <StyledTab icon={<Group />} label={t('usersList')} value="1" />
             <StyledTab
               icon={<PersonAdd />}
-              label={PersianTexts.createNewUser}
+              label={t('createNewUser')}
               value="2"
             />
             <StyledTab
               icon={<Receipt />}
-              label={PersianTexts.submitTransaction}
+              label={t('submitTransaction')}
               value="3"
             />
 
-            <StyledTab
-              icon={<Paid />}
-              label={PersianTexts.submitProfit}
-              value="4"
-            />
+            <StyledTab icon={<Paid />} label={t('submitProfit')} value="4" />
           </TabList>
           <StyledTabPanel value="1">
             <AllUsersTable editMode={editMode} />

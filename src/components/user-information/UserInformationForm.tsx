@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { PersianTexts } from '../../utils/persianTexts'
 import { ErrorToast, SuccessToast, TextField } from '../common'
 import {
   selectedUserView,
@@ -12,15 +11,17 @@ import {
   setSelectedUsername,
 } from '../../pages/user/selected-user.slice'
 import { Button, MenuItem } from '@mui/material'
-import { updateUserInformation } from '../../utils/dataManipulation'
+import { updateUserInformation } from '../../settings/api/dataManipulation'
 import { Units } from '../../models/units'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
-export function UserInformationForm({
-  handleClose,
-}: {
+interface Props {
   handleClose: (state: boolean) => unknown
-}) {
+}
+
+export function UserInformationForm({ handleClose }: Props) {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const selectedUser = useSelector(selectedUserView)
   const handleEditUser = () => {
@@ -30,7 +31,7 @@ export function UserInformationForm({
     })
       .then((res) => {
         console.log(res.data)
-        SuccessToast(PersianTexts.successful).showToast()
+        SuccessToast(t('messages.successful')).showToast()
       })
       .catch(() => {
         ErrorToast('مشکلی پیش آمد').showToast()
@@ -49,14 +50,14 @@ export function UserInformationForm({
     >
       <div>
         <TextField
-          label={PersianTexts.username}
+          label={t('user.username')}
           value={selectedUser?.username}
           onChange={(username) =>
             dispatch(setSelectedUsername(username.target.value))
           }
         />
         <TextField
-          label={PersianTexts.password}
+          label={t('user.password')}
           value={selectedUser.password}
           onChange={(password) =>
             dispatch(setSelectedPassword(password.target.value))
@@ -64,7 +65,7 @@ export function UserInformationForm({
           helperText="تنها در صورتی که می‌خواهید رمز عبور را تغییر دهید این فیلد را پر کنید"
         />
         <TextField
-          label={PersianTexts.nationalNo}
+          label={t('user.nationalNo')}
           value={
             selectedUser?.nationalNo ? selectedUser?.nationalNo : undefined
           }
@@ -73,18 +74,18 @@ export function UserInformationForm({
           }
         />
         <TextField
-          label={PersianTexts.firstname}
+          label={t('user.firstname')}
           value={selectedUser?.firstname}
           onChange={(e) => dispatch(setSelectedFirstname(e.target.value))}
         />
         <TextField
-          label={PersianTexts.lastname}
+          label={t('user.lastname')}
           value={selectedUser?.lastname}
           onChange={(e) => dispatch(setSelectedLastname(e.target.value))}
         />
         <TextField
           disabled
-          label={PersianTexts.financial}
+          label={t('financial')}
           value={
             selectedUser.financial && selectedUser.unit
               ? String(selectedUser.financial)
@@ -99,10 +100,10 @@ export function UserInformationForm({
           value={selectedUser.unit}
           onChange={(e) => dispatch(setSelectedUnit(e.target.value))}
         >
-          <MenuItem value={Units.rial}>{PersianTexts.rial}</MenuItem>
-          <MenuItem value={Units.derham}>{PersianTexts.derham}</MenuItem>
-          <MenuItem value={Units.dollar}>{PersianTexts.dollar}</MenuItem>
-          <MenuItem value={Units.euro}>{PersianTexts.euro}</MenuItem>
+          <MenuItem value={Units.rial}>{t('units.rial')}</MenuItem>
+          <MenuItem value={Units.derham}>{t('units.derham')}</MenuItem>
+          <MenuItem value={Units.dollar}>{t('units.dollar')}</MenuItem>
+          <MenuItem value={Units.euro}>{t('units.euro')}</MenuItem>
         </TextField>
       </div>
       <div style={{ display: 'flex', margin: '10px 0' }}>
@@ -119,7 +120,7 @@ export function UserInformationForm({
           variant="outlined"
           onClick={() => handleClose(false)}
         >
-          {PersianTexts.cancel}
+          {t('common.cancel')}
         </Button>
         <Button
           sx={{
@@ -133,7 +134,7 @@ export function UserInformationForm({
           variant="contained"
           onClick={handleEditUser}
         >
-          {PersianTexts.submit}
+          {t('common.submit')}
         </Button>
       </div>
     </div>

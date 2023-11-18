@@ -1,7 +1,7 @@
 import { MenuItem } from '@mui/material'
-import { PersianTexts } from '../../utils/persianTexts'
-import { TextField } from '../common'
+import { TextField } from './index'
 import { User } from '../../models/user'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   username: string | undefined
@@ -12,12 +12,14 @@ interface Props {
 }
 
 export function UsernameSelect({ username, onChange, users }: Props) {
+  const { t } = useTranslation()
   return (
     <div style={{ width: '100%' }}>
       <TextField
         select
+        required
         value={username}
-        label={PersianTexts.username}
+        label={t('user.username')}
         onChange={onChange}
       >
         {users.map((u) => (

@@ -9,6 +9,7 @@ import { cacheRtl, theme } from './settings/theme'
 import './index.css'
 import 'dayjs/locale/fa'
 import { ReduxProvider } from './settings/store'
+import './settings/i18n'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(

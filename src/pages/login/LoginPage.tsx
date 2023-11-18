@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { PersianTexts } from '../../utils/persianTexts'
 import {
   ContainedButton,
   ErrorToast,
@@ -7,7 +6,7 @@ import {
   SuccessToast,
   TextField,
 } from '../../components/common'
-import { loginUser } from '../../utils/dataManipulation'
+import { loginUser } from '../../settings/api/dataManipulation'
 import { useDispatch } from 'react-redux'
 import { setAccessToken, setCurrentPage } from '../user/main.slice'
 import { Page } from '../../models/Page'
@@ -16,8 +15,10 @@ import {
   setCurrentUsername,
 } from '../user/current-user.slice'
 import { setSelectedUsername } from '../user/selected-user.slice'
+import { useTranslation } from 'react-i18next'
 
 export function LoginPage() {
+  const { t } = useTranslation()
   const [username, setUsernameState] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const dispatch = useDispatch()
@@ -31,7 +32,7 @@ export function LoginPage() {
         dispatch(setCurrentIsAdmin(data.isAdmin))
         dispatch(setSelectedUsername(username))
         dispatch(setCurrentUsername(username))
-        SuccessToast(PersianTexts.successfulLogin).showToast()
+        SuccessToast(t('messages.successfulLogin')).showToast()
       })
       .catch(() => {
         ErrorToast('مشکلی پیش آمد').showToast()
@@ -60,17 +61,17 @@ export function LoginPage() {
           }}
         >
           <TextField
-            label={PersianTexts.username}
+            label={t('user.username')}
             onChange={(e) => setUsernameState(e.target.value)}
           />
           <TextField
-            label={PersianTexts.password}
+            label={t('user.password')}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
           />
         </div>
-        <ContainedButton variant="contained" onClick={loginHandler}>
-          {PersianTexts.enter}
+        <ContainedButton onClick={loginHandler}>
+          {t('common.enter')}
         </ContainedButton>
       </div>
     </Section>

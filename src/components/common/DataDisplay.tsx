@@ -1,5 +1,6 @@
 import { Divider, Stack, styled, Typography } from '@mui/material'
-import { PersianTexts } from '../../utils/persianTexts'
+import { useTranslation } from 'react-i18next'
+import { ReactNode } from 'react'
 
 const RowFlex = styled('div')(() => ({
   width: '100%',
@@ -13,10 +14,11 @@ const RowFlex = styled('div')(() => ({
 
 interface Props {
   label: string
-  value: string | undefined
+  value: ReactNode
 }
 
 export function DataDisplay({ label, value }: Props) {
+  const { t } = useTranslation()
   return (
     <RowFlex>
       <div
@@ -63,7 +65,7 @@ export function DataDisplay({ label, value }: Props) {
           }}
         >
           <Typography fontWeight="500" color="#000d">
-            {value ?? PersianTexts.empty}
+            {value ?? t('inform.empty')}
           </Typography>
         </Stack>
         <Divider />

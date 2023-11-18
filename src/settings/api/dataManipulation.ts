@@ -1,4 +1,4 @@
-import { User } from '../models/user'
+import { User } from '../../models/user'
 import { deleteRequest, getRequest, postRequest, putRequest } from './request'
 
 export function getUserWithUsername(username: string) {

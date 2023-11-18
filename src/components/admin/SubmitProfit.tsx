@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { PersianTexts } from '../../../utils/persianTexts'
-import { UsernameSelect } from '../UsernameSelect'
-import { AmountUnitTextField } from '../AmountUnitTextField'
-import { submitProfit } from '../../../utils/dataManipulation'
+import { UsernameSelect } from '../common/UsernameSelect'
+import { AmountUnitTextField } from '../common/AmountUnitTextField'
+import { submitProfit } from '../../settings/api/dataManipulation'
 import moment from 'moment-jalaali'
 import {
   ContainedButton,
@@ -10,14 +9,18 @@ import {
   ErrorToast,
   SuccessToast,
   TextField,
-} from '../../common'
+} from '../common'
 import { useSelector } from 'react-redux'
-import { usersView } from '../../../pages/user/main.slice'
-import { Units } from '../../../models/units'
+import { usersView } from '../../pages/user/main.slice'
+import { Units } from '../../models/units'
+import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 export function SubmitProfit() {
+  const { t } = useTranslation()
   const [username, setUsername] = useState<string>()
   const [date, setDate] = useState<number>(new Date().getTime())
+  const [type, setType] = useState<string>('in')
   const [amount, setAmount] = useState<number>()
   const [unit, setUnit] = useState<string>(Units.dollar)
   const [description, setDescription] = useState<string>()
@@ -26,19 +29,20 @@ export function SubmitProfit() {
     submitProfit({
       username,
       date: new Date(date),
+      type,
       amount,
       unit,
       description,
     })
       .then(() => {
-        SuccessToast(PersianTexts.successful).showToast()
+        SuccessToast(t('messages.successful')).showToast()
       })
       .catch(() => {
         ErrorToast('مشکلی پیش آمد').showToast()
       })
   }
   return (
-    <div
+    <form
       style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -54,7 +58,7 @@ export function SubmitProfit() {
           onChange={(e) => setUsername(e.target.value)}
         />
         <DatePicker
-          label={PersianTexts.date}
+          label={t('common.date')}
           value={moment(date)}
           onChange={(value) => setDate(moment(value).valueOf())}
         />
@@ -64,16 +68,27 @@ export function SubmitProfit() {
           amount={amount}
           onUnitChange={(e) => setUnit(e.target.value)}
         />
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          sx={{ padding: '10px' }}
+        >
+          <FormControlLabel value="in" control={<Radio />} label="سود" />
+          <FormControlLabel value="out" control={<Radio />} label="زیان" />
+        </RadioGroup>
         <TextField
           multiline
-          label={`${PersianTexts.description} (${PersianTexts.optional})`}
+          label={`${t('common.description')} (${t('common.optional')})`}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      <ContainedButton variant="contained" onClick={handleSubmitTransaction}>
-        {PersianTexts.submit}
+      <ContainedButton onClick={handleSubmitTransaction}>
+        {t('common.submit')}
       </ContainedButton>
-    </div>
+    </form>
   )
 }

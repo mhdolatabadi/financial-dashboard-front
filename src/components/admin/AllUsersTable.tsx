@@ -7,29 +7,30 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import { PersianTexts } from '../../../utils/persianTexts'
 import { DeleteOutline, VisibilityOutlined } from '@mui/icons-material'
 import {
   deleteUser,
   getUserProfits,
   getUserTransactions,
   getUserWithId,
-} from '../../../utils/dataManipulation'
-import { ErrorToast, SuccessToast } from '../../common'
+} from '../../settings/api/dataManipulation'
+import { ErrorToast, SuccessToast } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedProfits,
   setSelectedTransactions,
   setSelectedUser,
-} from '../../../pages/user/selected-user.slice'
-import { setDeleteUser, usersView } from '../../../pages/user/main.slice'
-import { currentUsernameView } from '../../../pages/user/current-user.slice'
+} from '../../pages/user/selected-user.slice'
+import { setDeleteUser, usersView } from '../../pages/user/main.slice'
+import { currentUsernameView } from '../../pages/user/current-user.slice'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   editMode: boolean
 }
 
 export function AllUsersTable({ editMode }: Props) {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const currentUsername = useSelector(currentUsernameView)
   const users = useSelector(usersView)
@@ -48,7 +49,7 @@ export function AllUsersTable({ editMode }: Props) {
     deleteUser(id)
       .then(() => {
         dispatch(setDeleteUser(id))
-        SuccessToast(PersianTexts.successful).showToast()
+        SuccessToast(t('messages.successful')).showToast()
       })
       .catch(() => {
         ErrorToast('مشکلی پیش آمد').showToast()
@@ -92,7 +93,7 @@ export function AllUsersTable({ editMode }: Props) {
                     <Typography>
                       {u.firstname || u.lastname
                         ? `${u.firstname ?? ''} ${u.lastname ?? ''}`
-                        : `${PersianTexts.firstname} ${PersianTexts.empty}`}
+                        : `${t('user.firstname')} ${t('inform.empty')}`}
                     </Typography>
                   </TableCell>
                   <TableCell sx={{ width: '20px', padding: 0 }}>
@@ -106,7 +107,7 @@ export function AllUsersTable({ editMode }: Props) {
                 </TableRow>
               ))
           ) : (
-            <Typography>{PersianTexts.thereIsNoUserYet}</Typography>
+            <Typography>{t('inform.thereIsNoUserYet')}</Typography>
           )}
         </TableBody>
       </Table>

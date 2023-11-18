@@ -1,16 +1,11 @@
-import {
-  ProfitsTable,
-  TransactionsTable,
-  UserInformationContainer,
-} from '../../components/user'
 import { useEffect, useState } from 'react'
 import {
   getAllUsers,
   getUserProfits,
   getUserTransactions,
   getUserWithUsername,
-} from '../../utils/dataManipulation'
-import { AdminToolbox } from '../../components/user/admin/AdminToolbox'
+} from '../../settings/api/dataManipulation'
+import { AdminToolbox } from '../../components/admin'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   currentIsAdminView,
@@ -26,10 +21,15 @@ import {
   setSelectedUser,
 } from './selected-user.slice'
 import { Typography } from '@mui/material'
-import { unitToPersian } from '../../utils/unitToPersian'
 import { setUsers } from './main.slice'
+import { useTranslation } from 'react-i18next'
+import { toPersianNumber } from '../../utils/toPersianNumber'
+import { UserInformationContainer } from '../../components/user-information'
+import { ProfitsTable, TransactionsTable } from '../../components/table'
 
 export function MainPage() {
+  const { t } = useTranslation()
+
   const [editMode, setEditMode] = useState(false)
 
   const dispatch = useDispatch()
@@ -66,9 +66,9 @@ export function MainPage() {
           color="white"
           fontWeight="700"
           fontSize="25px"
-        >{`دارایی شما: ${Intl.NumberFormat('fa-IR').format(
-          currentUser.financial ?? 0,
-        )} ${unitToPersian(currentUser.unit)}`}</Typography>
+        >{`دارایی شما: ${toPersianNumber(currentUser.financial)} ${t(
+          `units.${currentUser.unit}`,
+        )}`}</Typography>
       </div>
       {isAdmin && (
         <div

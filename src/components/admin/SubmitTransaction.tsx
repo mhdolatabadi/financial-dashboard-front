@@ -1,21 +1,22 @@
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { useState } from 'react'
-import { PersianTexts } from '../../../utils/persianTexts'
-import { UsernameSelect } from '../UsernameSelect'
-import { AmountUnitTextField } from '../AmountUnitTextField'
-import { submitTransaction } from '../../../utils/dataManipulation'
+import { UsernameSelect } from '../common/UsernameSelect'
+import { AmountUnitTextField } from '../common/AmountUnitTextField'
+import { submitTransaction } from '../../settings/api/dataManipulation'
 import {
   ContainedButton,
   DatePicker,
   ErrorToast,
   SuccessToast,
   TextField,
-} from '../../common'
+} from '../common'
 import moment from 'moment-jalaali'
 import { useSelector } from 'react-redux'
-import { usersView } from '../../../pages/user/main.slice'
+import { usersView } from '../../pages/user/main.slice'
+import { useTranslation } from 'react-i18next'
 
 export function SubmitTransaction() {
+  const { t } = useTranslation()
   const [username, setUsername] = useState<string>()
   const [date, setDate] = useState<number>(new Date().getTime())
   const [type, setType] = useState<string>('in')
@@ -33,14 +34,14 @@ export function SubmitTransaction() {
       description,
     })
       .then(() => {
-        SuccessToast(PersianTexts.successful).showToast()
+        SuccessToast(t('messages.successful')).showToast()
       })
       .catch(() => {
         ErrorToast('مشکلی پیش آمد').showToast()
       })
   }
   return (
-    <div
+    <form
       style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -56,7 +57,7 @@ export function SubmitTransaction() {
           onChange={(e) => setUsername(e.target.value)}
         />
         <DatePicker
-          label={PersianTexts.date}
+          label={t('common.date')}
           value={moment(date)}
           onChange={(value) => setDate(moment(value).valueOf())}
         />
@@ -79,14 +80,14 @@ export function SubmitTransaction() {
         </RadioGroup>
         <TextField
           multiline
-          label={`${PersianTexts.description} (${PersianTexts.optional})`}
+          label={`${t('common.description')} (${t('common.optional')})`}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      <ContainedButton variant="contained" onClick={handleSubmitTransaction}>
-        {PersianTexts.submit}
+      <ContainedButton onClick={handleSubmitTransaction}>
+        {t('common.submit')}
       </ContainedButton>
-    </div>
+    </form>
   )
 }

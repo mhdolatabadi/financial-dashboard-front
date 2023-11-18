@@ -2,6 +2,7 @@ import {
   Button,
   Chip,
   Table as MuiTable,
+  Stack,
   TableBody,
   TableCell,
   TableContainer,
@@ -10,12 +11,12 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
-import { PersianTexts } from '../../utils/persianTexts'
-import { unitToPersian } from '../../utils/unitToPersian'
 import { DeleteOutline } from '@mui/icons-material'
 import { useSelector } from 'react-redux'
 import { selectedUserView } from '../../pages/user/selected-user.slice'
 import { currentIsAdminView } from '../../pages/user/current-user.slice'
+import { useTranslation } from 'react-i18next'
+import { toPersianNumber } from '../../utils/toPersianNumber'
 
 interface HeaderProps {
   value: string
@@ -25,6 +26,7 @@ interface HeaderProps {
 interface Props<T> {
   headers: HeaderProps[]
   values: T[]
+  type: 'transaction' | 'profit'
   handleDelete: (id: string) => unknown
 }
 
@@ -41,7 +43,9 @@ export function Table<T extends Transaction>({
   headers,
   values,
   handleDelete,
+  type,
 }: Props<T>) {
+  const { t } = useTranslation()
   const selectedUser = useSelector(selectedUserView)
   const isAdmin = useSelector(currentIsAdminView)
   return (
@@ -53,7 +57,7 @@ export function Table<T extends Transaction>({
         borderWidth: '1px',
         borderStyle: 'solid',
 
-        borderRadius: '20px',
+        borderRadius: '20px', maxHeight: '500px'
       }}
     >
       {values.length > 0 ? (
@@ -89,21 +93,29 @@ export function Table<T extends Transaction>({
                   }}
                 >
                   <Typography fontSize="14px" noWrap>
-                    {`${Intl.NumberFormat('fa-IR').format(
-                      +value.amount,
-                    )} ${unitToPersian(selectedUser.unit)}`}
+                    {`${toPersianNumber(+value.amount)} ${t(
+                      `units.${selectedUser.unit}`,
+                    )}`}
                   </Typography>
                   {value.type && (
                     <Chip
                       color={value.type === 'in' ? 'success' : 'error'}
                       sx={{ marginLeft: '20px', width: '70px' }}
-                      label={value.type === 'in' ? 'واریز' : 'برداشت'}
+                      label={
+                        value.type === 'in'
+                          ? type === 'transaction'
+                            ? 'واریز'
+                            : 'سود'
+                          : type === 'transaction'
+                          ? 'برداشت'
+                          : 'زیان'
+                      }
                     />
                   )}
                 </TableCell>
                 <TableCell>
                   <Tooltip title={value.description}>
-                    <Typography>{value.description}</Typography>
+                    <Typography noWrap width="100%" sx={{ maxWidth: '500px', minWidth: '100px'}}>{value.description}</Typography>
                   </Tooltip>
                 </TableCell>
                 {isAdmin && (
@@ -131,7 +143,7 @@ export function Table<T extends Transaction>({
           }}
         >
           <Typography fontWeight="600" color="#000a">
-            {PersianTexts.thereIsNotProfitYet}
+            {t('inform.thereIsNotProfitYet')}
           </Typography>
         </div>
       )}
