@@ -69,29 +69,53 @@ const selectedUserSlice = createSlice({
       state.info.nationalNo = action.payload
     },
     setSelectedTransactions: (state, action) => {
-      state.transactions = action.payload
+      state.transactions = [...action.payload]
     },
-    // addSelectedTransaction: (state, action) => {
-    //   state.transactions = state.transactions.concat(action.payload)
-    // },
+    addSelectedTransaction: (state, { payload }) => {
+      state.transactions = [...state.transactions, payload]
+      if (payload.type === 'in') {
+        state.info.financial += payload.amount
+      } else {
+        state.info.financial -= payload.amount
+      }
+    },
     setSelectedProfits: (state, action) => {
-      state.profits = action.payload
+      state.profits = [...action.payload]
     },
-    // addSelectedProfit: (state, action) => {
-    //   state.profits = state.profits.concat(action.payload)
-    // },
+    addSelectedProfit: (state, { payload }) => {
+      state.profits = [...state.profits, payload]
+      if (payload.type === 'in') {
+        state.info.financial += payload.amount
+        state.info.totalProfit += payload.amount
+      } else {
+        state.info.financial -= payload.amount
+        state.info.totalProfit -= payload.amount
+      }
+    },
     setDeleteTransaction: (state, action) => {
       const newTransactions = state.transactions.filter(
         (u: any) => u?.id != action.payload,
       )
+      const transaction = state.transactions.find((t) => t.id == action.payload)
       state.transactions = newTransactions
+      if (transaction.type === 'in') {
+        state.info.financial -= transaction.amount
+      } else {
+        state.info.financial += transaction.amount
+      }
     },
 
-    setDeleteProfit: (state, action) => {
-      const newProfit = state.profits.filter(
-        (u: any) => u?.id != action.payload,
-      )
+    setDeleteProfit: (state, { payload }) => {
+      const newProfit = state.profits.filter((p) => p.id != payload)
+      const profit = state.profits.find((p) => p.id == payload)
       state.profits = newProfit
+      if (profit.type === 'in') {
+        state.info.financial -= profit.amount
+        state.info.totalProfit -= profit.amount
+      } else {
+        state.info.financial += profit.amount
+        state.info.totalProfit += profit.amount
+      }
     },
   },
 })
@@ -111,8 +135,8 @@ export const {
   setSelectedUnit,
   setSelectedProfits,
   setSelectedTransactions,
-  // addSelectedTransaction,
-  // addSelectedProfit,
+  addSelectedTransaction,
+  addSelectedProfit,
   setDeleteProfit,
   setDeleteTransaction,
 } = actions

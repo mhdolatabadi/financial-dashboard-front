@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Units } from '../../models/units'
 
 interface Props {
-  amount: number | undefined
+  amount: number
   unit: string
   onAmountChange: React.ChangeEventHandler<HTMLInputElement>
   onUnitChange: React.ChangeEventHandler<HTMLInputElement>
@@ -21,7 +21,6 @@ export function AmountUnitTextField({
   return (
     <div style={{ display: 'flex', width: '100%' }}>
       <TextField
-        type="number"
         required
         sx={{ width: '100%' }}
         label={t('common.amount')}

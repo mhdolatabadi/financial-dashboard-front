@@ -18,7 +18,7 @@ export function TransactionsTable() {
         dispatch(setDeleteTransaction(id))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد').showToast()
+        ErrorToast('مشکلی پیش آمد')
       })
   }
   return (

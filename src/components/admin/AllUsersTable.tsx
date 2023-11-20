@@ -49,10 +49,10 @@ export function AllUsersTable({ editMode }: Props) {
     deleteUser(id)
       .then(() => {
         dispatch(setDeleteUser(id))
-        SuccessToast(t('messages.successful')).showToast()
+        SuccessToast(t('messages.successful'))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد').showToast()
+        ErrorToast('مشکلی پیش آمد')
       })
   }
   return (

@@ -18,7 +18,7 @@ export function ProfitsTable() {
         dispatch(setDeleteProfit(id))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد').showToast()
+        ErrorToast('مشکلی پیش آمد')
       })
   }
   return (

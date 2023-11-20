@@ -1,4 +1,6 @@
 import { User } from '../../models/user'
+import { setDeleteTransaction } from '../../pages/user/selected-user.slice'
+import { dispatch } from '../store'
 import { deleteRequest, getRequest, postRequest, putRequest } from './request'
 
 export function getUserWithUsername(username: string) {

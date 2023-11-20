@@ -10,35 +10,46 @@ import {
   SuccessToast,
   TextField,
 } from '../common'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { usersView } from '../../pages/user/main.slice'
 import { Units } from '../../models/units'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { addSelectedProfit } from '../../pages/user/selected-user.slice'
 
 export function SubmitProfit() {
   const { t } = useTranslation()
-  const [username, setUsername] = useState<string>()
+
+  const dispatch = useDispatch()
+  const users = useSelector(usersView)
+
+  const [username, setUsername] = useState<string>(users[0].username)
   const [date, setDate] = useState<number>(new Date().getTime())
   const [type, setType] = useState<string>('in')
-  const [amount, setAmount] = useState<number>()
+  const [amount, setAmount] = useState<number>(0)
   const [unit, setUnit] = useState<string>(Units.dollar)
   const [description, setDescription] = useState<string>()
-  const users = useSelector(usersView)
+
   const handleSubmitTransaction = () => {
-    submitProfit({
+    if (amount === 0) {
+      ErrorToast('مبلغ نمی‌تواند صفر باشد')
+      return
+    }
+    const profit = {
       username,
       date: new Date(date),
       type,
       amount,
       unit,
       description,
-    })
-      .then(() => {
-        SuccessToast(t('messages.successful')).showToast()
+    }
+    submitProfit(profit)
+      .then((res) => {
+        dispatch(addSelectedProfit({ id: res.data, ...profit, username: undefined, date: profit.date.toLocaleDateString() }))
+        SuccessToast(t('messages.successful'))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد').showToast()
+        ErrorToast('مشکلی پیش آمد')
       })
   }
   return (
@@ -64,7 +75,7 @@ export function SubmitProfit() {
         />
         <AmountUnitTextField
           unit={users.find((u) => u.username === username)?.unit ?? unit}
-          onAmountChange={(e) => setAmount(+e.target.value)}
+          onAmountChange={(e) => !Number.isNaN(+e.target.value) ? setAmount(+e.target.value) : undefined}
           amount={amount}
           onUnitChange={(e) => setUnit(e.target.value)}
         />

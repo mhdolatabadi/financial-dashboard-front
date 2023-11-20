@@ -32,10 +32,10 @@ export function LoginPage() {
         dispatch(setCurrentIsAdmin(data.isAdmin))
         dispatch(setSelectedUsername(username))
         dispatch(setCurrentUsername(username))
-        SuccessToast(t('messages.successfulLogin')).showToast()
+        SuccessToast(t('messages.successfulLogin'))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد').showToast()
+        ErrorToast('مشکلی پیش آمد')
       })
   }
 

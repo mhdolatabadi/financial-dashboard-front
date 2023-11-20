@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { MainPage } from './pages/user/MainPage'
 import { AppBar, Button, Popover, Toolbar, Typography } from '@mui/material'
 import { LoginPage } from './pages/login/LoginPage'
@@ -9,7 +10,9 @@ import {
   currentUserView,
 } from './pages/user/current-user.slice'
 import { UserInformation } from './components/user-information/UserInformation'
-import React, { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { SuccessToast } from './components/common'
 
 export function App() {
   const dispatch = useDispatch()
@@ -30,11 +33,13 @@ export function App() {
     dispatch(setCurrentPage(Page.login))
     localStorage.clear()
     setAnchorEl(null)
+    SuccessToast('با موفقیت خارج شدید')
   }
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
   return (
     <div className="App">
+      <ToastContainer rtl position={toast.POSITION.BOTTOM_RIGHT} limit={3}/>
       <AppBar
         sx={{
           padding: '20px',

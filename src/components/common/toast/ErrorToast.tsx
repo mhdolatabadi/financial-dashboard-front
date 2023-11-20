@@ -1,26 +1,4 @@
-import Toastify from 'toastify-js'
+import { toast } from 'react-toastify'
 
 export const ErrorToast = (text: string) =>
-  Toastify({
-    text: text,
-    duration: 3000,
-    gravity: 'top', // `top` or `bottom`
-    position: 'right', // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      color: 'white',
-      padding: '20px',
-      boxSizing: 'border-box',
-      background: 'tomato',
-      position: 'absolute',
-      width: '300px',
-      height: '50px',
-      borderRadius: '10px',
-    },
-    offset: {
-      y: '120px',
-      x: '20px',
-    },
-  })
+  toast.error(text, { style: { fontFamily: 'Vazirmatn' } })

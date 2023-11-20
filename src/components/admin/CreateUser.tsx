@@ -4,6 +4,8 @@ import { Credential } from '../../models/Credential'
 import { MenuItem } from '@mui/material'
 import { Units } from '../../models/units'
 import { useTranslation } from 'react-i18next'
+import { usersView } from '../../pages/user/main.slice'
+import { useSelector } from 'react-redux'
 
 interface Props {
   handleCreateUser: ({
@@ -15,6 +17,9 @@ interface Props {
 
 export function CreateUser({ handleCreateUser }: Props) {
   const { t } = useTranslation()
+
+  const users = useSelector(usersView)
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [unit, setUnit] = useState<string>(Units.dollar)
@@ -34,6 +39,8 @@ export function CreateUser({ handleCreateUser }: Props) {
         <TextField
           label={t('user.username')}
           value={username}
+          error={users.map(u => u.username).includes(username)}
+          helperText={users.map(u => u.username).includes(username) ? 'نام کاربری باید یکتا باشد' : ''} 
           onChange={(e) => setUsername(e.target.value)}
         />
         <TextField

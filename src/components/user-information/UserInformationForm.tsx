@@ -8,13 +8,15 @@ import {
   setSelectedNationalNo,
   setSelectedPassword,
   setSelectedUnit,
+  setSelectedUser,
   setSelectedUsername,
 } from '../../pages/user/selected-user.slice'
 import { Button, MenuItem } from '@mui/material'
 import { updateUserInformation } from '../../settings/api/dataManipulation'
 import { Units } from '../../models/units'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { usersView } from '../../pages/user/main.slice'
 
 interface Props {
   handleClose: (state: boolean) => unknown
@@ -22,19 +24,39 @@ interface Props {
 
 export function UserInformationForm({ handleClose }: Props) {
   const { t } = useTranslation()
+
   const dispatch = useDispatch()
+  const users = useSelector(usersView)
   const selectedUser = useSelector(selectedUserView)
+
+  const [username, setUsername] = useState(selectedUser.username)
+  const [password, setPassword] = useState('')
+  const [nationalNo, setNationalNo] = useState(selectedUser.nationalNo ?? '')
+  const [firstname, setFirstname] = useState(selectedUser.firstname ?? '')
+  const [lastname, setLastname] = useState(selectedUser.lastname ?? '')
+  const [unit, setUnit] = useState(selectedUser.unit)
+
   const handleEditUser = () => {
-    updateUserInformation(selectedUser.id, {
+    const user = {
       ...selectedUser,
+      username,
+      password,
+      nationalNo,
+      firstname,
+      lastname,
+      unit,
+    }
+    updateUserInformation(selectedUser.id, {
+      ...user,
       lastTransactionDate: undefined,
     })
       .then((res) => {
-        console.log(res.data)
-        SuccessToast(t('messages.successful')).showToast()
+        console.log(res)
+        dispatch(setSelectedUser(user))
+        SuccessToast(t('messages.successful'))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد').showToast()
+        ErrorToast('مشکلی پیش آمد')
       })
       .finally(() => handleClose(false))
   }
@@ -51,54 +73,46 @@ export function UserInformationForm({ handleClose }: Props) {
       <div>
         <TextField
           label={t('user.username')}
-          value={selectedUser?.username}
-          onChange={(username) =>
-            dispatch(setSelectedUsername(username.target.value))
+          value={username}
+          error={
+            users.map((u) => u.username).includes(username) &&
+            username !== selectedUser.username
           }
+          helperText={
+            users.map((u) => u.username).includes(username) &&
+            username !== selectedUser.username
+              ? 'نام کاربری باید یکتا باشد'
+              : ''
+          }
+          onChange={(username) => setUsername(username.target.value)}
         />
         <TextField
           label={t('user.password')}
-          value={selectedUser.password}
-          onChange={(password) =>
-            dispatch(setSelectedPassword(password.target.value))
-          }
+          value={password}
+          onChange={(password) => setPassword(password.target.value)}
           helperText="تنها در صورتی که می‌خواهید رمز عبور را تغییر دهید این فیلد را پر کنید"
         />
         <TextField
           label={t('user.nationalNo')}
-          value={
-            selectedUser?.nationalNo ? selectedUser?.nationalNo : undefined
-          }
-          onChange={(nationalNo) =>
-            dispatch(setSelectedNationalNo(nationalNo.target.value))
-          }
+          value={nationalNo}
+          onChange={(nationalNo) => setNationalNo(nationalNo.target.value)}
         />
         <TextField
           label={t('user.firstname')}
-          value={selectedUser?.firstname}
-          onChange={(e) => dispatch(setSelectedFirstname(e.target.value))}
+          value={firstname}
+          onChange={(e) => setFirstname(e.target.value)}
         />
         <TextField
           label={t('user.lastname')}
-          value={selectedUser?.lastname}
-          onChange={(e) => dispatch(setSelectedLastname(e.target.value))}
-        />
-        <TextField
-          disabled
-          label={t('financial')}
-          value={
-            selectedUser.financial && selectedUser.unit
-              ? String(selectedUser.financial)
-              : undefined
-          }
-          onChange={(e) => dispatch(setSelectedFinancial(+e.target.value))}
+          value={lastname}
+          onChange={(e) => setLastname(e.target.value)}
         />
 
         <TextField
           select
           label="واحد تراکنش‌های کاربر"
-          value={selectedUser.unit}
-          onChange={(e) => dispatch(setSelectedUnit(e.target.value))}
+          value={unit}
+          onChange={(e) => setUnit(e.target.value)}
         >
           <MenuItem value={Units.rial}>{t('units.rial')}</MenuItem>
           <MenuItem value={Units.derham}>{t('units.derham')}</MenuItem>

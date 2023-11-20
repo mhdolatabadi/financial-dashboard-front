@@ -62,13 +62,13 @@ export function AdminToolbox({ editMode }: Props) {
     unit,
   }: Credential & { unit: string }) => {
     createUser(username, password, unit).then(() => {
-      SuccessToast(t('messages.successful')).showToast()
+      SuccessToast(t('messages.successful'))
       getUserWithUsername(username)
         .then((res) => {
           dispatch(setAddUser(res.data))
         })
         .catch(() => {
-          ErrorToast('مشکلی پیش آمد').showToast()
+          ErrorToast('مشکلی پیش آمد')
         })
     })
   }

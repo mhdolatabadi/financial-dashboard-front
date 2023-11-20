@@ -23,7 +23,7 @@ export function UsernameSelect({ username, onChange, users }: Props) {
         onChange={onChange}
       >
         {users.map((u) => (
-          <MenuItem value={u.username}>{u.username}</MenuItem>
+          <MenuItem key={u.username} value={u.username}>{u.username}</MenuItem>
         ))}
       </TextField>
     </div>
